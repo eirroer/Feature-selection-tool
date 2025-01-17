@@ -10,11 +10,11 @@ preprocessing:
   
   normalization_methods:
     tmm:
-      use_method: False
+      use_method: True
     cpm:
       use_method: False
     vst:
-      use_method: True
+      use_method: False
     deseq2:
       use_method: False
 
@@ -27,8 +27,8 @@ preprocessing:
       min_count: 10
       min_samples: 3
     pca: # Not implemented
-      use_method: False
-      # n_components: 2
+      use_method: True
+      n_components: 2
     variance_filter:
       use_method: False
       threshold: 0.5

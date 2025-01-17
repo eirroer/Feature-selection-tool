@@ -16,7 +16,7 @@ class CountNormalizer:
         self.config_data = config_data
 
     def tmm_normalize(self, count_data: pd.DataFrame) -> pd.DataFrame:
-        """Returns the TMM normalized data."""  # TODO write tmm normalization method with rnanorm
+        """Returns the TMM normalized data."""  # TODO write tmm normalization method without rnanorm
         tmm = TMM()
         tmm_normalized_data = tmm.set_output(transform="pandas").fit_transform(
             count_data
@@ -97,7 +97,7 @@ class CountNormalizer:
         return normalized_data
 
     def cpm_normalize(self, count_data: pd.DataFrame) -> pd.DataFrame:
-        """Returns the CPM normalized data."""
+        """Returns the Counts Per Million normalized data."""
         cpm_normalized_data = count_data.div(count_data.sum(axis=0), axis=1) * 1e6
         return cpm_normalized_data
 

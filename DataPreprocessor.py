@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 from Data import Data
@@ -6,6 +7,8 @@ from CountScaler import CountScaler
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 class DataPreprocessor:
@@ -94,8 +97,32 @@ class DataPreprocessor:
         return threshold_filtered_count_data
 
     def pca(self):
-        """Perform PCA on the count data."""
-        print("PCA is not implemented yet")
+        """Perform PCA on the count data and write the results to a file in the output folder."""
+        n_components = self.config_data["preprocessing"]["pre_filter_methods"]["pca"]["n_components"]
+        print(f"Performing PCA with {n_components} components")
+        
+        pca = PCA(n_components=n_components)
+        X_pca = pca.fit_transform(self.count_train_data)
+        pca_df = pd.DataFrame(X_pca, columns=["PC1", "PC2"])
+
+        def plot_pca(pca_df: pd.DataFrame):
+            """Plot the PCA results."""
+            plt.figure(figsize=(8, 6))
+            sns.scatterplot(x="PC1", y="PC2", data=pca_df)
+            plt.title("PCA Plot of Mock Dataset")
+            plt.xlabel(
+                f"Principal Component 1 ({pca.explained_variance_ratio_[0]*100:.2f}% Variance)"
+            )
+            plt.ylabel(
+                f"Principal Component 2 ({pca.explained_variance_ratio_[1]*100:.2f}% Variance)"
+            )
+            plt.tight_layout()
+            if not os.path.exists("outputs"):
+                os.makedirs("outputs")
+            plt.savefig("outputs/pca_plot.png", dpi=300, format="png")
+        
+        plot_pca(pca_df)
+
 
     def variance_filter(self):
         """Filter out genes that have a variance less than the threshold."""
