@@ -1,0 +1,45 @@
+preprocessing:
+
+  scaling_methods:
+    standard_scale:
+      use_method: True
+    min_max_scale:
+      use_method: False
+    max_abs_scale:
+      use_method: False
+  
+  normalization_methods:
+    tmm:
+      use_method: False
+    cpm:
+      use_method: False
+    vst:
+      use_method: True
+    deseq2:
+      use_method: False
+
+  train_test_split_params:
+    test_size: 0.2
+    random_state: 42
+
+  pre_filter_methods:
+    threshold_filter:
+      min_count: 10
+      min_samples: 3
+    pca: # Not implemented
+      use_method: False
+      # n_components: 2
+    variance_filter:
+      use_method: False
+      threshold: 0.5
+    expr_percentile_filter:
+      use_method: False
+      threshold_percentile: 0.8
+    correlation_filter:
+      use_method: True
+      correlation_method: "spearman" # or "pearson", "kendall"
+      threshold: 0.9
+
+feature_selection_methods:
+  - random_forest
+  - xgboost
