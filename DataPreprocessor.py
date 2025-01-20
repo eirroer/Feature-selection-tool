@@ -51,20 +51,20 @@ class DataPreprocessor:
             self.count_test_data = count_scaler.scale(normalized_count_test_data)
 
         else:  # split the data into training and test set
+            
+            test_size = self.config_data["preprocessing"]["train_test_split_params"]["test_size"]
+            random_state = self.config_data["preprocessing"]["train_test_split_params"]["random_state"]
+            
             logging.info(
-                "No optional test files provided. The data will be split into training and test set."
+                f"No optional test files provided. The data will be split into training and test set. Test size: {test_size}, Random state: {random_state}" 
             )
 
             count_train_data, count_test_data, meta_train_data, meta_test_data = (
                 train_test_split(
                     self.count_data,
                     self.meta_data,
-                    test_size=self.config_data["preprocessing"]["train_test_split_params"][
-                        "test_size"
-                    ],
-                    random_state=self.config_data["preprocessing"][
-                        "train_test_split_params"
-                    ]["random_state"],
+                    test_size=test_size,
+                    random_state=random_state,
                 )
             )
 
@@ -74,7 +74,10 @@ class DataPreprocessor:
             self.meta_test_data = meta_test_data
 
         # add threshold filtering on training data
-        self.count_train_data = self.threshold_filter(self.count_train_data)
+        use_threshold_filter = self.config_data["preprocessing"]["threshold_filter"]["use_method"]
+
+        if use_threshold_filter:
+            self.count_train_data = self.threshold_filter(self.count_train_data)
 
         count_normalizer = CountNormalizer(config_data=self.config_data)
         count_scaler = CountScaler(config_data=self.config_data)
@@ -93,8 +96,8 @@ class DataPreprocessor:
 
     def threshold_filter(self, count_data: pd.DataFrame):
         """Filter out genes that have a count less than the min_count in min_samples samples."""
-        min_count = self.config_data["preprocessing"]["pre_filter_methods"]["threshold_filter"]["min_count"]
-        min_samples = self.config_data["preprocessing"]["pre_filter_methods"]["threshold_filter"]["min_samples"]
+        min_count = self.config_data["preprocessing"]["threshold_filter"]["min_count"]
+        min_samples = self.config_data["preprocessing"]["threshold_filter"]["min_samples"]
         logging.info(f"Threshold filtering all genes with a count less than the {min_count} in {min_samples} samples")
         threshold_filtered_count_data = count_data.loc[
             (count_data > min_count).sum(axis=1) >= min_samples
@@ -160,7 +163,8 @@ class DataPreprocessor:
 
     def pre_filter(self):
         pre_filter_methods = self.config_data["preprocessing"]["pre_filter_methods"]
-        # logging.info("pre_filter_methods", pre_filter_methods)
+        active_pre_filter_methods = {key: pre_filter_methods[key] for key in pre_filter_methods if pre_filter_methods[key]["use_method"]}
+        logging.info("Pre-filtering methods activated in config file", active_pre_filter_methods)
 
         try:
             if pre_filter_methods["pca"]["use_method"]:
@@ -173,5 +177,5 @@ class DataPreprocessor:
                 self.correlation_filter()
         except KeyError as e:
             raise KeyError(
-                f'The method {e} is not implemented in the pre-filter method'
+                f'The method {e} is not implemented in the pre-filter methods'
             )

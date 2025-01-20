@@ -1,5 +1,10 @@
 preprocessing:
 
+  threshold_filter:
+      use_method: True
+      min_count: 10
+      min_samples: 3
+
   scaling_methods:
     standard_scale:
       use_method: True
@@ -23,10 +28,7 @@ preprocessing:
     random_state: 42
 
   pre_filter_methods:
-    threshold_filter:
-      min_count: 10
-      min_samples: 3
-    pca: # Not implemented
+    pca:
       use_method: True
       n_components: 2
     variance_filter:
