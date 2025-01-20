@@ -1,0 +1,1062 @@
+sample;sex;condition;histology;cancertype;stage
+sample1;F;C;control;control;Control
+sample10;M;C;control;control;Control
+sample100;M;C;control;control;Control
+sample1000;M;LC;Adenocarcinomas;NSCLC;Unknown
+sample1001;M;C;control;control;Control
+sample1002;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample1003;M;C;control;control;Control
+sample1004;M;C;control;control;Control
+sample1005;M;C;control;control;Control
+sample1006;F;C;control;control;Control
+sample1007;F;LC;Squamous cell carcinoma;NSCLC;Distant
+sample1008;F;LC;Adenocarcinomas;NSCLC;Distant
+sample1009;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample101;M;LC;Adenocarcinomas;NSCLC;Localized
+sample1010;F;LC;Squamous cell carcinoma;NSCLC;Localized
+sample1011;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample1012;M;LC;Adenocarcinomas;NSCLC;Distant
+sample1013;M;LC;Adenocarcinomas;NSCLC;Regional
+sample1014;M;C;control;control;Control
+sample1015;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample1016;F;C;control;control;Control
+sample1017;M;C;control;control;Control
+sample1018;F;LC;Others;Others;Distant
+sample1019;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample102;M;LC;Adenocarcinomas;NSCLC;Regional
+sample1020;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample1021;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample1022;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample1023;F;C;control;control;Control
+sample1024;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample1025;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample1026;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample1027;F;C;control;control;Control
+sample1028;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample1029;M;LC;Others;Others;Localized
+sample103;F;C;control;control;Control
+sample1030;M;LC;Others;Others;Unknown
+sample1031;M;C;control;control;Control
+sample1032;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample1033;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample1034;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample1035;M;LC;Others;Others;Localized
+sample1036;F;LC;Adenocarcinomas;NSCLC;Distant
+sample1037;M;LC;Non small-cell lung carcinoma;NSCLC;Localized
+sample1038;M;C;control;control;Control
+sample1039;M;C;control;control;Control
+sample104;M;LC;Adenocarcinomas;NSCLC;Localized
+sample1040;M;LC;Adenocarcinomas;NSCLC;Regional
+sample1041;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample1042;M;C;control;control;Control
+sample1043;M;LC;Non small-cell lung carcinoma;NSCLC;Regional
+sample1044;M;C;control;control;Control
+sample1045;F;LC;Squamous cell carcinoma;NSCLC;Regional
+sample1046;F;LC;Squamous cell carcinoma;NSCLC;Localized
+sample1047;F;C;control;control;Control
+sample1048;M;C;control;control;Control
+sample1049;F;C;control;control;Control
+sample105;M;LC;Adenocarcinomas;NSCLC;Distant
+sample1050;M;LC;Large-cell lung carcinoma;NSCLC;Localized
+sample1051;M;C;control;control;Control
+sample1052;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample1053;M;C;control;control;Control
+sample1054;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample1055;M;C;control;control;Control
+sample1056;F;C;control;control;Control
+sample1057;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample1058;M;C;control;control;Control
+sample1059;M;C;control;control;Control
+sample106;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample1060;M;C;control;control;Control
+sample1061;F;LC;Others;Others;Distant
+sample107;M;LC;Adenocarcinomas;NSCLC;Localized
+sample108;M;C;control;control;Control
+sample109;M;LC;Adenocarcinomas;NSCLC;Distant
+sample11;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample110;M;C;control;control;Control
+sample111;F;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample112;M;LC;Non small-cell lung carcinoma;NSCLC;Regional
+sample113;M;LC;Small-cell lung carcinoma;SCLC;Localized
+sample114;F;LC;Adenocarcinomas;NSCLC;Distant
+sample115;F;C;control;control;Control
+sample116;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample117;M;LC;Adenocarcinomas;NSCLC;Distant
+sample118;M;C;control;control;Control
+sample119;M;C;control;control;Control
+sample12;M;C;control;control;Control
+sample120;M;LC;Adenocarcinomas;NSCLC;Regional
+sample121;M;LC;Adenocarcinomas;NSCLC;Localized
+sample122;F;C;control;control;Control
+sample123;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample124;M;LC;Adenocarcinomas;NSCLC;Distant
+sample125;M;C;control;control;Control
+sample126;M;C;control;control;Control
+sample127;F;C;control;control;Control
+sample128;M;C;control;control;Control
+sample129;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample13;M;LC;Small-cell lung carcinoma;SCLC;Unknown
+sample130;M;LC;Adenocarcinomas;NSCLC;Unknown
+sample131;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample132;F;LC;Adenocarcinomas;NSCLC;Distant
+sample133;F;C;control;control;Control
+sample134;F;LC;Squamous cell carcinoma;NSCLC;Distant
+sample135;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample136;M;C;control;control;Control
+sample137;F;C;control;control;Control
+sample138;F;C;control;control;Control
+sample139;F;LC;Squamous cell carcinoma;NSCLC;Distant
+sample14;F;C;control;control;Control
+sample140;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample141;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample142;M;C;control;control;Control
+sample143;F;LC;Adenocarcinomas;NSCLC;Distant
+sample144;M;LC;Others;Others;Distant
+sample145;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample146;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample147;F;LC;Adenocarcinomas;NSCLC;Localized
+sample148;M;C;control;control;Control
+sample149;F;C;control;control;Control
+sample15;F;C;control;control;Control
+sample150;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample151;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample152;M;C;control;control;Control
+sample153;M;C;control;control;Control
+sample154;M;LC;Adenocarcinomas;NSCLC;Localized
+sample155;F;C;control;control;Control
+sample156;M;C;control;control;Control
+sample157;M;LC;Adenocarcinomas;NSCLC;Regional
+sample158;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample159;M;C;control;control;Control
+sample16;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample160;F;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample161;F;LC;Squamous cell carcinoma;NSCLC;Localized
+sample162;M;LC;Adenocarcinomas;NSCLC;Distant
+sample163;F;C;control;control;Control
+sample164;M;C;control;control;Control
+sample165;F;C;control;control;Control
+sample166;M;LC;Adenocarcinomas;NSCLC;Distant
+sample167;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample168;F;LC;Others;Others;Distant
+sample169;M;LC;Large-cell lung carcinoma;NSCLC;Distant
+sample17;F;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample170;M;LC;Adenocarcinomas;NSCLC;Distant
+sample171;F;LC;Others;Others;Distant
+sample172;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample173;M;C;control;control;Control
+sample174;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample175;F;LC;Adenocarcinomas;NSCLC;Regional
+sample176;M;LC;Adenocarcinomas;NSCLC;Distant
+sample177;M;C;control;control;Control
+sample178;F;LC;Squamous cell carcinoma;NSCLC;Localized
+sample179;F;LC;Others;Others;Unknown
+sample18;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample180;F;LC;Squamous cell carcinoma;NSCLC;Distant
+sample181;M;LC;Others;Others;Distant
+sample182;M;C;control;control;Control
+sample183;F;C;control;control;Control
+sample184;M;LC;Non small-cell lung carcinoma;NSCLC;Localized
+sample185;M;LC;Adenocarcinomas;NSCLC;Localized
+sample186;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample187;F;LC;Adenocarcinomas;NSCLC;Distant
+sample188;F;C;control;control;Control
+sample189;M;C;control;control;Control
+sample19;M;C;control;control;Control
+sample190;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample191;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample192;M;C;control;control;Control
+sample193;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample194;F;C;control;control;Control
+sample195;F;C;control;control;Control
+sample196;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample197;F;LC;Adenocarcinomas;NSCLC;Localized
+sample198;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample199;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample2;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample20;F;LC;Non small-cell lung carcinoma;NSCLC;Localized
+sample200;F;C;control;control;Control
+sample201;M;LC;Adenocarcinomas;NSCLC;Distant
+sample202;M;C;control;control;Control
+sample203;M;C;control;control;Control
+sample204;F;LC;Non small-cell lung carcinoma;NSCLC;Localized
+sample205;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample206;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample207;M;C;control;control;Control
+sample208;M;LC;Adenocarcinomas;NSCLC;Regional
+sample209;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample21;M;C;control;control;Control
+sample210;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample211;M;C;control;control;Control
+sample212;F;C;control;control;Control
+sample213;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample214;M;C;control;control;Control
+sample215;M;C;control;control;Control
+sample216;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample217;F;LC;Others;Others;Distant
+sample218;M;C;control;control;Control
+sample219;M;LC;Others;Others;Localized
+sample22;F;LC;Others;Others;Distant
+sample220;F;C;control;control;Control
+sample221;M;LC;Others;Others;Distant
+sample222;M;C;control;control;Control
+sample223;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample224;M;LC;Adenocarcinomas;NSCLC;Distant
+sample225;F;C;control;control;Control
+sample226;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample227;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample228;F;C;control;control;Control
+sample229;M;C;control;control;Control
+sample23;M;LC;Adenocarcinomas;NSCLC;Distant
+sample230;M;C;control;control;Control
+sample231;M;LC;Adenocarcinomas;NSCLC;Distant
+sample232;F;LC;Squamous cell carcinoma;NSCLC;Regional
+sample233;M;C;control;control;Control
+sample234;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample235;F;C;control;control;Control
+sample236;M;C;control;control;Control
+sample237;M;LC;Small-cell lung carcinoma;SCLC;Localized
+sample238;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample239;M;C;control;control;Control
+sample24;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample240;M;C;control;control;Control
+sample241;M;C;control;control;Control
+sample242;M;LC;Adenocarcinomas;NSCLC;Regional
+sample243;M;C;control;control;Control
+sample244;M;C;control;control;Control
+sample245;M;C;control;control;Control
+sample246;M;LC;Adenocarcinomas;NSCLC;Localized
+sample247;F;C;control;control;Control
+sample248;M;LC;Others;Others;Regional
+sample249;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample25;M;LC;Adenocarcinomas;NSCLC;Localized
+sample250;F;C;control;control;Control
+sample251;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample252;F;C;control;control;Control
+sample253;M;C;control;control;Control
+sample254;M;C;control;control;Control
+sample255;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample256;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample257;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample258;F;LC;Adenocarcinomas;NSCLC;Distant
+sample259;M;C;control;control;Control
+sample26;M;LC;Small-cell lung carcinoma;SCLC;Localized
+sample260;M;C;control;control;Control
+sample261;F;C;control;control;Control
+sample262;M;LC;Adenocarcinomas;NSCLC;Regional
+sample263;M;C;control;control;Control
+sample264;M;LC;Others;Others;Regional
+sample265;M;C;control;control;Control
+sample266;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample267;F;C;control;control;Control
+sample268;M;C;control;control;Control
+sample269;M;C;control;control;Control
+sample27;M;LC;Adenocarcinomas;NSCLC;Distant
+sample270;M;C;control;control;Control
+sample271;M;C;control;control;Control
+sample272;M;C;control;control;Control
+sample273;M;LC;Large-cell lung carcinoma;NSCLC;Regional
+sample274;F;LC;Carsinoid;Others;Regional
+sample275;F;LC;Squamous cell carcinoma;NSCLC;Regional
+sample276;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample277;M;LC;Adenocarcinomas;NSCLC;Distant
+sample278;F;C;control;control;Control
+sample279;M;C;control;control;Control
+sample28;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample280;F;C;control;control;Control
+sample281;M;C;control;control;Control
+sample282;M;C;control;control;Control
+sample283;F;C;control;control;Control
+sample284;M;C;control;control;Control
+sample285;F;C;control;control;Control
+sample286;F;LC;Adenocarcinomas;NSCLC;Regional
+sample287;M;LC;Large-cell lung carcinoma;NSCLC;Localized
+sample288;M;C;control;control;Control
+sample289;M;C;control;control;Control
+sample29;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample290;F;C;control;control;Control
+sample291;M;C;control;control;Control
+sample292;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample293;F;C;control;control;Control
+sample294;M;LC;Adenocarcinomas;NSCLC;Unknown
+sample295;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample296;M;C;control;control;Control
+sample297;M;C;control;control;Control
+sample298;M;C;control;control;Control
+sample299;M;LC;Large-cell lung carcinoma;NSCLC;Distant
+sample3;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample30;M;C;control;control;Control
+sample300;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample301;M;C;control;control;Control
+sample302;M;LC;Adenocarcinomas;NSCLC;Distant
+sample303;M;C;control;control;Control
+sample304;F;C;control;control;Control
+sample305;F;C;control;control;Control
+sample306;M;C;control;control;Control
+sample307;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample308;F;LC;Adenocarcinomas;NSCLC;Distant
+sample309;M;LC;Adenocarcinomas;NSCLC;Distant
+sample31;F;C;control;control;Control
+sample310;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample311;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample312;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample313;M;C;control;control;Control
+sample314;F;C;control;control;Control
+sample315;F;LC;Adenocarcinomas;NSCLC;Distant
+sample316;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample317;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample318;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample319;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample32;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample320;M;C;control;control;Control
+sample321;M;LC;Others;Others;Localized
+sample322;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample323;F;C;control;control;Control
+sample324;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample325;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample326;F;C;control;control;Control
+sample327;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample328;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample329;M;C;control;control;Control
+sample33;M;C;control;control;Control
+sample330;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample331;M;C;control;control;Control
+sample332;F;C;control;control;Control
+sample333;M;LC;Adenocarcinomas;NSCLC;Distant
+sample334;M;C;control;control;Control
+sample335;M;LC;Adenocarcinomas;NSCLC;Distant
+sample336;M;LC;Non small-cell lung carcinoma;NSCLC;Localized
+sample337;F;C;control;control;Control
+sample338;F;C;control;control;Control
+sample339;F;C;control;control;Control
+sample34;F;C;control;control;Control
+sample340;M;C;control;control;Control
+sample341;M;C;control;control;Control
+sample342;F;LC;Adenocarcinomas;NSCLC;Distant
+sample343;F;C;control;control;Control
+sample344;F;LC;Adenocarcinomas;NSCLC;Distant
+sample345;M;C;control;control;Control
+sample346;M;LC;Adenocarcinomas;NSCLC;Distant
+sample347;F;C;control;control;Control
+sample348;M;LC;Small-cell lung carcinoma;SCLC;Unknown
+sample349;M;LC;Adenocarcinomas;NSCLC;Unknown
+sample35;M;LC;Others;Others;Distant
+sample350;F;LC;Adenocarcinomas;NSCLC;Regional
+sample351;M;C;control;control;Control
+sample352;M;LC;Large-cell lung carcinoma;NSCLC;Distant
+sample353;M;C;control;control;Control
+sample354;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample355;M;C;control;control;Control
+sample356;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample357;F;C;control;control;Control
+sample358;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample359;F;C;control;control;Control
+sample36;M;C;control;control;Control
+sample360;M;C;control;control;Control
+sample361;M;C;control;control;Control
+sample362;M;C;control;control;Control
+sample363;M;LC;Non small-cell lung carcinoma;NSCLC;Regional
+sample364;M;C;control;control;Control
+sample365;M;C;control;control;Control
+sample366;F;C;control;control;Control
+sample367;M;C;control;control;Control
+sample368;M;C;control;control;Control
+sample369;M;C;control;control;Control
+sample37;F;C;control;control;Control
+sample370;M;C;control;control;Control
+sample371;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample372;F;LC;Others;Others;Distant
+sample373;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample374;M;C;control;control;Control
+sample375;M;C;control;control;Control
+sample376;F;LC;Adenocarcinomas;NSCLC;Regional
+sample377;M;C;control;control;Control
+sample378;M;C;control;control;Control
+sample379;M;C;control;control;Control
+sample38;M;C;control;control;Control
+sample380;M;C;control;control;Control
+sample381;F;C;control;control;Control
+sample382;M;LC;Adenocarcinomas;NSCLC;Distant
+sample383;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample384;F;C;control;control;Control
+sample385;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample386;M;LC;Large-cell lung carcinoma;NSCLC;Regional
+sample387;M;LC;Adenocarcinomas;NSCLC;Regional
+sample388;M;C;control;control;Control
+sample389;F;C;control;control;Control
+sample39;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample390;M;C;control;control;Control
+sample391;M;C;control;control;Control
+sample392;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample393;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample394;M;C;control;control;Control
+sample395;M;LC;Others;Others;Distant
+sample396;F;C;control;control;Control
+sample397;M;C;control;control;Control
+sample398;F;LC;Squamous cell carcinoma;NSCLC;Localized
+sample399;F;C;control;control;Control
+sample4;F;LC;Others;Others;Distant
+sample40;F;C;control;control;Control
+sample400;M;C;control;control;Control
+sample401;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample402;M;LC;Others;Others;Localized
+sample403;M;C;control;control;Control
+sample404;M;C;control;control;Control
+sample405;M;LC;Adenocarcinomas;NSCLC;Regional
+sample406;M;C;control;control;Control
+sample407;F;LC;Adenocarcinomas;NSCLC;Regional
+sample408;F;C;control;control;Control
+sample409;M;LC;Adenocarcinomas;NSCLC;Distant
+sample41;M;C;control;control;Control
+sample410;M;C;control;control;Control
+sample411;M;C;control;control;Control
+sample412;M;C;control;control;Control
+sample413;M;C;control;control;Control
+sample414;F;LC;Adenocarcinomas;NSCLC;Regional
+sample415;M;C;control;control;Control
+sample416;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample417;M;C;control;control;Control
+sample418;F;LC;Adenocarcinomas;NSCLC;Distant
+sample419;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample42;F;C;control;control;Control
+sample420;F;LC;Adenocarcinomas;NSCLC;Regional
+sample421;F;C;control;control;Control
+sample422;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample423;M;C;control;control;Control
+sample424;F;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample425;M;C;control;control;Control
+sample426;M;C;control;control;Control
+sample427;M;C;control;control;Control
+sample428;F;C;control;control;Control
+sample429;M;LC;Adenocarcinomas;NSCLC;Distant
+sample43;M;LC;Non small-cell lung carcinoma;NSCLC;Regional
+sample430;M;LC;Adenocarcinomas;NSCLC;Distant
+sample431;M;C;control;control;Control
+sample432;M;LC;Adenocarcinomas;NSCLC;Localized
+sample433;M;LC;Adenocarcinomas;NSCLC;Distant
+sample434;M;C;control;control;Control
+sample435;M;LC;Adenocarcinomas;NSCLC;Distant
+sample436;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample437;M;C;control;control;Control
+sample438;M;C;control;control;Control
+sample439;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample44;M;C;control;control;Control
+sample440;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample441;F;C;control;control;Control
+sample442;M;LC;Others;Others;Distant
+sample443;M;C;control;control;Control
+sample444;M;C;control;control;Control
+sample445;M;C;control;control;Control
+sample446;F;LC;Squamous cell carcinoma;NSCLC;Regional
+sample447;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample448;M;C;control;control;Control
+sample449;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample45;M;C;control;control;Control
+sample450;F;C;control;control;Control
+sample451;F;C;control;control;Control
+sample452;M;C;control;control;Control
+sample453;M;C;control;control;Control
+sample454;M;C;control;control;Control
+sample455;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample456;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample457;F;LC;Others;Others;Localized
+sample458;M;C;control;control;Control
+sample459;F;C;control;control;Control
+sample46;F;C;control;control;Control
+sample460;M;C;control;control;Control
+sample461;M;LC;Adenocarcinomas;NSCLC;Regional
+sample462;F;C;control;control;Control
+sample463;M;LC;Adenocarcinomas;NSCLC;Distant
+sample464;F;C;control;control;Control
+sample465;F;LC;Adenocarcinomas;NSCLC;Localized
+sample466;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample467;M;C;control;control;Control
+sample468;M;C;control;control;Control
+sample469;M;LC;Non small-cell lung carcinoma;NSCLC;Localized
+sample47;F;C;control;control;Control
+sample470;M;C;control;control;Control
+sample471;F;LC;Adenocarcinomas;NSCLC;Distant
+sample472;F;C;control;control;Control
+sample473;M;C;control;control;Control
+sample474;M;LC;Adenocarcinomas;NSCLC;Regional
+sample475;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample476;M;LC;Adenocarcinomas;NSCLC;Distant
+sample477;M;C;control;control;Control
+sample478;F;C;control;control;Control
+sample479;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample48;M;C;control;control;Control
+sample480;M;C;control;control;Control
+sample481;M;C;control;control;Control
+sample482;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample483;M;C;control;control;Control
+sample484;M;C;control;control;Control
+sample485;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample486;M;C;control;control;Control
+sample487;M;LC;Adenocarcinomas;NSCLC;Regional
+sample488;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample489;F;C;control;control;Control
+sample49;F;LC;Small-cell lung carcinoma;SCLC;Unknown
+sample490;M;C;control;control;Control
+sample491;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample492;M;LC;Others;Others;Distant
+sample493;M;LC;Others;Others;Distant
+sample494;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample495;M;C;control;control;Control
+sample496;F;LC;Adenocarcinomas;NSCLC;Distant
+sample497;M;C;control;control;Control
+sample498;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample499;M;LC;Non small-cell lung carcinoma;NSCLC;Regional
+sample5;M;LC;Adenocarcinomas;NSCLC;Distant
+sample50;F;LC;Squamous cell carcinoma;NSCLC;Regional
+sample500;M;C;control;control;Control
+sample501;M;C;control;control;Control
+sample502;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample503;M;LC;Adenocarcinomas;NSCLC;Distant
+sample504;M;C;control;control;Control
+sample505;F;LC;Adenocarcinomas;NSCLC;Distant
+sample506;F;C;control;control;Control
+sample507;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample508;M;C;control;control;Control
+sample509;M;C;control;control;Control
+sample51;M;LC;Non small-cell lung carcinoma;NSCLC;Regional
+sample510;M;C;control;control;Control
+sample511;F;LC;Squamous cell carcinoma;NSCLC;Regional
+sample512;F;C;control;control;Control
+sample513;M;LC;Adenocarcinomas;NSCLC;Regional
+sample514;F;LC;Adenocarcinomas;NSCLC;Distant
+sample515;M;C;control;control;Control
+sample516;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample517;F;C;control;control;Control
+sample518;M;C;control;control;Control
+sample519;M;C;control;control;Control
+sample52;F;C;control;control;Control
+sample520;M;C;control;control;Control
+sample521;M;C;control;control;Control
+sample522;F;LC;Non small-cell lung carcinoma;NSCLC;Localized
+sample523;F;LC;Adenocarcinomas;NSCLC;Distant
+sample524;M;C;control;control;Control
+sample525;M;C;control;control;Control
+sample526;F;LC;Adenocarcinomas;NSCLC;Regional
+sample527;M;C;control;control;Control
+sample528;M;LC;Adenocarcinomas;NSCLC;Regional
+sample529;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample53;M;C;control;control;Control
+sample530;M;C;control;control;Control
+sample531;F;C;control;control;Control
+sample532;M;LC;Adenocarcinomas;NSCLC;Localized
+sample533;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample534;M;C;control;control;Control
+sample535;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample536;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample537;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample538;M;C;control;control;Control
+sample539;M;C;control;control;Control
+sample54;F;C;control;control;Control
+sample540;M;C;control;control;Control
+sample541;F;LC;Others;Others;Distant
+sample542;M;LC;Adenocarcinomas;NSCLC;Localized
+sample543;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample544;F;C;control;control;Control
+sample545;M;C;control;control;Control
+sample546;F;LC;Adenocarcinomas;NSCLC;Localized
+sample547;M;C;control;control;Control
+sample548;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample549;F;LC;Squamous cell carcinoma;NSCLC;Distant
+sample55;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample550;M;C;control;control;Control
+sample551;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample552;F;C;control;control;Control
+sample553;M;LC;Non small-cell lung carcinoma;NSCLC;Regional
+sample554;M;C;control;control;Control
+sample555;M;C;control;control;Control
+sample556;F;LC;Adenocarcinomas;NSCLC;Regional
+sample557;M;C;control;control;Control
+sample558;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample559;F;LC;Adenocarcinomas;NSCLC;Regional
+sample56;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample560;M;C;control;control;Control
+sample561;F;LC;Adenocarcinomas;NSCLC;Regional
+sample562;F;LC;Others;Others;Distant
+sample563;F;C;control;control;Control
+sample564;F;C;control;control;Control
+sample565;F;C;control;control;Control
+sample566;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample567;M;C;control;control;Control
+sample568;M;LC;Others;Others;Distant
+sample569;M;C;control;control;Control
+sample57;M;C;control;control;Control
+sample570;F;C;control;control;Control
+sample571;F;LC;Others;Others;Unknown
+sample572;F;C;control;control;Control
+sample573;M;LC;Others;Others;Distant
+sample574;M;LC;Adenocarcinomas;NSCLC;Distant
+sample575;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample576;M;C;control;control;Control
+sample577;F;LC;Small-cell lung carcinoma;SCLC;Localized
+sample578;M;LC;Adenocarcinomas;NSCLC;Distant
+sample579;M;LC;Small-cell lung carcinoma;SCLC;Localized
+sample58;F;LC;Adenocarcinomas;NSCLC;Localized
+sample580;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample581;M;C;control;control;Control
+sample582;M;C;control;control;Control
+sample583;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample584;F;C;control;control;Control
+sample585;M;C;control;control;Control
+sample586;M;C;control;control;Control
+sample587;M;C;control;control;Control
+sample588;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample589;F;LC;Squamous cell carcinoma;NSCLC;Distant
+sample59;M;C;control;control;Control
+sample590;F;C;control;control;Control
+sample591;F;LC;Adenocarcinomas;NSCLC;Distant
+sample592;F;LC;Adenocarcinomas;NSCLC;Distant
+sample593;M;C;control;control;Control
+sample594;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample595;M;C;control;control;Control
+sample596;M;C;control;control;Control
+sample597;F;LC;Non small-cell lung carcinoma;NSCLC;Localized
+sample598;M;LC;Others;Others;Distant
+sample599;F;LC;Adenocarcinomas;NSCLC;Localized
+sample6;F;C;control;control;Control
+sample60;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample600;M;C;control;control;Control
+sample601;M;C;control;control;Control
+sample602;F;LC;Adenocarcinomas;NSCLC;Distant
+sample603;M;C;control;control;Control
+sample604;F;C;control;control;Control
+sample605;F;LC;Adenocarcinomas;NSCLC;Regional
+sample606;M;LC;Adenocarcinomas;NSCLC;Localized
+sample607;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample608;F;C;control;control;Control
+sample609;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample61;M;C;control;control;Control
+sample610;F;LC;Adenocarcinomas;NSCLC;Distant
+sample611;M;LC;Adenocarcinomas;NSCLC;Distant
+sample612;M;LC;Adenocarcinomas;NSCLC;Unknown
+sample613;M;LC;Adenocarcinomas;NSCLC;Regional
+sample614;M;C;control;control;Control
+sample615;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample616;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample617;M;C;control;control;Control
+sample618;M;C;control;control;Control
+sample619;F;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample62;M;C;control;control;Control
+sample620;F;C;control;control;Control
+sample621;F;C;control;control;Control
+sample622;M;C;control;control;Control
+sample623;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample624;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample625;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample626;F;C;control;control;Control
+sample627;M;C;control;control;Control
+sample628;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample629;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample63;F;LC;Adenocarcinomas;NSCLC;Distant
+sample630;M;C;control;control;Control
+sample631;F;C;control;control;Control
+sample632;M;LC;Adenocarcinomas;NSCLC;Distant
+sample633;M;C;control;control;Control
+sample634;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample635;M;C;control;control;Control
+sample636;M;LC;Adenocarcinomas;NSCLC;Distant
+sample637;M;LC;Others;Others;Localized
+sample638;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample639;M;C;control;control;Control
+sample64;M;C;control;control;Control
+sample640;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample641;F;LC;Squamous cell carcinoma;NSCLC;Distant
+sample642;M;C;control;control;Control
+sample643;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample644;F;C;control;control;Control
+sample645;M;C;control;control;Control
+sample646;M;C;control;control;Control
+sample647;M;C;control;control;Control
+sample648;F;LC;Adenocarcinomas;NSCLC;Distant
+sample649;M;C;control;control;Control
+sample65;M;LC;Large-cell lung carcinoma;NSCLC;Regional
+sample650;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample651;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample652;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample653;M;LC;Large-cell lung carcinoma;NSCLC;Regional
+sample654;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample655;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample656;M;C;control;control;Control
+sample657;M;LC;Adenocarcinomas;NSCLC;Distant
+sample658;M;LC;Adenocarcinomas;NSCLC;Localized
+sample659;F;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample66;M;C;control;control;Control
+sample660;M;C;control;control;Control
+sample661;M;C;control;control;Control
+sample662;M;LC;Adenocarcinomas;NSCLC;Regional
+sample663;M;LC;Adenocarcinomas;NSCLC;Distant
+sample664;M;LC;Others;Others;Distant
+sample665;M;C;control;control;Control
+sample666;F;C;control;control;Control
+sample667;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample668;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample669;F;C;control;control;Control
+sample67;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample670;M;LC;Adenocarcinomas;NSCLC;Localized
+sample671;M;C;control;control;Control
+sample672;M;LC;Adenocarcinomas;NSCLC;Regional
+sample673;F;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample674;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample675;M;C;control;control;Control
+sample676;F;C;control;control;Control
+sample677;M;C;control;control;Control
+sample678;M;LC;Adenocarcinomas;NSCLC;Distant
+sample679;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample68;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample680;M;LC;Adenocarcinomas;NSCLC;Regional
+sample681;M;LC;Adenocarcinomas;NSCLC;Distant
+sample682;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample683;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample684;F;LC;Adenocarcinomas;NSCLC;Regional
+sample685;F;C;control;control;Control
+sample686;M;LC;Adenocarcinomas;NSCLC;Localized
+sample687;F;C;control;control;Control
+sample688;M;C;control;control;Control
+sample689;F;LC;Adenocarcinomas;NSCLC;Distant
+sample69;M;LC;Adenocarcinomas;NSCLC;Unknown
+sample690;M;LC;Adenocarcinomas;NSCLC;Regional
+sample691;M;C;control;control;Control
+sample692;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample693;F;C;control;control;Control
+sample694;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample695;M;C;control;control;Control
+sample696;M;LC;Adenocarcinomas;NSCLC;Regional
+sample697;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample698;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample699;M;C;control;control;Control
+sample7;M;C;control;control;Control
+sample70;F;C;control;control;Control
+sample700;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample701;F;LC;Adenocarcinomas;NSCLC;Localized
+sample702;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample703;M;C;control;control;Control
+sample704;M;C;control;control;Control
+sample705;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample706;M;C;control;control;Control
+sample707;M;C;control;control;Control
+sample708;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample709;F;C;control;control;Control
+sample71;F;C;control;control;Control
+sample710;M;C;control;control;Control
+sample711;F;C;control;control;Control
+sample712;F;C;control;control;Control
+sample713;F;C;control;control;Control
+sample714;F;C;control;control;Control
+sample715;M;C;control;control;Control
+sample716;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample717;M;C;control;control;Control
+sample718;M;C;control;control;Control
+sample719;M;LC;Adenocarcinomas;NSCLC;Regional
+sample72;F;C;control;control;Control
+sample720;M;C;control;control;Control
+sample721;M;C;control;control;Control
+sample722;M;C;control;control;Control
+sample723;F;C;control;control;Control
+sample724;M;C;control;control;Control
+sample725;F;C;control;control;Control
+sample726;F;C;control;control;Control
+sample727;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample728;F;C;control;control;Control
+sample729;F;LC;Others;Others;Unknown
+sample73;M;C;control;control;Control
+sample730;F;C;control;control;Control
+sample731;M;C;control;control;Control
+sample732;M;C;control;control;Control
+sample733;M;C;control;control;Control
+sample734;M;LC;Others;Others;Distant
+sample735;M;C;control;control;Control
+sample736;M;C;control;control;Control
+sample737;M;C;control;control;Control
+sample738;F;C;control;control;Control
+sample739;M;C;control;control;Control
+sample74;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample740;F;LC;Adenocarcinomas;NSCLC;Unknown
+sample741;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample742;M;C;control;control;Control
+sample743;F;C;control;control;Control
+sample744;M;LC;Small-cell lung carcinoma;SCLC;Localized
+sample745;F;C;control;control;Control
+sample746;F;C;control;control;Control
+sample747;M;C;control;control;Control
+sample748;M;C;control;control;Control
+sample749;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample75;F;C;control;control;Control
+sample750;F;C;control;control;Control
+sample751;M;C;control;control;Control
+sample752;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample753;F;LC;Adenocarcinomas;NSCLC;Distant
+sample754;M;LC;Adenocarcinomas;NSCLC;Distant
+sample755;F;C;control;control;Control
+sample756;M;C;control;control;Control
+sample757;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample758;F;C;control;control;Control
+sample759;M;C;control;control;Control
+sample76;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample760;M;C;control;control;Control
+sample761;M;C;control;control;Control
+sample762;M;C;control;control;Control
+sample763;M;LC;Adenocarcinomas;NSCLC;Distant
+sample764;M;C;control;control;Control
+sample765;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample766;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample767;M;LC;Adenocarcinomas;NSCLC;Distant
+sample768;M;LC;Others;Others;Regional
+sample769;M;C;control;control;Control
+sample77;M;LC;Adenocarcinomas;NSCLC;Distant
+sample770;F;C;control;control;Control
+sample771;F;C;control;control;Control
+sample772;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample773;M;LC;Adenocarcinomas;NSCLC;Distant
+sample774;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample775;M;C;control;control;Control
+sample776;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample777;F;C;control;control;Control
+sample778;M;C;control;control;Control
+sample779;M;C;control;control;Control
+sample78;M;C;control;control;Control
+sample780;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample781;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample782;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample783;M;C;control;control;Control
+sample784;M;LC;Adenocarcinomas;NSCLC;Distant
+sample785;F;C;control;control;Control
+sample786;F;LC;Squamous cell carcinoma;NSCLC;Regional
+sample787;F;LC;Adenocarcinomas;NSCLC;Distant
+sample788;M;C;control;control;Control
+sample789;M;C;control;control;Control
+sample79;M;C;control;control;Control
+sample790;F;LC;Adenocarcinomas;NSCLC;Distant
+sample791;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample792;M;C;control;control;Control
+sample793;M;LC;Adenocarcinomas;NSCLC;Distant
+sample794;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample795;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample796;M;C;control;control;Control
+sample797;M;LC;Adenocarcinomas;NSCLC;Distant
+sample798;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample799;M;LC;Large-cell lung carcinoma;NSCLC;Distant
+sample8;M;LC;Adenocarcinomas;NSCLC;Distant
+sample80;M;LC;Adenocarcinomas;NSCLC;Regional
+sample800;M;C;control;control;Control
+sample801;M;LC;Adenocarcinomas;NSCLC;Regional
+sample802;M;C;control;control;Control
+sample803;M;C;control;control;Control
+sample804;F;C;control;control;Control
+sample805;F;C;control;control;Control
+sample806;F;LC;Squamous cell carcinoma;NSCLC;Distant
+sample807;F;C;control;control;Control
+sample808;M;C;control;control;Control
+sample809;M;C;control;control;Control
+sample81;M;C;control;control;Control
+sample810;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample811;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample812;M;C;control;control;Control
+sample813;M;C;control;control;Control
+sample814;M;C;control;control;Control
+sample815;F;C;control;control;Control
+sample816;F;LC;Small-cell lung carcinoma;SCLC;Localized
+sample817;M;C;control;control;Control
+sample818;F;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample819;F;LC;Adenocarcinomas;NSCLC;Distant
+sample82;M;LC;Adenocarcinomas;NSCLC;Distant
+sample820;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample821;M;LC;Adenocarcinomas;NSCLC;Distant
+sample822;M;C;control;control;Control
+sample823;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample824;M;C;control;control;Control
+sample825;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample826;F;LC;Small-cell lung carcinoma;SCLC;Unknown
+sample827;F;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample828;F;LC;Squamous cell carcinoma;NSCLC;Distant
+sample829;F;C;control;control;Control
+sample83;F;C;control;control;Control
+sample830;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample831;M;C;control;control;Control
+sample832;M;LC;Others;Others;Localized
+sample833;F;LC;Squamous cell carcinoma;NSCLC;Distant
+sample834;F;LC;Others;Others;Localized
+sample835;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample836;F;LC;Adenocarcinomas;NSCLC;Distant
+sample837;M;C;control;control;Control
+sample838;F;LC;Adenocarcinomas;NSCLC;Unknown
+sample839;M;LC;Adenocarcinomas;NSCLC;Localized
+sample84;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample840;M;LC;Adenocarcinomas;NSCLC;Regional
+sample841;M;LC;Adenocarcinomas;NSCLC;Distant
+sample842;M;C;control;control;Control
+sample843;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample844;M;C;control;control;Control
+sample845;M;LC;Others;Others;Distant
+sample846;M;LC;Large-cell lung carcinoma;NSCLC;Distant
+sample847;M;LC;Adenocarcinomas;NSCLC;Distant
+sample848;M;C;control;control;Control
+sample849;M;C;control;control;Control
+sample85;M;C;control;control;Control
+sample850;F;LC;Adenocarcinomas;NSCLC;Distant
+sample851;F;LC;Others;Others;Distant
+sample852;F;C;control;control;Control
+sample853;F;C;control;control;Control
+sample854;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample855;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample856;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample857;M;C;control;control;Control
+sample858;F;LC;Adenocarcinomas;NSCLC;Localized
+sample859;M;C;control;control;Control
+sample86;F;C;control;control;Control
+sample860;M;LC;Others;Others;Localized
+sample861;F;C;control;control;Control
+sample862;M;C;control;control;Control
+sample863;F;LC;Adenocarcinomas;NSCLC;Localized
+sample864;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample865;M;LC;Adenocarcinomas;NSCLC;Unknown
+sample866;M;LC;Others;Others;Distant
+sample867;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample868;M;C;control;control;Control
+sample869;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample87;M;LC;Adenocarcinomas;NSCLC;Localized
+sample870;F;C;control;control;Control
+sample871;F;C;control;control;Control
+sample872;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample873;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample874;M;LC;Others;Others;Distant
+sample875;M;C;control;control;Control
+sample876;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample877;M;C;control;control;Control
+sample878;M;C;control;control;Control
+sample879;M;C;control;control;Control
+sample88;M;C;control;control;Control
+sample880;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample881;M;C;control;control;Control
+sample882;M;C;control;control;Control
+sample883;M;LC;Others;Others;Regional
+sample884;M;C;control;control;Control
+sample885;M;C;control;control;Control
+sample886;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample887;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample888;F;C;control;control;Control
+sample889;F;C;control;control;Control
+sample89;M;C;control;control;Control
+sample890;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample891;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample892;M;C;control;control;Control
+sample893;F;C;control;control;Control
+sample894;M;LC;Adenocarcinomas;NSCLC;Localized
+sample895;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample896;M;C;control;control;Control
+sample897;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample898;F;C;control;control;Control
+sample899;M;C;control;control;Control
+sample9;F;LC;Squamous cell carcinoma;NSCLC;Localized
+sample90;F;C;control;control;Control
+sample900;F;LC;Others;Others;Distant
+sample901;F;C;control;control;Control
+sample902;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample903;M;C;control;control;Control
+sample904;M;LC;Adenocarcinomas;NSCLC;Distant
+sample905;M;LC;Small-cell lung carcinoma;SCLC;Localized
+sample906;M;C;control;control;Control
+sample907;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample908;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample909;M;C;control;control;Control
+sample91;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample910;F;LC;Adenocarcinomas;NSCLC;Regional
+sample911;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample912;M;C;control;control;Control
+sample913;M;LC;Adenocarcinomas;NSCLC;Unknown
+sample914;F;LC;Squamous cell carcinoma;NSCLC;Localized
+sample915;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample916;M;C;control;control;Control
+sample917;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample918;F;LC;Adenocarcinomas;NSCLC;Distant
+sample919;M;LC;Adenocarcinomas;NSCLC;Distant
+sample92;M;C;control;control;Control
+sample920;F;LC;Adenocarcinomas;NSCLC;Distant
+sample921;F;C;control;control;Control
+sample922;M;C;control;control;Control
+sample923;F;C;control;control;Control
+sample924;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample925;M;C;control;control;Control
+sample926;M;LC;Adenocarcinomas;NSCLC;Distant
+sample927;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample928;F;C;control;control;Control
+sample929;M;C;control;control;Control
+sample93;F;C;control;control;Control
+sample930;M;C;control;control;Control
+sample931;F;C;control;control;Control
+sample932;F;LC;Adenocarcinomas;NSCLC;Localized
+sample933;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample934;M;C;control;control;Control
+sample935;M;C;control;control;Control
+sample936;M;LC;Adenocarcinomas;NSCLC;Localized
+sample937;M;LC;Small-cell lung carcinoma;SCLC;Localized
+sample938;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample939;M;C;control;control;Control
+sample94;M;C;control;control;Control
+sample940;M;LC;Adenocarcinomas;NSCLC;Unknown
+sample941;M;C;control;control;Control
+sample942;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample943;F;C;control;control;Control
+sample944;F;LC;Adenocarcinomas;NSCLC;Regional
+sample945;M;C;control;control;Control
+sample946;M;C;control;control;Control
+sample947;M;C;control;control;Control
+sample948;M;LC;Small-cell lung carcinoma;SCLC;Regional
+sample949;F;LC;Adenocarcinomas;NSCLC;Distant
+sample95;M;C;control;control;Control
+sample950;M;C;control;control;Control
+sample951;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample952;M;C;control;control;Control
+sample953;M;C;control;control;Control
+sample954;M;C;control;control;Control
+sample955;M;C;control;control;Control
+sample956;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample957;M;C;control;control;Control
+sample958;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample959;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample96;M;LC;Squamous cell carcinoma;NSCLC;Regional
+sample960;F;LC;Adenocarcinomas;NSCLC;Distant
+sample961;M;LC;Adenocarcinomas;NSCLC;Regional
+sample962;F;C;control;control;Control
+sample963;F;LC;Adenocarcinomas;NSCLC;Distant
+sample964;M;C;control;control;Control
+sample965;M;LC;Others;Others;Distant
+sample966;F;C;control;control;Control
+sample967;M;C;control;control;Control
+sample968;F;LC;Adenocarcinomas;NSCLC;Distant
+sample969;M;C;control;control;Control
+sample97;M;LC;Squamous cell carcinoma;NSCLC;Distant
+sample970;M;LC;Non small-cell lung carcinoma;NSCLC;Regional
+sample971;F;C;control;control;Control
+sample972;F;C;control;control;Control
+sample973;M;LC;Non small-cell lung carcinoma;NSCLC;Localized
+sample974;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample975;M;C;control;control;Control
+sample976;F;C;control;control;Control
+sample977;M;C;control;control;Control
+sample978;M;C;control;control;Control
+sample979;M;C;control;control;Control
+sample98;M;LC;Non small-cell lung carcinoma;NSCLC;Distant
+sample980;M;C;control;control;Control
+sample981;F;C;control;control;Control
+sample982;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample983;M;LC;Squamous cell carcinoma;NSCLC;Localized
+sample984;M;LC;Others;Others;Distant
+sample985;M;LC;Others;Others;Distant
+sample986;F;C;control;control;Control
+sample987;M;C;control;control;Control
+sample988;F;C;control;control;Control
+sample989;M;C;control;control;Control
+sample99;F;C;control;control;Control
+sample990;F;C;control;control;Control
+sample991;M;LC;Others;Others;Distant
+sample992;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample993;M;C;control;control;Control
+sample994;F;LC;Adenocarcinomas;NSCLC;Distant
+sample995;M;LC;Small-cell lung carcinoma;SCLC;Distant
+sample996;F;LC;Small-cell lung carcinoma;SCLC;Regional
+sample997;F;LC;Small-cell lung carcinoma;SCLC;Distant
+sample998;F;C;control;control;Control
+sample999;M;LC;Adenocarcinomas;NSCLC;Distant
