@@ -1,4 +1,5 @@
 # Feature-selection-tool
+This command-line tool is made for doing feature selection on RNA counts data! It allows for plug-and-play analysis of the input data, with options for configuring the parameters used in the analysis.
 
 ## Install conda environment
 Conda environment with the required dependecies can be set up using the environment.yaml file with the following command:
