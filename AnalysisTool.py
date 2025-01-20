@@ -56,15 +56,15 @@ class AnalysisTool:
             count_test_file (str, optional): Path to the test count data file. Defaults to None.
             meta_test_file (str, optional): Path to the test meta data file. Defaults to None.
         """
-        # print(f"files given: \n-->{count_file} \n-->{meta_file}")
-
+        logging.info("-------------------------Starting the analysis tool...-------------------------")
+        logging.info(f"files given: COUNT File --> {count_file} METADATA File --> {meta_file}")
 
         with Progress(
             SpinnerColumn(),
             TextColumn("[progress.description]{task.description}"),
             transient=True,
         ) as progress:
-
+            
             # check if the files are correct are given in correct format
             check_format_task = progress.add_task(description="Checking file formats...", total=1)
             input_checker = InputFormatChecker(count_file, meta_file, count_test_file, meta_test_file)
@@ -117,7 +117,7 @@ class AnalysisTool:
             config_data (dict): Data from the config file.
         """
 
-        logging.info(f'Methods found in config file: {config_data['feature_selection_methods']}')
+        logging.info(f'Feature selection methods activated in config file: {config_data['feature_selection_methods']}')
         
         # Run the selected methods
         for method_name in config_data['feature_selection_methods']:
