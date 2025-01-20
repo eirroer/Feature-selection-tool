@@ -3,6 +3,7 @@ import logging
 import pandas as pd
 import numpy as np
 from Data import Data
+from PreFilter import PreFilter
 from CountNormalizer import CountNormalizer
 from CountScaler import CountScaler
 from sklearn.feature_selection import VarianceThreshold
@@ -89,7 +90,8 @@ class DataPreprocessor:
         self.count_train_data = count_scaler.scale(normalized_count_data)
 
         # apply pre-filtering
-        self.pre_filter()
+        pre_filter = PreFilter(config_data=self.config_data)
+        self.count_train_data = pre_filter.apply_pre_filters(count_data=self.count_train_data)
 
         data = Data(self.count_train_data, self.meta_train_data, self.count_test_data, self.meta_test_data)
         return data
@@ -104,78 +106,4 @@ class DataPreprocessor:
         ]
         return threshold_filtered_count_data
 
-    def pca(self):
-        """Perform PCA on the count data and write the results to a file in the output folder."""
-        n_components = self.config_data["preprocessing"]["pre_filter_methods"]["pca"]["n_components"]
-        logging.info(f"Performing PCA with {n_components} components")
 
-        pca = PCA(n_components=n_components)
-        X_pca = pca.fit_transform(self.count_train_data)
-        pca_df = pd.DataFrame(X_pca, columns=["PC1", "PC2"])
-
-        def plot_pca(pca_df: pd.DataFrame):
-            """Plot the PCA results."""
-            plt.figure(figsize=(8, 6))
-            sns.scatterplot(x="PC1", y="PC2", data=pca_df)
-            plt.title("PCA Plot of Mock Dataset")
-            plt.xlabel(
-                f"Principal Component 1 ({pca.explained_variance_ratio_[0]*100:.2f}% Variance)"
-            )
-            plt.ylabel(
-                f"Principal Component 2 ({pca.explained_variance_ratio_[1]*100:.2f}% Variance)"
-            )
-            plt.tight_layout()
-            if not os.path.exists("outputs"):
-                os.makedirs("outputs")
-            plt.savefig("outputs/pca_plot.png", dpi=300, format="png")
-
-        plot_pca(pca_df)
-
-    def variance_filter(self):
-        """Filter out genes that have a variance less than the threshold."""
-        threshold = self.config_data["preprocessing"]["pre_filter_methods"]["variance_filter"]["threshold"]
-        logging.info(f"Variance filtering all genes with a variance less than {threshold}")
-
-        variance_threshold = VarianceThreshold(threshold=threshold)
-        self.count_data = variance_threshold.fit_transform(self.count_data)
-
-    def expr_percentile_filter(self):
-        """Filter out genes that have an expression less than the threshold percentile."""
-        threshold_percentile = self.config_data["preprocessing"]["pre_filter_methods"]["expr_percentile_filter"]["threshold_percentile"]
-        logging.info(f"Expression percentile filtering all genes with an expression less than the {threshold_percentile} percentile")
-
-        expr_percentile = self.count_data.quantile(q=threshold_percentile, axis=0)
-        self.count_data = self.count_data.loc[:, (self.count_data > expr_percentile).any()]
-
-    def correlation_filter(self):
-        """Filter out genes that are highly correlated."""
-        correlation_method = self.config_data["preprocessing"]["pre_filter_methods"]["correlation_filter"]["correlation_method"]
-        threshold = self.config_data["preprocessing"]["pre_filter_methods"]["correlation_filter"]["threshold"]
-        logging.info(f"Correlation filtering all genes with a correlation greater than {threshold}, using the {correlation_method} method")
-        correlation_matrix = self.count_train_data.corr(method=correlation_method)
-
-        # Find highly correlated pairs
-        upper_triangle = correlation_matrix.where(np.triu(np.ones(correlation_matrix.shape), k=1).astype(bool))
-        to_drop = [column for column in upper_triangle.columns if any(upper_triangle[column] > threshold)]
-
-        # Drop the genes
-        self.count_train_data = self.count_train_data.drop(columns=to_drop)
-
-    def pre_filter(self):
-        pre_filter_methods = self.config_data["preprocessing"]["pre_filter_methods"]
-        active_pre_filter_methods = {key: pre_filter_methods[key] for key in pre_filter_methods if pre_filter_methods[key]["use_method"]}
-        logging.info("Pre-filtering methods activated in config file", active_pre_filter_methods)
-
-        try:
-            if pre_filter_methods["pca"]["use_method"]:
-                self.pca()
-            if pre_filter_methods["variance_filter"]["use_method"]:
-                self.variance_filter()
-            if pre_filter_methods["expr_percentile_filter"]["use_method"]:
-                self.expr_percentile_filter()  
-            if pre_filter_methods["correlation_filter"]["use_method"]:
-                self.correlation_filter()
-        except KeyError as e:
-            raise KeyError(
-                f'The method {e} is not implemented in the pre-filter methods'
-            )
