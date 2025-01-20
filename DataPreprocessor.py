@@ -45,12 +45,6 @@ class DataPreprocessor:
             )
             self.count_test_data = count_test_data.T  # Transpose the count data
 
-            # Normalize the count data
-            normalized_count_test_data = count_normalizer.normalize(count_test_data)
-
-            # Scale the count data
-            self.count_test_data = count_scaler.scale(normalized_count_test_data)
-
         else:  # split the data into training and test set
             
             test_size = self.config_data["preprocessing"]["train_test_split_params"]["test_size"]
@@ -74,7 +68,7 @@ class DataPreprocessor:
             self.count_test_data = count_test_data
             self.meta_test_data = meta_test_data
 
-        # add threshold filtering on training data
+        # apply threshold filtering on training data
         use_threshold_filter = self.config_data["preprocessing"]["threshold_filter"]["use_method"]
 
         if use_threshold_filter:
