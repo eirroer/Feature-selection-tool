@@ -1,5 +1,7 @@
 
 import typer
+from rich.progress import Progress, SpinnerColumn, TextColumn
+import time
 from typing_extensions import Annotated, Optional
 import yaml
 import warnings
@@ -48,23 +50,41 @@ class AnalysisTool:
         """
         # print(f"files given: \n-->{count_file} \n-->{meta_file}")
 
-        # check if the files are correct are given in correct format
-        input_checker = InputFormatChecker(count_file, meta_file, count_test_file, meta_test_file)
-        input_checker.run_format_check()
+        with Progress(
+            SpinnerColumn(),
+            TextColumn("[progress.description]{task.description}"),
+            transient=True,
+        ) as progress:
 
-        config_data = self.read_config_file(config_file="config.yaml")
+            # check if the files are correct are given in correct format
+            check_format_task = progress.add_task(description="Checking file formats...", total=1)
+            input_checker = InputFormatChecker(count_file, meta_file, count_test_file, meta_test_file)
+            input_checker.run_format_check()
+            progress.update(check_format_task, completed=1)
 
-        # read and preprocess the data
-        dataPreProcessor = DataPreprocessor(count_file_path=count_file,
-                                            meta_file_path=meta_file,
-                                            count_test_file=count_test_file,
-                                            meta_test_file= meta_test_file,
-                                            config_data=config_data
-                                            )
-        self.data = dataPreProcessor.preprocess()
-        self.feature_selector = FeatureSelector(self.data)
-        # analyze the data
-        self.analyze(config_data=config_data)
+            read_config_task = progress.add_task(description="Reading configuration...", total=1)
+            config_data = self.read_config_file(config_file="config.yaml")
+            progress.update(read_config_task, completed=1)
+
+            # read and preprocess the data
+            preprocess_task = progress.add_task(description="Preprocessing data...", total=1)
+            dataPreProcessor = DataPreprocessor(count_file_path=count_file,
+                                                meta_file_path=meta_file,
+                                                count_test_file=count_test_file,
+                                                meta_test_file= meta_test_file,
+                                                config_data=config_data
+                                                )
+            self.data = dataPreProcessor.preprocess()
+            progress.update(preprocess_task, completed=1)
+
+            # analyze the data
+            analyze_task = progress.add_task(description="Analyzing data...", total=1)
+            self.feature_selector = FeatureSelector(self.data)
+            self.analyze(config_data=config_data)
+            progress.update(analyze_task, completed=1)
+
+            time.sleep(5)
+
 
     def read_config_file(self, config_file: str = "config.yaml"):
         """
