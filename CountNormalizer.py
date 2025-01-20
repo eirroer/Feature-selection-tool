@@ -58,7 +58,7 @@ class CountNormalizer:
         # # Step 7: Apply scaling factors to normalize counts
         # normalized_counts = count_data.div(normalization_factors, axis=0) * ref_sample.sum()
 
-        # print(normalized_counts)
+        # logging.info(normalized_counts)
 
         # return normalized_counts
 
@@ -103,7 +103,7 @@ class CountNormalizer:
 
     def vst(self, count_data: pd.DataFrame, metadata: pd.DataFrame) -> pd.DataFrame:
         """Returns the VST normalized data."""
-        print("Running VST normalization...")
+        logging.info("Running VST normalization...")
         # Make sure your metadata contains the condition information
         # Assumes the metadata has a 'condition' column to specify sample conditions
         if "condition" not in metadata.columns:
@@ -120,7 +120,7 @@ class CountNormalizer:
 
     def deseq2_normalize(self, count_data: pd.DataFrame) -> pd.DataFrame:
         """Returns the DESeq2 normalized data."""
-        print("Running DESeq2 normalization...")
+        logging.info("Running DESeq2 normalization...")
         deseq2_normalized_data, size_factors = deseq2_preprocess.deseq2_norm(count_data)
         # print("DESeq2 normalized count data.")
         # print(deseq2_normalized_data)

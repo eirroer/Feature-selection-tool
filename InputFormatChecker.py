@@ -57,7 +57,7 @@ class InputFormatChecker:
 
     def is_both_optional_files_provided(self):
         if not self.count_test_file and not self.meta_test_file:
-            print("No optional test files provided. The data will be split into training and test set.")
+            # logging.info("No optional test files provided. The data will be split into training and test set.")
             return False
         if self.count_test_file and not self.meta_test_file:
             raise ValueError("If you provide a count test file, you must also provide a meta test file.")
@@ -144,7 +144,7 @@ class InputFormatChecker:
         # count_data and count_test_data should not have overlapping indexes
         count_overlapping_indexes = self.count_data.index.intersection(self.count_test_data.index)
         if not count_overlapping_indexes.empty:
-            print(f"Overlapping count data indexes: {count_overlapping_indexes}")
+            logging.info(f"Overlapping count data indexes: {count_overlapping_indexes}")
             raise ValueError(
                 "The count data and count test data should not have overlapping indexes. Please make sure the samples in the count data and count test data are unique."
             )
@@ -152,7 +152,7 @@ class InputFormatChecker:
         # meta_data and meta_test_data should not have overlapping indexes
         meta_overlapping_indexes = self.meta_data.index.intersection(self.meta_test_data.index) 
         if not meta_overlapping_indexes.empty:
-            print(f"Overlapping metadata indexes: {meta_overlapping_indexes}")
+            logging.info(f"Overlapping metadata indexes: {meta_overlapping_indexes}")
             raise ValueError(
                 "The meta data and meta test data should not have overlapping indexes. Please make sure the samples in the meta data and meta test data are unique."
             )

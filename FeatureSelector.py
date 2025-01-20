@@ -1,5 +1,6 @@
 
 import os
+import logging
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -48,7 +49,7 @@ class FeatureSelector:
         X = self.data.count_train_data
         y = self.data.train_targets
 
-        print("Running Random Forest...")
+        logging.info("Running Random Forest...")
 
         # Create a Random Forest model
         rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -82,7 +83,7 @@ class FeatureSelector:
         X = self.data.count_train_data
         y = self.data.train_targets
 
-        print("Running XGBoost...")
+        logging.info("Running XGBoost...")
 
         # Convert the DataFrame to numeric types
         X = X.apply(pd.to_numeric, errors="coerce")

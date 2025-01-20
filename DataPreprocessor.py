@@ -1,4 +1,5 @@
 import os
+import logging
 import pandas as pd
 import numpy as np
 from Data import Data
@@ -50,6 +51,10 @@ class DataPreprocessor:
             self.count_test_data = count_scaler.scale(normalized_count_test_data)
 
         else:  # split the data into training and test set
+            logging.info(
+                "No optional test files provided. The data will be split into training and test set."
+            )
+
             count_train_data, count_test_data, meta_train_data, meta_test_data = (
                 train_test_split(
                     self.count_data,
@@ -90,7 +95,7 @@ class DataPreprocessor:
         """Filter out genes that have a count less than the min_count in min_samples samples."""
         min_count = self.config_data["preprocessing"]["pre_filter_methods"]["threshold_filter"]["min_count"]
         min_samples = self.config_data["preprocessing"]["pre_filter_methods"]["threshold_filter"]["min_samples"]
-        print(f"Threshold filtering all genes with a count less than the {min_count} in {min_samples} samples")
+        logging.info(f"Threshold filtering all genes with a count less than the {min_count} in {min_samples} samples")
         threshold_filtered_count_data = count_data.loc[
             (count_data > min_count).sum(axis=1) >= min_samples
         ]
@@ -99,8 +104,8 @@ class DataPreprocessor:
     def pca(self):
         """Perform PCA on the count data and write the results to a file in the output folder."""
         n_components = self.config_data["preprocessing"]["pre_filter_methods"]["pca"]["n_components"]
-        print(f"Performing PCA with {n_components} components")
-        
+        logging.info(f"Performing PCA with {n_components} components")
+
         pca = PCA(n_components=n_components)
         X_pca = pca.fit_transform(self.count_train_data)
         pca_df = pd.DataFrame(X_pca, columns=["PC1", "PC2"])
@@ -120,14 +125,13 @@ class DataPreprocessor:
             if not os.path.exists("outputs"):
                 os.makedirs("outputs")
             plt.savefig("outputs/pca_plot.png", dpi=300, format="png")
-        
-        plot_pca(pca_df)
 
+        plot_pca(pca_df)
 
     def variance_filter(self):
         """Filter out genes that have a variance less than the threshold."""
         threshold = self.config_data["preprocessing"]["pre_filter_methods"]["variance_filter"]["threshold"]
-        print(f"Variance filtering all genes with a variance less than {threshold}")
+        logging.info(f"Variance filtering all genes with a variance less than {threshold}")
 
         variance_threshold = VarianceThreshold(threshold=threshold)
         self.count_data = variance_threshold.fit_transform(self.count_data)
@@ -135,7 +139,7 @@ class DataPreprocessor:
     def expr_percentile_filter(self):
         """Filter out genes that have an expression less than the threshold percentile."""
         threshold_percentile = self.config_data["preprocessing"]["pre_filter_methods"]["expr_percentile_filter"]["threshold_percentile"]
-        print(f"Expression percentile filtering all genes with an expression less than the {threshold_percentile} percentile")
+        logging.info(f"Expression percentile filtering all genes with an expression less than the {threshold_percentile} percentile")
 
         expr_percentile = self.count_data.quantile(q=threshold_percentile, axis=0)
         self.count_data = self.count_data.loc[:, (self.count_data > expr_percentile).any()]
@@ -144,9 +148,9 @@ class DataPreprocessor:
         """Filter out genes that are highly correlated."""
         correlation_method = self.config_data["preprocessing"]["pre_filter_methods"]["correlation_filter"]["correlation_method"]
         threshold = self.config_data["preprocessing"]["pre_filter_methods"]["correlation_filter"]["threshold"]
-        print(f"Correlation filtering all genes with a correlation greater than {threshold}, using the {correlation_method} method")
+        logging.info(f"Correlation filtering all genes with a correlation greater than {threshold}, using the {correlation_method} method")
         correlation_matrix = self.count_train_data.corr(method=correlation_method)
-        
+
         # Find highly correlated pairs
         upper_triangle = correlation_matrix.where(np.triu(np.ones(correlation_matrix.shape), k=1).astype(bool))
         to_drop = [column for column in upper_triangle.columns if any(upper_triangle[column] > threshold)]
@@ -156,7 +160,7 @@ class DataPreprocessor:
 
     def pre_filter(self):
         pre_filter_methods = self.config_data["preprocessing"]["pre_filter_methods"]
-        # print("pre_filter_methods", pre_filter_methods)
+        # logging.info("pre_filter_methods", pre_filter_methods)
 
         try:
             if pre_filter_methods["pca"]["use_method"]:

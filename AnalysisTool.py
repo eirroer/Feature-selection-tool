@@ -1,10 +1,11 @@
 
 import typer
-from rich.progress import Progress, SpinnerColumn, TextColumn
 import time
-from typing_extensions import Annotated, Optional
 import yaml
 import warnings
+import logging
+from typing_extensions import Annotated, Optional
+from rich.progress import Progress, SpinnerColumn, TextColumn
 
 from Data import Data
 from FeatureSelector import FeatureSelector
@@ -14,6 +15,13 @@ from DataPreprocessor import DataPreprocessor
 # Ignore warnings from imported TMM module
 warnings.filterwarnings("ignore", category=FutureWarning, module="sklearn")
 warnings.filterwarnings("ignore", category=RuntimeWarning, module="rnanorm.methods.between_sample")
+
+logging.basicConfig(
+            filename='application.log',
+            level=logging.INFO,
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
 
 class AnalysisTool:
     '''
@@ -49,6 +57,7 @@ class AnalysisTool:
             meta_test_file (str, optional): Path to the test meta data file. Defaults to None.
         """
         # print(f"files given: \n-->{count_file} \n-->{meta_file}")
+
 
         with Progress(
             SpinnerColumn(),
@@ -108,7 +117,7 @@ class AnalysisTool:
             config_data (dict): Data from the config file.
         """
 
-        print(f'Methods found in config file: {config_data['feature_selection_methods']}')
+        logging.info(f'Methods found in config file: {config_data['feature_selection_methods']}')
         
         # Run the selected methods
         for method_name in config_data['feature_selection_methods']:
@@ -116,7 +125,7 @@ class AnalysisTool:
                 method = getattr(self.feature_selector, method_name)  # Get the method in feature_selector object by given name found in the config file
                 method()  # Call the method
             else:
-                print(f"Method '{method_name}' does not exist in the analysis tool.")
+                logging.info(f"Method '{method_name}' does not exist in the analysis tool.")
 
 
 if __name__ == "__main__":
