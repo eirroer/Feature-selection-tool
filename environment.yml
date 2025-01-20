@@ -19,6 +19,7 @@ dependencies:
   - pip
   - rnanorm
   - rpy2
+  - xgboost
   - pip:
       - typing-extensions
       - pydeseq2
