@@ -45,7 +45,7 @@ class AnalysisTool:
                 typer.Option(
                     help="Optional holdout test of the metadata, if not provided meta_file will be split into training and test set."
                 ),
-        ] = None,
+            ] = None,
     ):
         """
         Run the analysis tool with the given files.
