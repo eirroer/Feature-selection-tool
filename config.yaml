@@ -46,6 +46,8 @@ preprocessing:
       correlation_method: "spearman" # or "pearson", "kendall"
       threshold: 0.9
 
-feature_selection_methods:
+feature_selection:
+  n_cores: 4
+  methods:
   - random_forest
   - xgboost
