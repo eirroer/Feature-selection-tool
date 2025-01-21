@@ -53,3 +53,6 @@ class CountScaler:
                 return self.max_abs_scale(count_data=count_data)
         except KeyError as e:
             raise ValueError(f"Scaling method {e} not implemented.")
+
+        # If no scaling method is selected, return the original count data
+        return count_data

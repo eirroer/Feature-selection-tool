@@ -111,6 +111,9 @@ class PreFilter:
             "Pre-filtering methods activated in config file", active_pre_filter_methods
         )
 
+        if count_data is None:
+            raise ValueError("Count data is None in the pre filter method. Please provide count data.")
+
         try:
             if pre_filter_methods["pca"]["use_method"]:
                 count_data = self.pca(count_data=count_data)
