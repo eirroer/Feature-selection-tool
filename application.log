@@ -245,3 +245,35 @@
 2025-01-21 10:30:35 - INFO - Feature selection methods activated in config file: ['random_forest', 'xgboost']
 2025-01-21 10:30:35 - INFO - Running Random Forest...
 2025-01-21 10:30:41 - INFO - Running XGBoost...
+2025-01-21 10:39:16 - INFO - -------------------------Starting the analysis tool...-------------------------
+2025-01-21 10:39:16 - INFO - files given: COUNT File --> mock_data_lc/lc_mirna_counts.csv METADATA File --> mock_data_lc/lc_dataset.csv
+2025-01-21 10:39:16 - INFO - No optional test files provided. The data will be split into training and test set. Test size: 0.2, Random state: 42
+2025-01-21 10:39:17 - INFO - Threshold filtering all genes with a count less than the 10 in 3 samples
+2025-01-21 10:39:17 - INFO - Running VST normalization...
+2025-01-21 10:40:08 - INFO - -------------------------Starting the analysis tool...-------------------------
+2025-01-21 10:40:08 - INFO - files given: COUNT File --> mock_data_lc/lc_mirna_counts.csv METADATA File --> mock_data_lc/lc_dataset.csv
+2025-01-21 10:40:09 - INFO - No optional test files provided. The data will be split into training and test set. Test size: 0.2, Random state: 42
+2025-01-21 10:40:09 - INFO - Threshold filtering all genes with a count less than the 10 in 3 samples
+2025-01-21 10:40:09 - INFO - Running VST normalization...
+2025-01-21 10:40:47 - INFO - -------------------------Starting the analysis tool...-------------------------
+2025-01-21 10:40:47 - INFO - files given: COUNT File --> mock_data_lc/lc_mirna_counts.csv METADATA File --> mock_data_lc/lc_dataset.csv
+2025-01-21 10:40:49 - INFO - No optional test files provided. The data will be split into training and test set. Test size: 0.2, Random state: 42
+2025-01-21 10:40:49 - INFO - Threshold filtering all genes with a count less than the 10 in 3 samples
+2025-01-21 10:40:49 - INFO - Running VST normalization...
+2025-01-21 10:41:07 - INFO - Performing PCA with 2 components
+2025-01-21 10:41:09 - INFO - Pre-filtering methods activated in config file
+2025-01-21 10:41:09 - INFO - Correlation filtering all genes with a correlation greater than 0.9, using the spearman method
+2025-01-21 10:41:39 - INFO - Feature selection methods activated in config file: ['random_forest', 'xgboost']
+2025-01-21 10:41:39 - INFO - Running Random Forest...
+2025-01-21 10:41:44 - INFO - Running XGBoost...
+2025-01-21 11:24:06 - INFO - -------------------------Starting the analysis tool...-------------------------
+2025-01-21 11:24:06 - INFO - files given: COUNT File --> mock_data_lc/lc_mirna_counts.csv METADATA File --> mock_data_lc/lc_dataset.csv
+2025-01-21 11:24:08 - INFO - No optional test files provided. The data will be split into training and test set. Test size: 0.2, Random state: 42
+2025-01-21 11:24:08 - INFO - Threshold filtering all genes with a count less than the 10 in 3 samples
+2025-01-21 11:24:08 - INFO - Running VST normalization...
+2025-01-21 11:24:26 - INFO - Performing PCA with 2 components
+2025-01-21 11:24:29 - INFO - Pre-filtering methods activated in config file
+2025-01-21 11:24:29 - INFO - Correlation filtering all genes with a correlation greater than 0.9, using the spearman method
+2025-01-21 11:25:02 - INFO - Feature selection methods activated in config file: ['random_forest', 'xgboost']
+2025-01-21 11:25:02 - INFO - Running Random Forest...
+2025-01-21 11:25:06 - INFO - Running XGBoost...
