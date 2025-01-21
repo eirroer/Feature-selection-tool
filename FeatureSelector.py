@@ -1,6 +1,6 @@
-
 import os
 import logging
+import argparse
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -99,3 +99,10 @@ class FeatureSelector:
             top_n_features_importances=top_features_importances,
             model_name="XGBoost",
         )
+
+    def lasso(self):
+        raise NotImplementedError("Lasso feature selection not implemented yet.")
+    
+    def recursive_feature_elimination(self):
+        raise NotImplementedError("Recursive Feature Elimination not implemented yet.")
+
