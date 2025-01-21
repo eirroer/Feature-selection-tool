@@ -50,14 +50,8 @@ class FeatureSelector:
         y = self.data.train_targets
 
         logging.info("Running Random Forest...")
-
-        # Create a Random Forest model
         rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
-
-        # Train the model
         rf_model.fit(X, y)
-
-        # Extract feature importances
         importances = rf_model.feature_importances_
 
         # Rank features by importance
@@ -68,11 +62,8 @@ class FeatureSelector:
 
         # Select the top N features
         X_selected = X.iloc[:, top_n_features]
-
-        # the importance values of the top features
         top_features_imporances = importances[top_n_features]
 
-        # plot the feature importances
         self.plot_feature_importance(
             top_n_features_names=X_selected.columns[:10],
             top_n_features_importances=top_features_imporances,
@@ -88,18 +79,10 @@ class FeatureSelector:
         # Convert the DataFrame to numeric types
         X = X.apply(pd.to_numeric, errors="coerce")
 
-        # Handle any missing values that may have been introduced
-        # X = X.fillna(0)
-
-        # Create an XGBoost model
         xgb_model = XGBClassifier(
             n_estimators=100, random_state=42, eval_metric="logloss"
         )
-
-        # Train the model
         xgb_model.fit(X, y)
-
-        # Extract feature importances
         importances = xgb_model.feature_importances_
 
         # Rank features by importance
