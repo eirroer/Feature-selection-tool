@@ -1,18 +1,13 @@
 preprocessing:
+  train_test_split_params:
+    test_size: 0.2
+    random_state: 42
 
   threshold_filter:
       use_method: True
       min_count: 10
       min_samples: 3
 
-  scaling_methods: # Use only on metadata
-    standard_scale:
-      use_method: False
-    min_max_scale:
-      use_method: False
-    max_abs_scale:
-      use_method: False
-  
   normalization_methods:
     tmm:
       use_method: False
@@ -23,17 +18,23 @@ preprocessing:
     deseq2:
       use_method: False
 
-  shrinkage_scaling: # Optional scaling on count data
-    use_method: False 
+  scaling_methods_metadata: # Use only on metadata
+    standard_scale:
+      use_method: False
+    min_max_scale:
+      use_method: False
+    max_abs_scale:
+      use_method: False
 
-  train_test_split_params:
-    test_size: 0.2
-    random_state: 42
+  scaling_methods_count: # Optional scaling on count data
+    shrinkage_scaling: # Not implemented
+      use_method: False 
 
-  pre_filter_methods:
-    pca:
+  pca:
       use_method: True
       n_components: 2
+
+  pre_filter_methods:
     variance_filter:
       use_method: False
       threshold: 0.5
