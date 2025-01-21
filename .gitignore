@@ -1,7 +1,9 @@
 
-.__pycache__/
-.outputs/
-*.pyc
-*.pyo
-*.pyd
-*.log
+# Ignore cache files
+.__pycache__/*
+
+# Ignore all files in the outputs directory
+.outputs/*
+
+# Ignore log files
+.application.log
