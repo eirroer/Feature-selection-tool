@@ -1,6 +1,6 @@
 
-__pycache__/
-outputs/
+.__pycache__/
+.outputs/
 *.pyc
 *.pyo
 *.pyd
