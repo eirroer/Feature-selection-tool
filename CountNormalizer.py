@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import logging
 from rnanorm import TMM
 from pydeseq2.dds import DeseqDataSet
 from pydeseq2 import preprocessing as deseq2_preprocess
@@ -142,3 +143,6 @@ class CountNormalizer:
                 return self.deseq2_normalize(count_data=count_data)
         except KeyError as e:
             raise ValueError(f"Normalization method {e} not implemented.")
+        
+        # If no normalization method is selected, return the original count data
+        return count_data

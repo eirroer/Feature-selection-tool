@@ -5,9 +5,9 @@ preprocessing:
       min_count: 10
       min_samples: 3
 
-  scaling_methods:
+  scaling_methods: # Use only on metadata
     standard_scale:
-      use_method: True
+      use_method: False
     min_max_scale:
       use_method: False
     max_abs_scale:
@@ -15,13 +15,16 @@ preprocessing:
   
   normalization_methods:
     tmm:
-      use_method: True
+      use_method: False
     cpm:
       use_method: False
     vst:
-      use_method: False
+      use_method: True
     deseq2:
       use_method: False
+
+  shrinkage_scaling: # Optional scaling on count data
+    use_method: False 
 
   train_test_split_params:
     test_size: 0.2
