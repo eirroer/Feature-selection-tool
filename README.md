@@ -5,7 +5,7 @@ This command-line tool is made for doing feature selection on RNA counts data! I
 Conda environment with the required dependecies can be set up using the environment.yaml file with the following command:
 
 ```
-conda env create -f environment.yaml
+conda env create -f environment.yml
 ```
  
 ## Run the tool
