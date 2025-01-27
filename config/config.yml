@@ -1,3 +1,9 @@
+
+count_file: "mock_data_lc/lc_mirna_counts.csv"
+metadata_file: "mock_data_lc/lc_dataset.csv"
+count_holdout_test_set: None
+metadata_holdout_test_set: None
+ 
 preprocessing:
   train_test_split_params:
     test_size: 0.2
