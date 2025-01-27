@@ -17,7 +17,7 @@ warnings.filterwarnings("ignore", category=FutureWarning, module="sklearn")
 warnings.filterwarnings("ignore", category=RuntimeWarning, module="rnanorm.methods.between_sample")
 
 logging.basicConfig(
-            filename='application.log',
+            filename='logs/application.log',
             level=logging.INFO,
             format='%(asctime)s - %(levelname)s - %(message)s',
             datefmt='%Y-%m-%d %H:%M:%S'

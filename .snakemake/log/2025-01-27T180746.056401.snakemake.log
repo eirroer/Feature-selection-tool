@@ -1,0 +1,7 @@
+host: Epsilon-Pc
+Building DAG of jobs...
+MissingInputException in rule preprocess in file C:\Users\eirro\OneDrive\Dokumenter\Kodeprosjekter\JanusRNA\Feature-selection-tool\rules/preprocessing.smk, line 9:
+Missing input files for rule preprocess:
+    output: data/count_train_data.csv, data/metadata_train_data.csv, data/count_test_data.csv, data/metadata_test_data.csv
+    affected files:
+        None

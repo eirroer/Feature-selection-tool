@@ -13,7 +13,7 @@ from pydeseq2 import preprocessing as deseq2_preprocess
 class CountNormalizer:
     """A class to represent the count normalizer. Holds the methods for normalizing the count data."""
 
-    def __init__(self, config_data: dict):
+    def __init__(self):
         self.config_data = config_data
 
     def tmm_normalize(self, count_data: pd.DataFrame) -> pd.DataFrame:
