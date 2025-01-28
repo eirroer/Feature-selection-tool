@@ -5,4 +5,4 @@ include: "rules/preprocessing.smk"
 
 rule all:
     input:
-        normalized_count_train_data="data/normalized_count_train_data.csv"
+        pre_filtered_data="data/pre_filtered_normalized_count_train_data.csv"

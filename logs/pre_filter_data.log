@@ -1,0 +1,4 @@
+Running pre-filtering...
+Count data file: data/normalized_count_train_data.csv
+Output path: data/pre_filtered_normalized_count_train_data.csv
+Correlation filtering all genes with a correlation greater than 0.9, using the spearman method

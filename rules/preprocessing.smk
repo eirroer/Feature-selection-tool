@@ -97,22 +97,20 @@ rule normalize_train_count_data:
 
 rule pre_filter_data:
     input:
-        normalized_count_train_data="data/normalized_count_train_data.csv"
+        normalized_count_train_data="data/normalized_count_train_data.csv",
+        config_file="config/config.yml"
     output:
         pre_filtered_data="data/pre_filtered_normalized_count_train_data.csv"
     log:
         "logs/pre_filter_data.log"
     params:
         script="scripts/pre_filter.py",
-        min_samples=config["preprocessing"]["pre_filter_params"]["min_samples"],
-        min_features=config["preprocessing"]["pre_filter_params"]["min_features"]
     run:
         # Prepare the command to run the external Python script
         cmd = [
             "python", "{params.script}",
             "--count_file", input.normalized_count_train_data,
-            "--min_samples", str(params.min_samples),
-            "--min_features", str(params.min_features),
+            "--config_file", input.config_file,
             "--output_path", output.pre_filtered_data
         ]
         # Log the command
