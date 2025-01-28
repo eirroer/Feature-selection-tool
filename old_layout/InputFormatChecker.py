@@ -144,7 +144,7 @@ class InputFormatChecker:
         # count_data and count_test_data should not have overlapping indexes
         count_overlapping_indexes = self.count_data.index.intersection(self.count_test_data.index)
         if not count_overlapping_indexes.empty:
-            logging.info(f"Overlapping count data indexes: {count_overlapping_indexes}")
+            print(f"Overlapping count data indexes: {count_overlapping_indexes}")
             raise ValueError(
                 "The count data and count test data should not have overlapping indexes. Please make sure the samples in the count data and count test data are unique."
             )
@@ -152,7 +152,7 @@ class InputFormatChecker:
         # meta_data and meta_test_data should not have overlapping indexes
         meta_overlapping_indexes = self.meta_data.index.intersection(self.meta_test_data.index) 
         if not meta_overlapping_indexes.empty:
-            logging.info(f"Overlapping metadata indexes: {meta_overlapping_indexes}")
+            print(f"Overlapping metadata indexes: {meta_overlapping_indexes}")
             raise ValueError(
                 "The meta data and meta test data should not have overlapping indexes. Please make sure the samples in the meta data and meta test data are unique."
             )

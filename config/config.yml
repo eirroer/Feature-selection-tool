@@ -9,16 +9,19 @@ preprocessing:
     test_size: 0.2
     random_state: 42
 
-  threshold_filter:
-      use_method: True
+  threshold_filter_params:
       min_count: 10
       min_samples: 3
 
   normalization_methods:
-    # - tmm
-    # - cpm
-    - vst
-    # - deseq2
+    tmm:
+      use_method: False
+    cpm:
+      use_method: False
+    vst:
+      use_method: True
+    deseq2:
+      use_method: False
 
   scaling_methods_metadata: # Use only on metadata
     standard_scale:
