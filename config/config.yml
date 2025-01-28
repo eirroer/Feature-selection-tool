@@ -1,8 +1,8 @@
 
 count_file: "mock_data_lc/lc_mirna_counts.csv"
 metadata_file: "mock_data_lc/lc_dataset.csv"
-count_holdout_test_set: None
-metadata_holdout_test_set: None
+# count_holdout_test_set: None
+# metadata_holdout_test_set: None
  
 preprocessing:
   train_test_split_params:
@@ -15,14 +15,10 @@ preprocessing:
       min_samples: 3
 
   normalization_methods:
-    tmm:
-      use_method: False
-    cpm:
-      use_method: False
-    vst:
-      use_method: True
-    deseq2:
-      use_method: False
+    # - tmm
+    # - cpm
+    - vst
+    # - deseq2
 
   scaling_methods_metadata: # Use only on metadata
     standard_scale:
