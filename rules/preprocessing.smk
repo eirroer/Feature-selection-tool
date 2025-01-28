@@ -6,8 +6,8 @@ rule read_and_split_train_test_data:
         count_holdout_test_set=lambda wildcards: config.get("count_holdout_test_set", []),
         metadata_holdout_test_set=lambda wildcards: config.get("metadata_holdout_test_set", []),
     output:
-        count_train_data="data/count_train_data.csv",
-        metadata_train_data="data/metadata_train_data.csv",
+        count_train_data=temp("data/count_train_data.csv"),
+        metadata_train_data=temp("data/metadata_train_data.csv"),
         count_test_data="data/count_test_data.csv",
         metadata_test_data="data/metadata_test_data.csv"
     log:
@@ -43,7 +43,7 @@ rule threshold_filter_data:
     input:
         count_train_data="data/count_train_data.csv"
     output:
-        threshold_filtered_data="data/threshold_filtered_count_train_data.csv"
+        threshold_filtered_data=temp("data/threshold_filtered_count_train_data.csv")
     log:
         "logs/threshold_filter_data.log"
     params:
