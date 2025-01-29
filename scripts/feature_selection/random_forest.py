@@ -1,33 +1,61 @@
 import os
+import yaml
 import pandas as pd
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier
 import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
 
 
 def random_forest(
     count_file,
     metadata_file,
-    n_estimators,
-    max_depth,
-    random_state,
+    config_file,
     output_path_file,
     output_path_plot,
 ):
     """Run Random Forest and plot the feature importance."""
     print("Running Random Forest...")
 
+    # Load configuration file
+    with open(config_file, "r") as file:
+        config_data = yaml.safe_load(file)
+
+    # Extract parameters from the configuration file
+    param_grid = config_data["feature_selection"]["random_forest"]["param_grid"]
+    print(f"Parameters: {param_grid}")
+
     count_data = pd.read_csv(count_file, delimiter=";", index_col=0, header=0)
     metadata = pd.read_csv(metadata_file, delimiter=";", index_col=0, header=0)
+
     X = count_data
     y = metadata["condition"].map({"C": 0, "LC": 1})
+    y = y.values.ravel()
 
-    rf_model = RandomForestClassifier(
-        n_estimators=n_estimators, max_depth=max_depth, random_state=random_state
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    rf_model = RandomForestClassifier(random_state=42)
+    grid_search = GridSearchCV(
+        estimator=rf_model,
+        param_grid=param_grid,
+        cv=5,  # 5-fold cross-validation
+        scoring="accuracy",  # Metric to optimize
+        n_jobs=-1,  # Use all CPUs
+        verbose=2,
     )
-    rf_model.fit(X, y.values.ravel())  # Ensure y is 1D
 
-    importances = rf_model.feature_importances_
+    grid_search.fit(X_train, y_train)
+
+    print("Best Parameters:", grid_search.best_params_)
+    print("Best Score:", grid_search.best_score_)
+
+    # Evaluate on validation data
+    best_model = grid_search.best_estimator_
+    test_accuracy = best_model.score(X_val, y_val)
+    print("Test Accuracy:", test_accuracy)
+
+    importances = best_model.feature_importances_
     indices = np.argsort(importances)[::-1][:10]  # Sort and get top N indices
 
     # Extract feature names and importance values
@@ -69,21 +97,9 @@ if __name__ == "__main__":
         required=True,
     )
     parser.add_argument(
-        "--n_estimators",
-        type=int,
-        help="The number of trees in the forest.",
-        required=True,
-    )
-    parser.add_argument(
-        "--max_depth",
-        type=int,
-        help="The maximum depth of the tree.",
-        required=False,
-    )
-    parser.add_argument(
-        "--random_state",
-        type=int,
-        help="The random seed.",
+        "--config_file",
+        type=str,
+        help="The file path to the configuration file.",
         required=True,
     )
     parser.add_argument(
@@ -104,9 +120,7 @@ if __name__ == "__main__":
     random_forest(
         count_file=args.count_file,
         metadata_file=args.metadata_file,
-        n_estimators=args.n_estimators,
-        max_depth=args.max_depth,
-        random_state=args.random_state,
+        config_file=args.config_file,
         output_path_file=args.output_path_file,
         output_path_plot=args.output_path_plot,
     )
