@@ -1,4 +1,4 @@
-sample;sex;condition;histology;cancertype;stage
+SampleID;sex;condition;histology;cancertype;stage
 sample1026;M;LC;Squamous cell carcinoma;NSCLC;Distant
 sample415;M;C;control;control;Control
 sample525;M;C;control;control;Control
