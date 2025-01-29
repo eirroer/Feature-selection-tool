@@ -23,7 +23,9 @@ def preprocess(
 
     count_data = pd.read_csv(count_file, delimiter=";", index_col=0, header=0) 
     count_data = count_data.T
+    count_data.index.name = "SampleID"
     metadata = pd.read_csv(metadata_file, delimiter=";", index_col=0, header=0)
+    metadata.index.name = "SampleID"
 
     if counts_holdout_test_set and metadata_holdout_test_set:
         count_train_data = count_data

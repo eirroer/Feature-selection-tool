@@ -1,0 +1,32 @@
+Performing PCA with 2 components
+            hsa-let-7a-2-3p  hsa-let-7a-3p  ...  hsa-miR-99b-3p  hsa-miR-99b-5p
+SampleID                                    ...                                
+sample108          1.119291       4.497396  ...        4.163459       12.083569
+sample852          1.119291       6.838354  ...        4.678876       10.812075
+sample1038         1.119291       1.119291  ...        3.199293        8.629159
+sample321          1.119291       3.867433  ...        2.559204        6.900176
+sample75           1.119291       1.119291  ...        3.947942        9.617835
+
+[5 rows x 2606 columns]
+           sex condition histology cancertype      stage
+SampleID                                                
+sample108    M         C   control    control    Control
+sample852    F         C   control    control    Control
+sample1038   M         C   control    control    Control
+sample321    M        LC    Others     Others  Localized
+sample75     F         C   control    control    Control
+                  PC1       PC2
+SampleID                       
+sample108   12.500757 -3.978460
+sample852    4.987641 -3.047004
+sample1038  -5.022877 -3.792195
+sample321    5.271599  3.174161
+sample75   -15.971122 -0.133886
+                  PC1       PC2      stage
+SampleID                                  
+sample108   12.500757 -3.978460    Control
+sample852    4.987641 -3.047004    Control
+sample1038  -5.022877 -3.792195    Control
+sample321    5.271599  3.174161  Localized
+sample75   -15.971122 -0.133886    Control
+plots/pca_plot.png

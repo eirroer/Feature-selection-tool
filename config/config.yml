@@ -38,6 +38,7 @@ preprocessing:
   pca:
       use_method: True
       n_components: 2
+      color_by: "stage"
 
   pre_filter_methods:
     variance_filter:
@@ -52,7 +53,10 @@ preprocessing:
       threshold: 0.9
 
 feature_selection:
-  n_cores: 4
-  methods:
-  - random_forest
-  - xgboost
+  
+  random_forest:
+    n_estimators: 100
+    max_depth: 100
+    random_state: 42
+    
+    

@@ -7,7 +7,7 @@ rule read_and_split_train_test_data:
         metadata_holdout_test_set=lambda wildcards: config.get("metadata_holdout_test_set", []),
     output:
         count_train_data=temp("data/count_train_data.csv"),
-        metadata_train_data=temp("data/metadata_train_data.csv"),
+        metadata_train_data="data/metadata_train_data.csv",
         count_test_data="data/count_test_data.csv",
         metadata_test_data="data/metadata_test_data.csv"
     log:
@@ -94,6 +94,35 @@ rule normalize_train_count_data:
 
         # Run the command and redirect stdout and stderr to the log file
         shell(shell_cmd + " > {log} 2>&1")
+
+rule plot_pca:
+    input:
+        normalized_count_train_data="data/normalized_count_train_data.csv",
+        metadata_train_data="data/metadata_train_data.csv",
+    output:
+        pca_plot="plots/pca_plot.png"
+    log:
+        "logs/plot_pca.log"
+    params:
+        script="scripts/plot_pca.py",
+        n_components=config["preprocessing"]["pca"]["n_components"],
+        color_by=config["preprocessing"]["pca"]["color_by"]
+    run:
+        # Prepare the command to run the external Python script
+        cmd = [
+            "python", "{params.script}",
+            "--count_file", input.normalized_count_train_data,
+            "--metadata_file", input.metadata_train_data,
+            "--n_components", str(params.n_components),
+            "--color_by", str(params.color_by),
+            "--output_path", output.pca_plot
+        ]
+        # Log the command
+        shell_cmd = " ".join(cmd)
+        print(f"Running command: {shell_cmd}")
+        # Run the command and redirect stdout and stderr to the log file
+        shell(shell_cmd + " > {log} 2>&1")
+
 
 rule pre_filter_data:
     input:
