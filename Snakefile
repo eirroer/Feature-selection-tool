@@ -2,7 +2,7 @@
 configfile: "config/config.yml"
 
 include: "rules/preprocessing.smk"
-include: "rules/feature selection.smk"
+include: "rules/feature_selection.smk"
 
 rule all:
     input:
