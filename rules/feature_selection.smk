@@ -15,7 +15,7 @@ rule random_forest:
     run:
         # Prepare the command to run the external Python script
         cmd = [
-            "python", "{params.script}",
+            "python ", "{params.script}",
             "--count_file", input.pre_filtered_data,
             "--metadata_file", input.metadata_train_data,
             "--config_file", input.config_file,
@@ -26,7 +26,8 @@ rule random_forest:
         shell_cmd = " ".join(cmd)
         print(f"Running command: {shell_cmd}")
         # Run the command and redirect stdout and stderr to the log file
-        shell(shell_cmd + " > {log} 2>&1")
+        # shell(shell_cmd + " > {log} 2>&1")
+        shell(shell_cmd)
 
 
         
