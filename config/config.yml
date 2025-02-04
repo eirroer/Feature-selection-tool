@@ -38,7 +38,7 @@ preprocessing:
   pca:
       use_method: True
       n_components: 2
-      color_by: "stage"
+      color_by: "condition"
 
   pre_filter_methods:
     variance_filter:
@@ -55,12 +55,30 @@ preprocessing:
 feature_selection:
 
   random_forest:
-    param_grid:
-      n_estimators: [50, 100, 200]
-      max_depth: [1, 10, 20, 100]
+    param_grid_gridsearchCV: 
+      n_estimators: [50, 100, 200, 300]
+      max_depth: [None, 10, 20, 30]
+      max_features: [0.1, 1.0]
       min_samples_split: [2, 5, 10]
-      min_samples_leaf: [1, 2, 4]
-      # random_state: [42]
-  
+    space_params_hyperopt:
+      criterion:
+        parameter_type: choice
+        values: ["entropy", "gini"]
+      max_depth:
+        parameter_type: quniform
+        values: [10, 1200, 10]
+      max_features:
+        parameter_type: choice
+        values: ["sqrt", "log2", "None"]
+      min_samples_leaf: 
+        parameter_type: uniform
+        values: [0, 0.5]
+      min_samples_split: 
+        parameter_type: uniform
+        values: [0, 1]
+      n_estimators:
+        parameter_type: choice
+        values: [10, 50, 300, 750, 1200, 1300, 1500]
+
 
     

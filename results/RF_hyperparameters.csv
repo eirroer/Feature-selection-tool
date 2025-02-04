@@ -1,0 +1,7 @@
+parameter;value
+criterion;entropy
+max_depth;30
+max_features;log2
+min_samples_leaf;0.17018342216737714
+min_samples_split;0.09513755177250427
+n_estimators;1500

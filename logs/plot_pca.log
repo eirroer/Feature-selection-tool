@@ -17,16 +17,15 @@ sample321    M        LC    Others     Others  Localized
 sample75     F         C   control    control    Control
                   PC1       PC2
 SampleID                       
-sample108   12.500757 -3.978460
-sample852    4.987641 -3.047004
-sample1038  -5.022877 -3.792195
-sample321    5.271599  3.174161
-sample75   -15.971122 -0.133886
-                  PC1       PC2      stage
-SampleID                                  
-sample108   12.500757 -3.978460    Control
-sample852    4.987641 -3.047004    Control
-sample1038  -5.022877 -3.792195    Control
-sample321    5.271599  3.174161  Localized
-sample75   -15.971122 -0.133886    Control
-plots/pca_plot.png
+sample108   12.500757 -2.471818
+sample852    4.987641 -3.089958
+sample1038  -5.022877 -0.990064
+sample321    5.271599  4.484121
+sample75   -15.971122  0.257710
+                  PC1       PC2 condition
+SampleID                                 
+sample108   12.500757 -2.471818         C
+sample852    4.987641 -3.089958         C
+sample1038  -5.022877 -0.990064         C
+sample321    5.271599  4.484121        LC
+sample75   -15.971122  0.257710         C
