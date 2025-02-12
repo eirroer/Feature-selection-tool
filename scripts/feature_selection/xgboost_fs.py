@@ -1,21 +1,20 @@
 import os
-import sys
 import yaml
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.ensemble import RandomForestClassifier
-from hyperopt import fmin, tpe, hp, Trials, STATUS_OK, space_eval
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
-from sklearn.model_selection import cross_val_score
+from xgboost import XGBClassifier
+import xgboost as xgb
 from sklearn.feature_selection import SelectFromModel
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+from hyperopt import hp, fmin, tpe, Trials, STATUS_OK, space_eval
 
-sys.stdout.reconfigure(line_buffering=True)
 
 def write_feature_importance_to_file(top_features: pd.DataFrame, output_path_file):
     """Write the feature importance to a file."""
     os.makedirs(os.path.dirname(output_path_file), exist_ok=True)
     top_features.to_csv(output_path_file, sep=";", index=False)
+
 
 def plot_feature_importance(top_features: pd.DataFrame, output_path_plot):
     """Plot the feature importance."""
@@ -31,8 +30,7 @@ def plot_feature_importance(top_features: pd.DataFrame, output_path_plot):
     os.makedirs(os.path.dirname(output_path_plot), exist_ok=True)
     plt.savefig(output_path_plot, dpi=300, format="png")
 
-
-def random_forest_gridsearch(
+def xgboost_gridsearch(   
     count_file,
     metadata_file,
     config_file,
@@ -40,15 +38,14 @@ def random_forest_gridsearch(
     output_path_plot,
     output_path_hyperparams,
 ):
-    """Run Random Forest and plot the feature importance."""
-    print("Running Random Forest...")
+    """Perform grid search with XGBoost."""
 
     # Load configuration file
     with open(config_file, "r") as file:
         config_data = yaml.safe_load(file)
 
     # Extract parameters from the configuration file
-    param_grid = config_data["feature_selection"]["random_forest"]["param_grid_gridsearch"]
+    param_grid = config_data["feature_selection"]["xgboost"]["param_grid_gridsearch"]
     print(f"Parameters: {param_grid}")
 
     count_data = pd.read_csv(count_file, delimiter=";", index_col=0, header=0)
@@ -58,34 +55,33 @@ def random_forest_gridsearch(
     y = metadata["condition"].map({"C": 0, "LC": 1})
     y = y.values.ravel()
 
-    rf_model = RandomForestClassifier(random_state=42)
+    xgb_model = XGBClassifier(eval_metric="logloss")
     grid_search = GridSearchCV(
-        estimator=rf_model,
+        estimator=xgb_model,
         param_grid=param_grid,
-        cv=5,  # 5-fold cross-validation
-        scoring="roc_auc",  # Metric to optimize
-        n_jobs=-1,  # Use all CPUs
-        verbose=2,
+        cv=5,
+        scoring="roc_auc",
+        n_jobs=-1,
+        verbose=1,
+        return_train_score=True,
     )
 
     grid_search.fit(X, y)
 
-    print("Best Parameters:", grid_search.best_params_)
-
-    # convert the best dict to a csv file
+    print(f"Best parameters: {grid_search.best_params_}")
     df_best = pd.DataFrame(
-        list(grid_search.best_params_.items()), columns=["parameter", "value"]
-    )
+            list(grid_search.best_params_.items()), columns=["parameter", "value"]
+        )
+    # Save the best hyperparameters to a file
     os.makedirs(os.path.dirname(output_path_hyperparams), exist_ok=True)
     df_best.to_csv(output_path_hyperparams, sep=";", index=False, header=True)
 
     best_model = grid_search.best_estimator_
 
-    # show the auc score
-    print("Calculating AUC score...")
-    auc_score = cross_val_score(best_model, X, y, cv=5, scoring="roc_auc").mean()
-    print("AUC Score:", auc_score)
+    # show auc score
+    print(f"Best AUC score: {grid_search.best_score_}")
 
+    # Extract the feature importance
     importances = best_model.feature_importances_
     indices = np.argsort(importances)[::-1][:10]  # Sort and get top N indices
     top_features = pd.DataFrame(
@@ -94,9 +90,9 @@ def random_forest_gridsearch(
     write_feature_importance_to_file(top_features, output_path_file)
     plot_feature_importance(top_features, output_path_plot)
 
-    print("Random Forest completed successfully!")
+    print("XGBoost grid search completed.")
 
-def random_forest_randomsearch(
+def xgboost_randomsearch(
     count_file,
     metadata_file,
     config_file,
@@ -104,23 +100,14 @@ def random_forest_randomsearch(
     output_path_plot,
     output_path_hyperparams,
 ):
-    """Run Random Forest and plot the feature importance."""
-    print("Running Random Forest...")
+    """Perform random search with XGBoost."""
 
     # Load configuration file
     with open(config_file, "r") as file:
         config_data = yaml.safe_load(file)
 
     # Extract parameters from the configuration file
-    param_grid = config_data["feature_selection"]["random_forest"]["param_grid_randomsearch"]
-
-    # if 'none' is in the list, replace it with None
-    for key, value in param_grid.items():
-        print(key, value)
-        if 'None' in value:
-            value = [None if x == 'None' else x for x in value]
-            param_grid[key] = value
-
+    param_grid = config_data["feature_selection"]["xgboost"]["param_grid_randomsearch"]
     print(f"Parameters: {param_grid}")
 
     count_data = pd.read_csv(count_file, delimiter=";", index_col=0, header=0)
@@ -130,54 +117,45 @@ def random_forest_randomsearch(
     y = metadata["condition"].map({"C": 0, "LC": 1})
     y = y.values.ravel()
 
-    # X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
-
-    rf_model = RandomForestClassifier(random_state=42)
-    grid_search = RandomizedSearchCV(
-        estimator=rf_model,
+    xgb_model = XGBClassifier(eval_metric="logloss")
+    random_search = RandomizedSearchCV(
+        estimator=xgb_model,
         param_distributions=param_grid,
-        n_iter=10,  # Number of random samples
-        cv=5,  # 5-fold cross-validation
-        scoring="roc_auc",  # Metric to optimize
-        n_jobs=-1,  # Use all CPUs
-        verbose=2,
+        n_iter=100,
+        cv=5,
+        scoring="roc_auc",
+        n_jobs=-1,
+        verbose=1,
+        return_train_score=True,
     )
 
-    grid_search.fit(X, y)
+    random_search.fit(X, y)
 
-    print("Best Parameters:", grid_search.best_params_)
-
-
-    # convert the best dict to a csv file
-    df_best = pd.DataFrame(list(grid_search.best_params_.items()), columns=["parameter", "value"])
+    print(f"Best parameters: {random_search.best_params_}")
+    df_best = pd.DataFrame(
+            list(random_search.best_params_.items()), columns=["parameter", "value"]
+        )
+    # Save the best hyperparameters to a file
     os.makedirs(os.path.dirname(output_path_hyperparams), exist_ok=True)
     df_best.to_csv(output_path_hyperparams, sep=";", index=False, header=True)
 
-    best_model = grid_search.best_estimator_
-    # show the auc score
-    print("Calculating AUC score...")
-    auc_score = cross_val_score(best_model, X, y, cv=5, scoring='roc_auc').mean()
-    print("AUC Score:", auc_score)
+    best_model = random_search.best_estimator_
 
-    # convert the best dict to a csv file
-    df_best = pd.DataFrame(list(grid_search.best_params_.items()), columns=["parameter", "value"])
-    os.makedirs(os.path.dirname(output_path_hyperparams), exist_ok=True)
-    df_best.to_csv(output_path_hyperparams, sep=";", index=False, header=True)
+    # show auc score
+    print(f"Best AUC score: {random_search.best_score_}")
 
+    # Extract the feature importance
     importances = best_model.feature_importances_
     indices = np.argsort(importances)[::-1][:10]  # Sort and get top N indices
-
-    # Extract feature names and importance values
     top_features = pd.DataFrame(
         {"Feature": X.columns[indices], "Importance": importances[indices]}
     )
-
     write_feature_importance_to_file(top_features, output_path_file)
     plot_feature_importance(top_features, output_path_plot)
 
-    print("Random Forest completed successfully!")
+    print("XGBoost random search completed.")
 
-def random_forest_hyperopt(
+def xgboost_hyperopt(
     count_file,
     metadata_file,
     config_file,
@@ -185,27 +163,33 @@ def random_forest_hyperopt(
     output_path_plot,
     output_path_hyperparams,
 ):
-    """Run Random Forest and plot the feature importance."""
-    print("Running Random Forest...")
-
+    """Perform hyperopt search with XGBoost."""
+    # raise NotImplementedError("Hyperopt search with XGBoost is not implemented yet.")
     # Load configuration file
     with open(config_file, "r") as file:
         config_data = yaml.safe_load(file)
 
     # Extract parameters from the configuration file
-    param_grid = config_data["feature_selection"]["random_forest"]["space_params_hyperopt"]
+    param_space = config_data["feature_selection"]["xgboost"]["space_params_hyperopt"]
 
     space = {}
-    for param_name, param_details in param_grid.items():
+    for param_name, param_details in param_space.items():
         param_type = param_details["parameter_type"]
         values = param_details["values"]
-
+        print(param_name, values)
         if param_type == "choice":
             space[param_name] = hp.choice(param_name, values)
         elif param_type == "quniform":
             space[param_name] = hp.quniform(param_name, *values)
         elif param_type == "uniform":
+            # print(param_name, values)
             space[param_name] = hp.uniform(param_name, *values)
+        elif param_type == "fixed":
+            space[param_name] = list(values)
+        else:
+            raise ValueError(f"Invalid parameter type: {param_type}")
+        
+    # print(f"Parameters: {space}")
 
     count_data = pd.read_csv(count_file, delimiter=";", index_col=0, header=0)
     metadata = pd.read_csv(metadata_file, delimiter=";", index_col=0, header=0)
@@ -214,77 +198,61 @@ def random_forest_hyperopt(
     y = metadata["condition"].map({"C": 0, "LC": 1})
     y = y.values.ravel()
 
+    dtrain_clf = xgb.DMatrix(X, label=y)
+    
+
     def objective(space):
-        space["max_depth"] = int(space["max_depth"])
-        space["max_features"] = None if space["max_features"] == 'None' else space["max_features"]
-        print(f"Parameters: {space}")
-
-        model = RandomForestClassifier(
-            criterion = space['criterion'],
-            max_depth = space['max_depth'],
-            max_features = space['max_features'],
-            min_samples_leaf = space['min_samples_leaf'],
-            min_samples_split = space['min_samples_split'],
-            n_estimators = space['n_estimators'],
-            random_state=42
-        )
-
-        # Feature selection using model importance
-        selector = SelectFromModel(model, threshold="mean")
-        selector.fit(X, y)
-
-        X_selected = selector.transform(X)  # Apply the feature selection on the whole dataset
-
-        # Perform cross-validation with AUC score
-        auc_score = cross_val_score(model, X_selected, y, cv=5, scoring='roc_auc').mean()
-
-        return {"loss": -auc_score, "status": STATUS_OK}
+        # print(f"Training with parameters: {params}")
+        # print(f'type of params: {type(params)}')
+        # xgb_model = XGBClassifier(*params, eval_metric="logloss")
+        # cv_results = xgb_model.fit(X, y)
+        # auc_score = cv_results.score(X, y)
+        # return {"loss": -auc_score, "status": STATUS_OK}
+    
+        results = xgb.cv(space, 
+                   dtrain=dtrain_clf, #DMatrix (xgboost specific)
+                   num_boost_round=100, 
+                   nfold=5, 
+                   stratified=True,  
+                   early_stopping_rounds=20,
+                   metrics = ['logloss','auc','aucpr','error'])
+  
+        best_score = results['test-auc-mean'].max()
+        return {'loss':-best_score, 'status': STATUS_OK}
 
     trials = Trials()
-    best = fmin(
-        fn=objective, space=space, algo=tpe.suggest, max_evals=5, trials=trials
-    )
-    best = space_eval(space, best)
+    best = fmin(objective, space, algo=tpe.suggest, max_evals=2, trials=trials)
+    best_params = space_eval(param_space, best)
+    print(f"Best parameters: {best_params}")
 
-    print("Best Parameters:")
-    for key, value in best.items():
-        print(f"  {key}: {value}")
-
-    # make sure max depth is an integer
-    best["max_depth"] = int(best["max_depth"])
-
-    # convert the best dict to a csv file
-    df_best = pd.DataFrame(list(best.items()), columns=["parameter", "value"])
+    df_best = pd.DataFrame(
+            list(best_params.items()), columns=["parameter", "value"]
+        )
+    # Save the best hyperparameters to a file
     os.makedirs(os.path.dirname(output_path_hyperparams), exist_ok=True)
     df_best.to_csv(output_path_hyperparams, sep=";", index=False, header=True)
 
-    # Evaluate on validation data
-    best_model = RandomForestClassifier(random_state=42, **best)
+    best_model = XGBClassifier(**best_params, eval_metric="logloss")
     best_model.fit(X, y)
 
-    # show the auc score
-    print("Calculating AUC score...")
-    auc_score = cross_val_score(best_model, X, y, cv=5, scoring='roc_auc').mean()
-    print("AUC Score:", auc_score)
+    # show auc score
+    auc_score = best_model.score(X, y)
+    print(f"Best AUC score: {auc_score}")
 
-    # Feature importances
+    # Extract the feature importance
     importances = best_model.feature_importances_
     indices = np.argsort(importances)[::-1][:10]  # Sort and get top N indices
-
-    # Extract feature names and importance values
     top_features = pd.DataFrame(
         {"Feature": X.columns[indices], "Importance": importances[indices]}
     )
-
     write_feature_importance_to_file(top_features, output_path_file)
     plot_feature_importance(top_features, output_path_plot)
 
-    print("Random Forest completed successfully!")
+    print("XGBoost hyperopt search completed.") 
 
 if __name__ == "__main__":
     import argparse
-
-    parser = argparse.ArgumentParser(description="Run Random Forest on the count data.")
+    parser = argparse.ArgumentParser(description="XGBoost feature selection.")
     parser.add_argument(
         "--count_file",
         type=str,
@@ -330,7 +298,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.method == "gridsearch":
-        random_forest_gridsearch(
+        xgboost_gridsearch(
             args.count_file,
             args.metadata_file,
             args.config_file,
@@ -339,7 +307,7 @@ if __name__ == "__main__":
             args.output_path_hyperparams,
         )
     elif args.method == "randomsearch":
-        random_forest_randomsearch(
+        xgboost_randomsearch(
             args.count_file,
             args.metadata_file,
             args.config_file,
@@ -348,7 +316,7 @@ if __name__ == "__main__":
             args.output_path_hyperparams,
         )
     elif args.method == "hyperopt":
-        random_forest_hyperopt(
+        xgboost_hyperopt(
             args.count_file,
             args.metadata_file,
             args.config_file,
