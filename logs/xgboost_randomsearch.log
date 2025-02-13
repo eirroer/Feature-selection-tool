@@ -1,0 +1,20 @@
+C:\Users\eirro\miniconda3\envs\fs-tool\Lib\site-packages\sklearn\model_selection\_search.py:317: UserWarning: The total space of parameters 1 is smaller than n_iter=10. Running 1 iterations. For exhaustive searches, use GridSearchCV.
+  warnings.warn(
+Parameters: {'n_estimators': [100], 'max_depth': [6], 'learning_rate': [0.3], 'min_child_weight': [1], 'gamma': [0], 'subsample': [1.0], 'colsample_bytree': [1.0], 'colsample_bylevel': [1.0], 'colsample_bynode': [1.0], 'reg_lambda': [1], 'reg_alpha': [0]}
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+
+params: {'subsample': 1.0, 'reg_lambda': 1, 'reg_alpha': 0, 'n_estimators': 100, 'min_child_weight': 1, 'max_depth': 6, 'learning_rate': 0.3, 'gamma': 0, 'colsample_bytree': 1.0, 'colsample_bynode': 1.0, 'colsample_bylevel': 1.0} 
+AUC: 0.4663 ± 0.0259
+
+Best hyperparameters: {'subsample': 1.0, 'reg_lambda': 1, 'reg_alpha': 0, 'n_estimators': 100, 'min_child_weight': 1, 'max_depth': 6, 'learning_rate': 0.3, 'gamma': 0, 'colsample_bytree': 1.0, 'colsample_bynode': 1.0, 'colsample_bylevel': 1.0}
+Best AUC score: 0.4663
+[CV 2/5; 1/1] START colsample_bylevel=1.0, colsample_bynode=1.0, colsample_bytree=1.0, gamma=0, learning_rate=0.3, max_depth=6, min_child_weight=1, n_estimators=100, reg_alpha=0, reg_lambda=1, subsample=1.0
+[CV 2/5; 1/1] END colsample_bylevel=1.0, colsample_bynode=1.0, colsample_bytree=1.0, gamma=0, learning_rate=0.3, max_depth=6, min_child_weight=1, n_estimators=100, reg_alpha=0, reg_lambda=1, subsample=1.0;, score=0.445 total time=  14.0s
+[CV 1/5; 1/1] START colsample_bylevel=1.0, colsample_bynode=1.0, colsample_bytree=1.0, gamma=0, learning_rate=0.3, max_depth=6, min_child_weight=1, n_estimators=100, reg_alpha=0, reg_lambda=1, subsample=1.0
+[CV 1/5; 1/1] END colsample_bylevel=1.0, colsample_bynode=1.0, colsample_bytree=1.0, gamma=0, learning_rate=0.3, max_depth=6, min_child_weight=1, n_estimators=100, reg_alpha=0, reg_lambda=1, subsample=1.0;, score=0.484 total time=  14.2s
+[CV 3/5; 1/1] START colsample_bylevel=1.0, colsample_bynode=1.0, colsample_bytree=1.0, gamma=0, learning_rate=0.3, max_depth=6, min_child_weight=1, n_estimators=100, reg_alpha=0, reg_lambda=1, subsample=1.0
+[CV 3/5; 1/1] END colsample_bylevel=1.0, colsample_bynode=1.0, colsample_bytree=1.0, gamma=0, learning_rate=0.3, max_depth=6, min_child_weight=1, n_estimators=100, reg_alpha=0, reg_lambda=1, subsample=1.0;, score=0.489 total time=  21.6s
+[CV 4/5; 1/1] START colsample_bylevel=1.0, colsample_bynode=1.0, colsample_bytree=1.0, gamma=0, learning_rate=0.3, max_depth=6, min_child_weight=1, n_estimators=100, reg_alpha=0, reg_lambda=1, subsample=1.0
+[CV 4/5; 1/1] END colsample_bylevel=1.0, colsample_bynode=1.0, colsample_bytree=1.0, gamma=0, learning_rate=0.3, max_depth=6, min_child_weight=1, n_estimators=100, reg_alpha=0, reg_lambda=1, subsample=1.0;, score=0.488 total time=  22.6s
+[CV 5/5; 1/1] START colsample_bylevel=1.0, colsample_bynode=1.0, colsample_bytree=1.0, gamma=0, learning_rate=0.3, max_depth=6, min_child_weight=1, n_estimators=100, reg_alpha=0, reg_lambda=1, subsample=1.0
+[CV 5/5; 1/1] END colsample_bylevel=1.0, colsample_bynode=1.0, colsample_bytree=1.0, gamma=0, learning_rate=0.3, max_depth=6, min_child_weight=1, n_estimators=100, reg_alpha=0, reg_lambda=1, subsample=1.0;, score=0.426 total time=  22.6s

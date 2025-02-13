@@ -33,8 +33,8 @@ rule xgboost_gridsearch:
         shell_cmd = " ".join(cmd)
         print(f"Running command: {shell_cmd}")
         # Run the command and redirect stdout and stderr to the log file
-        # shell(shell_cmd + " > {log} 2>&1")
-        shell(shell_cmd)
+        shell(shell_cmd + " > {log} 2>&1")
+        # shell(shell_cmd)
 
 rule xgboost_randomsearch:
     input:
@@ -71,8 +71,8 @@ rule xgboost_randomsearch:
         shell_cmd = " ".join(cmd)
         print(f"Running command: {shell_cmd}")
         # Run the command and redirect stdout and stderr to the log file
-        # shell(shell_cmd + " > {log} 2>&1")
-        shell(shell_cmd)
+        shell(shell_cmd + " > {log} 2>&1")
+        # shell(shell_cmd)
 
 
 rule random_forest_gridsearch:
@@ -110,8 +110,8 @@ rule random_forest_gridsearch:
         shell_cmd = " ".join(cmd)
         print(f"Running command: {shell_cmd}")
         # Run the command and redirect stdout and stderr to the log file
-        # shell(shell_cmd + " > {log} 2>&1")
-        shell(shell_cmd)
+        shell(shell_cmd + " > {log} 2>&1")
+        # shell(shell_cmd)
 
 rule random_forest_randomsearch:
     input:
@@ -148,5 +148,5 @@ rule random_forest_randomsearch:
         shell_cmd = " ".join(cmd)
         print(f"Running command: {shell_cmd}")
         # Run the command and redirect stdout and stderr to the log file
-        # shell(shell_cmd + " > {log} 2>&1")
-        shell(shell_cmd)
+        shell(shell_cmd + " > {log} 2>&1")
+        # shell(shell_cmd)
