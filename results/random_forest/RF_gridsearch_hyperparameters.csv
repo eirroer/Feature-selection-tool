@@ -1,5 +1,5 @@
-parameter;value
-max_depth;10.0
-max_features;0.1
-min_samples_split;2.0
-n_estimators;50.0
+parameter,value
+max_depth,10.0
+max_features,0.1
+min_samples_split,2.0
+n_estimators,50.0
