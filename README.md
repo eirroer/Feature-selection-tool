@@ -1,5 +1,5 @@
 # Feature-selection-tool
-This command-line tool is made for doing feature selection on RNA counts data! It allows for plug-and-play analysis of the input data, with options for configuring the parameters used in the analysis.
+This snakemake based pipeline tool is developed for doing feature selection on RNA counts data! It allows for plug-and-play analysis of the input data, with options for configuring the parameters used in the analysis.
 
 ## Install conda environment
 Conda environment with the required dependecies can be set up using the environment.yaml file with the following command:
@@ -9,19 +9,11 @@ conda env create -f environment.yml
 ```
  
 ## Run the tool
+Run with snakemake command.
 
-Run with the following command
+to run all models (with all available cores):
 ```
-Usage: AnalysisTool.py [OPTIONS] COUNT_FILE META_FILE
-
-Arguments 
- *    count_file      TEXT  [default: None] [required] 
- *    meta_file       TEXT  [default: None] [required]
-
-Options  
- --count-test-file        TEXT [default:None] Optional holdout test of the RNA counts, if not provided count_file will be split into training and test set.                                                                                                    
- --meta-test-file         TEXT [default:None] Optional holdout test of the metadata, if not provided meta_file will be split into training and test set.
- --help                         Show this message and exit.       
+snakemake --cores all
 ```
 
 
