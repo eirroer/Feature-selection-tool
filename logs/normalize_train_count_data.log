@@ -1,0 +1,6 @@
+Running normalization...
+Count data file: data/threshold_filtered_count_train_data.csv
+Metadata file: data/metadata_train_data.csv
+Normalization methods: ['vst']
+Output path: data/normalized_count_train_data.csv
+Running VST normalization...
