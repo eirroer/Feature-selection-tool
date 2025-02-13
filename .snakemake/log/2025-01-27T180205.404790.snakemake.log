@@ -1,0 +1,7 @@
+host: Epsilon-Pc
+Building DAG of jobs...
+InputFunctionException in rule preprocess in file C:\Users\eirro\OneDrive\Dokumenter\Kodeprosjekter\JanusRNA\Feature-selection-tool\rules/preprocessing.smk, line 1:
+Error:
+  Function did not return str or iterable of str. Encountered: [{}] (<class 'list'>)
+Wildcards:
+ (rule preprocess, line 1, C:\Users\eirro\OneDrive\Dokumenter\Kodeprosjekter\JanusRNA\Feature-selection-tool\rules/preprocessing.smk)

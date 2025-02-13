@@ -1,3 +1,5 @@
+# ignore .snakefile
+.snakemake/
 
 # Ignore cache files
 .__pycache__/*

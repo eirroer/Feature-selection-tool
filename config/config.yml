@@ -1,0 +1,193 @@
+
+count_file: "mock_data_lc/lc_mirna_counts.csv"
+metadata_file: "mock_data_lc/lc_dataset.csv"
+# count_holdout_test_set: None
+# metadata_holdout_test_set: None
+
+
+preprocessing:
+  train_test_split_params:
+    test_size: 0.2
+    random_state: 42
+
+  threshold_filter_params:
+      min_count: 10
+      min_samples: 3
+
+  normalization_methods:
+    tmm:
+      use_method: False
+    cpm:
+      use_method: False
+    vst:
+      use_method: True
+    deseq2:
+      use_method: False
+
+  scaling_methods_metadata: # Use only on metadata
+    standard_scale:
+      use_method: False
+    min_max_scale:
+      use_method: False
+    max_abs_scale:
+      use_method: False
+
+  scaling_methods_count: # Optional scaling on count data
+    shrinkage_scaling: # Not implemented
+      use_method: False 
+
+  pca:
+      use_method: True
+      n_components: 2
+      color_by: "condition"
+
+  pre_filter_methods:
+    variance_filter:
+      use_method: False
+      threshold: 0.5
+    expr_percentile_filter:
+      use_method: False
+      threshold_percentile: 0.8
+    correlation_filter:
+      use_method: True
+      correlation_method: "spearman" # or "pearson", "kendall"
+      threshold: 0.9
+
+feature_selection:
+
+  random_forest:
+    gridsearch: 
+      param_grid:
+        n_estimators: [50]
+        max_depth: [10]
+        max_features: [0.1]
+        min_samples_split: [2]
+
+        # n_estimators: [50, 100, 200, 300]
+        # max_depth: [None, 10, 20, 30]
+        # max_features: [0.1, 1.0]
+        # min_samples_split: [2, 5, 10]
+
+    randomsearch: 
+      param_grid:
+        n_estimators: [50]
+        max_depth: [None]
+        max_features: [0.1]
+        min_samples_split: [2]
+
+        # n_estimators: [50, 100, 200, 300]
+        # max_depth: [None, 10, 20, 30]
+        # max_features: [0.1, 1.0]
+        # min_samples_split: [2, 5, 10]
+      
+    hyperopt:
+      param_grid:
+        criterion:
+          parameter_type: choice
+          values: ["entropy", "gini"]
+        max_depth:
+          parameter_type: quniform
+          values: [10, 1200, 10]
+        max_features:
+          parameter_type: choice
+          values: ["sqrt", "log2", None]
+        min_samples_leaf: 
+          parameter_type: uniform
+          values: [0, 0.5]
+        min_samples_split: 
+          parameter_type: uniform
+          values: [0, 1]
+        n_estimators:
+          parameter_type: choice
+          values: [10, 50, 300, 750, 1200, 1300, 1500]
+
+  xgboost:
+    gridsearch: 
+      param_grid:
+        n_estimators: [100]
+        max_depth: [6]
+        learning_rate: [0.3]
+        min_child_weight: [1]
+        gamma: [0]
+        subsample: [1.0]
+        colsample_bytree: [1.0]
+        colsample_bylevel: [1.0]
+        colsample_bynode: [1.0]
+        reg_lambda: [1]
+        reg_alpha: [0]
+
+
+    randomsearch:
+      param_grid:
+        n_estimators: [100]
+        max_depth: [6]
+        learning_rate: [0.3]
+        min_child_weight: [1]
+        gamma: [0]
+        subsample: [1.0]
+        colsample_bytree: [1.0]
+        colsample_bylevel: [1.0]
+        colsample_bynode: [1.0]
+        reg_lambda: [1]
+        reg_alpha: [0]
+
+      # n_estimators: [100, 300, 500, 1000]
+      # max_depth: [3, 5, 7, 9, 12]
+      # learning_rate: [0.01, 0.05, 0.1, 0.2, 0.3]
+      # min_child_weight: [1, 3, 5, 7]
+      # gamma: [0, 0.1, 0.5, 1, 5]
+      # subsample: [0.5, 0.7, 0.9, 1.0]
+      # colsample_bytree: [0.5, 0.7, 0.9, 1.0]
+      # colsample_bylevel: [0.5, 0.7, 0.9, 1.0]
+      # colsample_bynode: [0.5, 0.7, 0.9, 1.0]
+      # reg_lambda: [0, 1, 10, 100]
+      # reg_alpha: [0, 0.1, 1, 10]
+
+    hyperopt:
+      param_grid:
+        max_depth:
+          parameter_type: choice
+          values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+        eta:
+          parameter_type: uniform
+          values: [0, 1]
+        gamma:
+          parameter_type: uniform
+          values: [0, 100]
+        reg_alpha:
+          parameter_type: uniform
+          values: [0.0000001, 10]
+        reg_lambda:
+          parameter_type: uniform
+          values: [0, 1]
+        colsample_bytree:
+          parameter_type: uniform
+          values: [0.5, 1]
+        colsample_bynode:
+          parameter_type: uniform
+          values: [0.5, 1]
+        colsample_bylevel:
+          parameter_type: uniform
+          values: [0.5, 1]
+        n_estimators:
+          parameter_type: choice
+          values: [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 310, 320, 330, 340, 350, 360, 370, 380, 390, 400, 410, 420, 430, 440, 450, 460, 470, 480, 490, 500, 510, 520, 530, 540, 550, 560, 570, 580, 590, 600, 610, 620, 630, 640, 650, 660, 670, 680, 690, 700, 710, 720, 730, 740, 750, 760, 770, 780, 790, 800, 810, 820, 830, 840, 850, 860, 870, 880, 890, 900, 910, 920, 930, 940, 950, 960, 970, 980, 990]
+        min_child_weight:
+          parameter_type: choice
+          values: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        max_delta_step:
+          parameter_type: choice
+          values: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        subsample:
+          parameter_type: uniform
+          values: [0.5, 1]
+        # objective:
+        #   parameter_type: fixed
+        #   values: "binary:logistic"
+        # eval_metric:
+        #   parameter_type: fixed
+        #   values: "aucpr"
+        # seed:
+        #   parameter_type: fixed
+        #   values: 44
+    
