@@ -20,7 +20,7 @@ def write_hyperparameters_to_file(best_params: dict, output_path_hyperparams):
         list(best_params.items()), columns=["parameter", "value"]
     )
     os.makedirs(os.path.dirname(output_path_hyperparams), exist_ok=True)
-    df_best.to_csv(output_path_hyperparams, sep=";", index=False, header=True)
+    df_best.to_csv(output_path_hyperparams, sep=",", index=False, header=True)
 
 def save_model(model, output_path_model):
     """Save the model to a file."""
@@ -38,7 +38,7 @@ def write_feature_importance_to_file(X, feature_importances, output_path_file):
     top_features = top_features.head(10)
 
     os.makedirs(os.path.dirname(output_path_file), exist_ok=True)
-    top_features.to_csv(output_path_file, sep=";", index=False)
+    top_features.to_csv(output_path_file, sep=",", index=False)
 
 def plot_feature_importance(X, feature_importances, output_path_plot):
     """Plot the feature importance."""
