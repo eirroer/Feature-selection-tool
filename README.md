@@ -15,6 +15,7 @@ to run all models (with all available cores):
 ```
 snakemake --cores all
 ```
+## Snakemake DAG visualization
 ![DAG Visualization](dag.png)
 
 ## Input file format
