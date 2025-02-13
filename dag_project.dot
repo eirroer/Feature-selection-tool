@@ -1,39 +1,34 @@
 digraph snakemake_dag {
     graph[bgcolor=white, margin=0];
     node[shape=box, style=rounded, fontname=sans, fontsize=10, penwidth=2];
-    edge[penwidth=2, color=grey];
+    edge[penwidth=2, color=grey, fontname=sans, fontsize=8];
 
-    0[label = "all", color = "0.00 0.6 0.85", style="rounded,dashed"];
-    1[label = "random_forest_gridsearch", color = "0.27 0.6 0.85", style="rounded,dashed"];
+    0[label = "all", color = "0.00 0.6 0.85", style="rounded"];
+    1[label = "random_forest_gridsearch", color = "0.27 0.6 0.85", style="rounded"];
     2[label = "pre_filter_data", color = "0.20 0.6 0.85", style="rounded,dashed"];
     3[label = "normalize_train_count_data", color = "0.07 0.6 0.85", style="rounded,dashed"];
     4[label = "threshold_filter_data", color = "0.47 0.6 0.85", style="rounded,dashed"];
     5[label = "read_and_split_train_test_data", color = "0.40 0.6 0.85", style="rounded,dashed"];
-    6[label = "random_forest_randomsearch", color = "0.33 0.6 0.85", style="rounded,dashed"];
-    7[label = "xgboost_gridsearch", color = "0.53 0.6 0.85", style="rounded,dashed"];
-    8[label = "xgboost_randomsearch", color = "0.60 0.6 0.85", style="rounded,dashed"];
+    6[label = "random_forest_randomsearch", color = "0.33 0.6 0.85", style="rounded"];
+    7[label = "xgboost_gridsearch", color = "0.53 0.6 0.85", style="rounded"];
+    8[label = "xgboost_randomsearch", color = "0.60 0.6 0.85", style="rounded"];
     9[label = "plot_pca", color = "0.13 0.6 0.85", style="rounded,dashed"];
 
     1 -> 0 [label="final RF model"];
     6 -> 0 [label="final RF random"];
     7 -> 0 [label="final XGB model"];
     8 -> 0 [label="final XGB random"];
-    9 -> 0 [label="PCA plots"];
-    
+    9 -> 0 [label="PCA plot"];
+
     2 -> 1 [label="filtered data"];
-    5 -> 1 [label="train/test split"];
-    3 -> 2 [label="normalized data"];
-    4 -> 3 [label="threshold applied"];
-    5 -> 3 [label="metadata (train)"];
-    5 -> 4 [label="counts (train)"];
+    3 -> 2 [label="normalized count data"];
+    4 -> 3 [label="threshold filtered count data"];
+    5 -> 3 [label="metadata"];
+    5 -> 4 [label="raw count data"];
 
     2 -> 6 [label="filtered data"];
-    5 -> 6 [label="train/test split"];
     2 -> 7 [label="filtered data"];
-    5 -> 7 [label="train/test split"];
     2 -> 8 [label="filtered data"];
-    5 -> 8 [label="train/test split"];
-
-    3 -> 9 [label="normalized countsdata train"];
-    5 -> 9 [label="metadata train"];
+    3 -> 9 [label="normalized count data"];
+    5 -> 9 [label="metadata"];
 }

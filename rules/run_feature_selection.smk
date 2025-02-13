@@ -1,7 +1,7 @@
 rule xgboost_gridsearch:
     input:
         pre_filtered_data="data/pre_filtered_normalized_count_train_data.csv",
-        # metadata_train_data="data/metadata_train_data.csv",
+        metadata_train_data="data/metadata_train_data.csv",
         config_file="config/config.yml"
     output:
         xgboost_feature_importance="results/xgboost/XGB_gridsearch_feature_importance.csv",
@@ -39,7 +39,7 @@ rule xgboost_gridsearch:
 rule xgboost_randomsearch:
     input:
         pre_filtered_data="data/pre_filtered_normalized_count_train_data.csv",
-        # metadata_train_data="data/metadata_train_data.csv",
+        metadata_train_data="data/metadata_train_data.csv",
         config_file="config/config.yml"
     output:
         xgboost_feature_importance="results/xgboost/XGB_randomsearch_feature_importance.csv",
@@ -78,7 +78,7 @@ rule xgboost_randomsearch:
 rule random_forest_gridsearch:
     input:
         pre_filtered_data="data/pre_filtered_normalized_count_train_data.csv",
-        # metadata_train_data="data/metadata_train_data.csv",
+        metadata_train_data="data/metadata_train_data.csv",
         config_file="config/config.yml"
     output:
         random_forest_feature_importance="results/random_forest/RF_gridsearch_feature_importance.csv",
@@ -116,7 +116,7 @@ rule random_forest_gridsearch:
 rule random_forest_randomsearch:
     input:
         pre_filtered_data="data/pre_filtered_normalized_count_train_data.csv",
-        # metadata_train_data="data/metadata_train_data.csv",
+        metadata_train_data="data/metadata_train_data.csv",
         config_file="config/config.yml"
     output:
         random_forest_feature_importance="results/random_forest/RF_randomsearch_feature_importance.csv",
