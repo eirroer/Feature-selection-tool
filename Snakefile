@@ -5,6 +5,7 @@ include: "rules/preprocessing.smk"
 # include: "rules/random_forest.smk"
 # include: "rules/xgboost.smk"
 include: "rules/run_feature_selection.smk"
+include: "rules/run_prediction.smk"
 
 rule all:
     input:
