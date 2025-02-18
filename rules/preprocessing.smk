@@ -41,9 +41,11 @@ rule read_and_split_train_test_data:
 
 rule threshold_filter_data:
     input:
-        count_train_data="data/count_train_data.csv"
+        count_train_data="data/count_train_data.csv",
+        metadata_train_data="data/metadata_train_data.csv",
     output:
-        threshold_filtered_data=temp("data/threshold_filtered_count_train_data.csv")
+        threshold_filtered_data=temp("data/threshold_filtered_count_train_data.csv"),
+        threshold_filtered_metadata="data/threshold_filtered_metadata_train_data.csv",
     log:
         "logs/threshold_filter_data.log"
     params:
@@ -55,9 +57,11 @@ rule threshold_filter_data:
         cmd = [
             "python", "{params.script}",
             "--count_file", input.count_train_data,
+            "--metadata_file", input.metadata_train_data,
             "--min_count", str(params.min_count),
             "--min_samples", str(params.min_samples),
-            "--output_path", output.threshold_filtered_data
+            "--output_path_count", output.threshold_filtered_data,
+            "--output_path_metadata", output.threshold_filtered_metadata
         ]
         # Log the command
         shell_cmd = " ".join(cmd)
@@ -65,35 +69,35 @@ rule threshold_filter_data:
         # Run the command and redirect stdout and stderr to the log file
         shell(shell_cmd + " > {log} 2>&1")
 
-rule normalize_train_count_data:
-    input:
-        threshold_filter_data="data/threshold_filtered_count_train_data.csv",
-        metadata_train_data="data/metadata_train_data.csv"
-    output:
-        normalized_count_train_data="data/normalized_count_train_data.csv"
-    log:
-        "logs/normalize_train_count_data.log"
-    params:
-        script="scripts/normalize.py",
-        # Get the normalization methods from the config file and filter out the methods that are not used
-        normalization_methods=[method for method, is_use in config["preprocessing"]["normalization_methods"].items() if is_use["use_method"]]
-    run:
-        print(f"normalization_methods = {params.normalization_methods}")
+# rule normalize_train_count_data:
+#     input:
+#         threshold_filter_data="data/threshold_filtered_count_train_data.csv",
+#         metadata_train_data="data/metadata_train_data.csv"
+#     output:
+#         normalized_count_train_data="data/normalized_count_train_data.csv"
+#     log:
+#         "logs/normalize_train_count_data.log"
+#     params:
+#         script="scripts/normalize.py",
+#         # Get the normalization methods from the config file and filter out the methods that are not used
+#         normalization_methods=[method for method, is_use in config["preprocessing"]["normalization_methods"].items() if is_use["use_method"]]
+#     run:
+#         print(f"normalization_methods = {params.normalization_methods}")
 
-        # Prepare the command to run the external Python script
-        cmd = [
-            "python", "{params.script}",
-            "--count_file", input.threshold_filter_data,
-            "--metadata_file", input.metadata_train_data,
-            "--normalization_methods", " ".join(params.normalization_methods),
-            "--output_path", output.normalized_count_train_data
-        ]
-        # Log the command
-        shell_cmd = " ".join(cmd)
-        print(f"Running command: {shell_cmd}")
+#         # Prepare the command to run the external Python script
+#         cmd = [
+#             "python", "{params.script}",
+#             "--count_file", input.threshold_filter_data,
+#             "--metadata_file", input.metadata_train_data,
+#             "--normalization_methods", " ".join(params.normalization_methods),
+#             "--output_path", output.normalized_count_train_data
+#         ]
+#         # Log the command
+#         shell_cmd = " ".join(cmd)
+#         print(f"Running command: {shell_cmd}")
 
-        # Run the command and redirect stdout and stderr to the log file
-        shell(shell_cmd + " > {log} 2>&1")
+#         # Run the command and redirect stdout and stderr to the log file
+#         shell(shell_cmd + " > {log} 2>&1")
 
 rule plot_pca:
     input:
