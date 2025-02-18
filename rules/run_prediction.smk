@@ -1,6 +1,7 @@
 rule random_forest_prediction:
     input:
-        processed_count_train_data="data/pre_filtered_normalized_count_train_data.csv",
+        # processed_count_train_data="data/pre_filtered_normalized_count_train_data.csv",
+        threshold_filter_data="data/threshold_filtered_count_train_data.csv",
         count_test_data="data/count_test_data.csv",
         metadata_test_data="data/metadata_test_data.csv",
         config_file="config/config.yml",
@@ -21,7 +22,7 @@ rule random_forest_prediction:
         # Prepare the command to run the external Python script
         cmd = [
             "python", "{params.script}",
-            "--count_train_file", input.processed_count_train_data,
+            "--count_train_file", input.threshold_filter_data,
             "--count_test_file", input.count_test_data,
             "--metadata_test_file", input.metadata_test_data,
             "--config_file", input.config_file,

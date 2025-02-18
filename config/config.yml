@@ -54,9 +54,11 @@ preprocessing:
       threshold: 0.9
 
 feature_selection:
-
+  hyperparameter_optimization_method: "gridsearch" # or "randomsearch"
+  refit: "roc_auc" # or "accuracy", "precision", "recall", "f1"
+  
   random_forest:
-    gridsearch: 
+    gridsearch:
       param_grid:
         n_estimators: [50]
         max_depth: [10]
@@ -68,7 +70,7 @@ feature_selection:
         # max_features: [0.1, 1.0]
         # min_samples_split: [2, 5, 10]
 
-    randomsearch: 
+    randomsearch:
       param_grid:
         n_estimators: [50]
         max_depth: [None]

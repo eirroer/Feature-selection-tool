@@ -31,7 +31,6 @@ def plot_feature_importance(top_features: pd.DataFrame, output_path_plot):
     os.makedirs(os.path.dirname(output_path_plot), exist_ok=True)
     plt.savefig(output_path_plot, dpi=300, format="png")
 
-
 def random_forest_gridsearch(
     count_file,
     metadata_file,

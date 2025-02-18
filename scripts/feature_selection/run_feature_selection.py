@@ -11,7 +11,9 @@ from hyperopt import fmin, tpe, hp, Trials, STATUS_OK, space_eval
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.model_selection import cross_val_score
 from sklearn.feature_selection import SelectFromModel
-
+from sklearn.pipeline import Pipeline
+from NormalizerVST import NormalizerVST
+from sklearn.metrics import make_scorer, precision_score, recall_score, f1_score
 
 def write_hyperparameters_to_file(best_params: dict, output_path_hyperparams):
     """Write the best hyperparameters to a file."""
@@ -58,17 +60,6 @@ def plot_feature_importance(X, feature_importances, output_path_plot):
     os.makedirs(os.path.dirname(output_path_plot), exist_ok=True)
     plt.savefig(output_path_plot, dpi=300, format="png")
 
-def gridsearchCV(X, y, model, param_grid, cv):
-    """Perform grid search cross validation."""
-    clf = GridSearchCV(model, param_grid, cv=cv, n_jobs=-1, verbose=10, scoring='roc_auc')
-    clf.fit(X, y)
-    return clf
-
-def randomsearchCV(X, y, model, param_dist, cv):
-    """Perform random search cross validation."""
-    clf = RandomizedSearchCV(model, param_dist, cv=cv, n_jobs=-1,verbose=10, scoring='roc_auc')
-    clf.fit(X, y)
-    return clf
 
 def hyperopt(X, y, model, space, max_evals):
     """Perform hyperopt search cross validation."""
@@ -86,7 +77,6 @@ def run_feature_selection(
     count_file: str,
     metadata_file: str,
     config_file: str,
-    hyperparameter_optimization_method: str,
     feature_selection_method: str,
     output_path_file: str,
     output_path_plot: str,
@@ -104,7 +94,14 @@ def run_feature_selection(
     y = metadata["condition"].map({"C": 0, "LC": 1})
     y = y.values.ravel()
 
+    hyperparameter_optimization_method = config["feature_selection"][
+        "hyperparameter_optimization_method"
+    ]
+    if hyperparameter_optimization_method not in ["gridsearch", "randomsearch"]:
+        raise ValueError(f"Hyperparameter tuning method {hyperparameter_optimization_method} not supported.")
+
     param_grid = config["feature_selection"][feature_selection_method][hyperparameter_optimization_method]["param_grid"]
+    param_grid = {f"classifier__{key}": value for key, value in param_grid.items()}  # add classifier__ to the keys
 
     # if 'none' is in the list, replace it with None
     for key, value in param_grid.items():
@@ -112,24 +109,6 @@ def run_feature_selection(
             value = [None if x == 'None' else x for x in value]
             param_grid[key] = value
     print(f"Parameters: {param_grid}")
-
-    def define_space_from_param_grid(param_grid) -> dict:
-        space = {}
-        for param_name, param_details in param_grid.items():
-            param_type = param_details["parameter_type"]
-            values = param_details["values"]
-
-            if param_type == "choice":
-                space[param_name] = hp.choice(param_name, values)
-            elif param_type == "quniform":
-                space[param_name] = hp.quniform(param_name, *values)
-            elif param_type == "uniform":
-                space[param_name] = hp.uniform(param_name, *values)
-            elif param_type == "loguniform":
-                space[param_name] = hp.loguniform(param_name, *values)
-            else:
-                raise ValueError(f"Parameter type {param_type} not supported.")
-        return space
 
     model = None
     if feature_selection_method == "random_forest":
@@ -139,32 +118,56 @@ def run_feature_selection(
     else:
         raise ValueError(f"Feature selection method {feature_selection_method} not supported.")
 
+    # TODO add differetn normalization methods
+    pipeline = Pipeline(
+        [
+            ("normalizer", NormalizerVST(metadata=metadata)),
+            ("classifier", model),
+        ]
+    )
+
+    scoring = {
+        "roc_auc": "roc_auc",
+        "accuracy": "accuracy",
+        "precision": make_scorer(precision_score, average="macro"),
+        "recall": make_scorer(recall_score, average="macro"),
+        "f1": make_scorer(f1_score, average="macro"),
+    }
+
+    refit = config["feature_selection"]["refit"]
+    if refit not in scoring.keys():
+        raise ValueError(f"Refit metric {refit} not supported.")
+
     if hyperparameter_optimization_method == "gridsearch":
-        clf = gridsearchCV(X, y, model, param_grid, cv=5)
+        gridsearch = GridSearchCV(pipeline, param_grid=param_grid, cv=2, n_jobs=-1, verbose=10, scoring=scoring, refit=refit)
     elif hyperparameter_optimization_method == "randomsearch":
-        clf = randomsearchCV(X, y, model, param_grid, cv=5)
-    # elif hyperparameter_optimization_method == "hyperopt":
-    #     space = define_space_from_param_grid(param_grid)
-    #     clf = hyperopt(X, y, model, space, max_evals=2)
-    #     clf = space_eval(space, best_params) # convert the best hyperparameters to the original space
+        gridsearch = RandomizedSearchCV(pipeline, param_distributions=param_grid, cv=2, n_jobs=-1, verbose=10, scoring=scoring, refit=refit)
     else:
         raise ValueError(f"Hyperparameter optimization method {hyperparameter_optimization_method} not supported.")
 
-    all_auc_scores = clf.cv_results_["mean_test_score"]
-    std_auc_scores = clf.cv_results_["std_test_score"]
-    param_grid = clf.cv_results_["params"]
-    for params, mean_auc, std_auc in zip(param_grid, all_auc_scores, std_auc_scores):
-        print(f"\nparams: {params} \nAUC: {mean_auc:.4f} ± {std_auc:.4f}\n")
+    gridsearch.fit(X, y)
 
-    print(f"Best hyperparameters: {clf.best_params_}")
-    print(f"Best AUC score: {clf.best_score_:.4f}")
+    for metric in scoring.keys():
+        mean_scores = gridsearch.cv_results_[f"mean_test_{metric}"]
+        std_scores = gridsearch.cv_results_[f"std_test_{metric}"]
+        print(f"\nResults for {metric}:")
+        for params, mean, std in zip(gridsearch.cv_results_["params"], mean_scores, std_scores):
+            print(f"params: {params} \n{metric.upper()}: {mean:.4f} ± {std:.4f}\n")
 
+    print(f"Best hyperparameters: {gridsearch.best_params_}")
+    print(f"Best AUC score: {gridsearch.best_score_:.4f}")
 
-    write_hyperparameters_to_file(clf.best_params_, output_path_hyperparams)
-    save_model(clf.best_estimator_, output_path_model)
-    write_feature_importance_to_file(X, clf.best_estimator_.feature_importances_, output_path_file)
+    write_hyperparameters_to_file(gridsearch.best_params_, output_path_hyperparams)
+    save_model(gridsearch.best_estimator_.named_steps["classifier"], output_path_model)
+    write_feature_importance_to_file(
+        X,
+        gridsearch.best_estimator_.named_steps["classifier"].feature_importances_,
+        output_path_file,
+    )
     plot_feature_importance(
-        X, clf.best_estimator_.feature_importances_, output_path_plot
+        X,
+        gridsearch.best_estimator_.named_steps["classifier"].feature_importances_,
+        output_path_plot,
     )
 
 if __name__ == "__main__":
@@ -187,12 +190,6 @@ if __name__ == "__main__":
         "--config_file",
         type=str,
         help="The file path to the configuration file.",
-        required=True,
-    )
-    parser.add_argument(
-        "--hyperparameter_optimization_method",
-        type=str,
-        help="The method to use for hyperparameter optimization.",
         required=True,
     )
     parser.add_argument(
@@ -231,7 +228,6 @@ if __name__ == "__main__":
         args.count_file,
         args.metadata_file,
         args.config_file,
-        args.hyperparameter_optimization_method,
         args.feature_selection_method,
         args.output_path_file,
         args.output_path_plot,
