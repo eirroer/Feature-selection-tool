@@ -82,6 +82,7 @@ def run_feature_selection(
     output_path_plot: str,
     output_path_hyperparams: str,
     output_path_model: str,
+    output_path_scores: str,
 ):
     # read the configuration file
     with open(config_file, "r") as file:
@@ -138,10 +139,14 @@ def run_feature_selection(
     if refit not in scoring.keys():
         raise ValueError(f"Refit metric {refit} not supported.")
 
+    cv = config["feature_selection"]["cv"]
+    if cv < 2:
+        raise ValueError(f"Cross-validation must be at least 2.")
+
     if hyperparameter_optimization_method == "gridsearch":
-        gridsearch = GridSearchCV(pipeline, param_grid=param_grid, cv=2, n_jobs=-1, verbose=10, scoring=scoring, refit=refit)
+        gridsearch = GridSearchCV(pipeline, param_grid=param_grid, cv=cv, n_jobs=-1, verbose=10, scoring=scoring, refit=refit)
     elif hyperparameter_optimization_method == "randomsearch":
-        gridsearch = RandomizedSearchCV(pipeline, param_distributions=param_grid, cv=2, n_jobs=-1, verbose=10, scoring=scoring, refit=refit)
+        gridsearch = RandomizedSearchCV(pipeline, param_distributions=param_grid, cv=cv, n_jobs=-1, verbose=10, scoring=scoring, refit=refit)
     else:
         raise ValueError(f"Hyperparameter optimization method {hyperparameter_optimization_method} not supported.")
 
@@ -169,6 +174,49 @@ def run_feature_selection(
         gridsearch.best_estimator_.named_steps["classifier"].feature_importances_,
         output_path_plot,
     )
+
+    all_scores = pd.DataFrame(
+        gridsearch.cv_results_,
+        columns=gridsearch.cv_results_.keys(),
+        index=[feature_selection_method],
+    )
+
+    # # Check if file exists
+    # if os.path.exists(output_path_scores):
+    #     # Load existing file
+    #     old_score_df = pd.read_csv(output_path_scores, index_col=0, header=0)
+
+    #     # Ensure consistent columns
+    #     if set(old_score_df.columns) == set(all_scores.columns):
+    #         # Append and save
+    #         merged_scores = pd.concat([old_score_df, all_scores], ignore_index=False)
+    #         merged_scores.to_csv(output_path_scores, index=True, header=True)
+    #     else:
+    #         raise ValueError("Column mismatch between new data and existing file.")
+    # else:
+    os.makedirs(os.path.dirname(output_path_scores), exist_ok=True)
+    all_scores.to_csv(output_path_scores, index=True, header=True)
+
+    # all_scores = gridsearch.cv_results_
+    # all_scores_df = pd.DataFrame([all_scores])
+    # # add the model name as the first column
+    # all_scores_df.insert(0, "model", [feature_selection_method] * len(all_scores_df))
+
+    # # Check if file exists
+    # if os.path.exists(output_path_scores):
+    #     # Load existing file
+    #     existing_df = pd.read_csv(output_path_scores)
+
+    #     # Ensure consistent columns
+    #     if set(existing_df.columns) == set(all_scores_df.columns):
+    #         # Append and save
+    #         updated_df = pd.concat([existing_df, all_scores_df], ignore_index=True)
+    #         updated_df.to_csv(output_path_scores, index=False)
+    #     else:
+    #         raise ValueError("Column mismatch between new data and existing file.")
+    # else:
+    #     # Save new DataFrame as a new file with headers
+    #     all_scores_df.to_csv(output_path_scores, index=False)
 
 if __name__ == "__main__":
     import argparse
@@ -222,6 +270,13 @@ if __name__ == "__main__":
         help="The output path to save the best hyperparameters.",
         required=False,
     )
+    parser.add_argument(
+        "--output_path_scores",
+        type=str,
+        help="The output path to save the scores.",
+        required=False,
+    )
+
     args = parser.parse_args()
 
     run_feature_selection(
@@ -233,4 +288,5 @@ if __name__ == "__main__":
         args.output_path_plot,
         args.output_path_hyperparams,
         args.output_path_model,
+        args.output_path_scores,
     )

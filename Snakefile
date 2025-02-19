@@ -9,11 +9,8 @@ include: "rules/run_prediction.smk"
 
 rule all:
     input:
-        all_RF_feature_importance=expand("results/random_forest/RF_{method}_feature_importance.csv", method=["gridsearch", "randomsearch"]),
-        all_RF_feature_importance_plots=expand("plots/random_forest/RF_{method}_feature_importance.png", method=["gridsearch", "randomsearch"]),
-        all_RF_models=expand("results/random_forest/RF_{method}_model.pkl", method=["gridsearch", "randomsearch"]),
-        all_XGB_feature_importance=expand("results/xgboost/XGB_{method}_feature_importance.csv", method=["gridsearch", "randomsearch"]),
-        all_XGB_feature_importance_plots=expand("plots/xgboost/XGB_{method}_feature_importance.png", method=["gridsearch", "randomsearch"]),
-        all_XGB_models=expand("results/xgboost/XGB_{method}_model.pkl", method=["gridsearch", "randomsearch"]),
-        all_XGB_hyperparameters=expand("results/xgboost/XGB_{method}_hyperparameters.csv", method=["gridsearch", "randomsearch"]),
-        pca_plot="plots/pca_plot.png",
+        expand("results/{model}/{model}_feature_importance.csv", model=["random_forest", "xgboost"]),
+        expand("results/{model}/{model}_feature_importance.png", model=["random_forest", "xgboost"]),
+        expand("results/{model}/{model}_hyperparameters.csv", model=["random_forest", "xgboost"]),
+        expand("results/{model}/{model}_model.pkl", model=["random_forest", "xgboost"]),
+        "results/pca_plot.png",

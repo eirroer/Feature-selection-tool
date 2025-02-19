@@ -1,0 +1,5 @@
+parameter,value
+classifier__max_depth,10.0
+classifier__max_features,0.1
+classifier__min_samples_split,2.0
+classifier__n_estimators,50.0

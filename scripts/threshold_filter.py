@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-def threshold_filter(count_file, metadata_file, min_count, min_samples, output_path_count, output_path_metadata):
+def threshold_filter(count_file, metadata_file, min_count, min_samples, output_path_count):
     """Filter out genes that have a count less than the min_count in min_samples samples."""
     count_data = pd.read_csv(count_file, delimiter=";", index_col=0, header=0)
     metadata = pd.read_csv(metadata_file, delimiter=";", index_col=0, header=0)
@@ -9,8 +9,6 @@ def threshold_filter(count_file, metadata_file, min_count, min_samples, output_p
     threshold_filtered_count_data = count_data.loc[
         (count_data > min_count).sum(axis=1) >= min_samples
     ]
-    # remove the corresponding index from the metadata
-    threshold_filtered_metadata = metadata.loc[threshold_filtered_count_data.index]
 
     # Save the filtered count data
     os.makedirs(os.path.dirname(output_path_count), exist_ok=True)
@@ -18,11 +16,6 @@ def threshold_filter(count_file, metadata_file, min_count, min_samples, output_p
         output_path_count, sep=";", index=True, header=True
     )
 
-    # Save the filtered metadata
-    os.makedirs(os.path.dirname(output_path_metadata), exist_ok=True)
-    threshold_filtered_metadata.to_csv(
-        output_path_metadata, sep=";", index=True, header=True
-    )
 
 if __name__ == "__main__":
     import argparse
@@ -32,7 +25,6 @@ if __name__ == "__main__":
     parser.add_argument("--min_count", required=True, help="Minimum count value.")
     parser.add_argument("--min_samples", required=True, help="Minimum number of samples.")
     parser.add_argument("--output_path_count", required=True, help="Path to save the filtered count data.")
-    parser.add_argument("--output_path_metadata", required=True, help="Path to save the filtered metadata.")
     args = parser.parse_args()
 
     threshold_filter(
@@ -41,5 +33,4 @@ if __name__ == "__main__":
         min_count=int(args.min_count),
         min_samples=int(args.min_samples),
         output_path_count=args.output_path_count,
-        output_path_metadata=args.output_path_metadata
     )
