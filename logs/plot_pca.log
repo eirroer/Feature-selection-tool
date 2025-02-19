@@ -17,15 +17,15 @@ sample321    M        LC    Others     Others  Localized
 sample75     F         C   control    control    Control
                   PC1       PC2
 SampleID                       
-sample108   12.500758 -3.146328
-sample852    4.987642 -2.891450
-sample1038  -5.022876 -1.733627
-sample321    5.271600  2.991244
-sample75   -15.971122  0.054383
+sample108   12.500758 -1.846272
+sample852    4.987641 -2.666893
+sample1038  -5.022877 -3.196806
+sample321    5.271599  3.201129
+sample75   -15.971122 -0.459725
                   PC1       PC2 condition
 SampleID                                 
-sample108   12.500758 -3.146328         C
-sample852    4.987642 -2.891450         C
-sample1038  -5.022876 -1.733627         C
-sample321    5.271600  2.991244        LC
-sample75   -15.971122  0.054383         C
+sample108   12.500758 -1.846272         C
+sample852    4.987641 -2.666893         C
+sample1038  -5.022877 -3.196806         C
+sample321    5.271599  3.201129        LC
+sample75   -15.971122 -0.459725         C

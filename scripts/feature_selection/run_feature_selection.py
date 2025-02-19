@@ -13,6 +13,8 @@ from sklearn.model_selection import cross_val_score
 from sklearn.feature_selection import SelectFromModel
 from sklearn.pipeline import Pipeline
 from NormalizerVST import NormalizerVST
+from NormalizerTMM import NormalizerTMM
+from NormalizerDESEQ2 import NormalizerDESEQ2
 from sklearn.metrics import make_scorer, precision_score, recall_score, f1_score
 
 def write_hyperparameters_to_file(best_params: dict, output_path_hyperparams):
@@ -110,6 +112,26 @@ def run_feature_selection(
             param_grid[key] = value
     # print(f"Parameters: {param_grid}")
 
+    # Create the pipeline
+    pipeline_steps = []
+
+    normalization_methods = [
+        method
+        for method, is_use in config["preprocessing"]["normalization_methods"].items()
+        if is_use["use_method"]
+    ]
+
+    if normalization_methods:
+        for method in normalization_methods:
+            if method == "vst":
+                pipeline_steps.append(("normalizer_vst", NormalizerVST(metadata=metadata)))
+            elif method == "tmm":
+                pipeline_steps.append(("normalizer_tmm", NormalizerTMM()))
+            elif method == "deseq2":
+                pipeline_steps.append(("normalizer_deseq2", NormalizerDESEQ2()))
+            else:
+                raise ValueError(f"Normalization method {method} not supported.")
+
     model = None
     if feature_selection_method == "random_forest":
         model = RandomForestClassifier(random_state=42)
@@ -117,14 +139,9 @@ def run_feature_selection(
         model = XGBClassifier(random_state=42)
     else:
         raise ValueError(f"Feature selection method {feature_selection_method} not supported.")
-
-    # TODO add differetn normalization methods
-    pipeline = Pipeline(
-        [
-            ("normalizer", NormalizerVST(metadata=metadata)),
-            ("classifier", model),
-        ]
-    )
+    pipeline_steps.append(("classifier", model))
+    
+    pipeline = Pipeline(pipeline_steps)
 
     scoring = {
         "roc_auc": "roc_auc",
