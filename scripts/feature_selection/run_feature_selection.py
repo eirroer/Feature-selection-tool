@@ -177,7 +177,7 @@ def run_feature_selection(
 
     all_scores = pd.DataFrame(
         gridsearch.cv_results_,
-        columns=gridsearch.cv_results_.keys(),
+        columns=["mean_test_accuracy", "std_test_accuracy", "mean_test_precision", "std_test_precision", "mean_test_recall", "std_test_recall", "mean_test_f1", "std_test_f1"],
         index=[feature_selection_method],
     )
 
