@@ -109,7 +109,7 @@ def run_feature_selection(
         if 'None' in value:
             value = [None if x == 'None' else x for x in value]
             param_grid[key] = value
-    print(f"Parameters: {param_grid}")
+    # print(f"Parameters: {param_grid}")
 
     model = None
     if feature_selection_method == "random_forest":
@@ -143,8 +143,12 @@ def run_feature_selection(
     if cv < 2:
         raise ValueError(f"Cross-validation must be at least 2.")
 
+    verbose = config["feature_selection"]["verbose"]
+    if verbose not in range(0, 11):
+        raise ValueError(f"Verbose must be between 0 and 10.")
+
     if hyperparameter_optimization_method == "gridsearch":
-        gridsearch = GridSearchCV(pipeline, param_grid=param_grid, cv=cv, n_jobs=-1, verbose=10, scoring=scoring, refit=refit)
+        gridsearch = GridSearchCV(pipeline, param_grid=param_grid, cv=cv, n_jobs=-1, verbose=verbose, scoring=scoring, refit=refit)
     elif hyperparameter_optimization_method == "randomsearch":
         gridsearch = RandomizedSearchCV(pipeline, param_distributions=param_grid, cv=cv, n_jobs=-1, verbose=10, scoring=scoring, refit=refit)
     else:
@@ -152,16 +156,16 @@ def run_feature_selection(
 
     gridsearch.fit(X, y)
 
-    for metric in scoring.keys():
-        mean_scores = gridsearch.cv_results_[f"mean_test_{metric}"]
-        std_scores = gridsearch.cv_results_[f"std_test_{metric}"]
-        print(f"\nResults for {metric}:")
-        for params, mean, std in zip(gridsearch.cv_results_["params"], mean_scores, std_scores):
-            print(f"params: {params} \n{metric.upper()}: {mean:.4f} ± {std:.4f}\n")
+    # for metric in scoring.keys():
+    #     mean_scores = gridsearch.cv_results_[f"mean_test_{metric}"]
+    #     std_scores = gridsearch.cv_results_[f"std_test_{metric}"]
+    #     print(f"\nResults for {metric}:")
+    #     for params, mean, std in zip(gridsearch.cv_results_["params"], mean_scores, std_scores):
+    #         print(f"params: {params} \n{metric.upper()}: {mean:.4f} ± {std:.4f}\n")
 
-    print(f"Best hyperparameters: {gridsearch.best_params_}")
-    print(f"Best AUC score: {gridsearch.best_score_:.4f}")
-
+    # print(f"Best hyperparameters: {gridsearch.best_params_}")
+    # print(f"Best AUC score: {gridsearch.best_score_:.4f}")
+    
     write_hyperparameters_to_file(gridsearch.best_params_, output_path_hyperparams)
     save_model(gridsearch.best_estimator_.named_steps["classifier"], output_path_model)
     write_feature_importance_to_file(
@@ -179,44 +183,10 @@ def run_feature_selection(
         gridsearch.cv_results_,
         columns=["mean_test_accuracy", "std_test_accuracy", "mean_test_precision", "std_test_precision", "mean_test_recall", "std_test_recall", "mean_test_f1", "std_test_f1"],
         index=[feature_selection_method],
-    )
-
-    # # Check if file exists
-    # if os.path.exists(output_path_scores):
-    #     # Load existing file
-    #     old_score_df = pd.read_csv(output_path_scores, index_col=0, header=0)
-
-    #     # Ensure consistent columns
-    #     if set(old_score_df.columns) == set(all_scores.columns):
-    #         # Append and save
-    #         merged_scores = pd.concat([old_score_df, all_scores], ignore_index=False)
-    #         merged_scores.to_csv(output_path_scores, index=True, header=True)
-    #     else:
-    #         raise ValueError("Column mismatch between new data and existing file.")
-    # else:
+    ).round(4)
     os.makedirs(os.path.dirname(output_path_scores), exist_ok=True)
     all_scores.to_csv(output_path_scores, index=True, header=True)
 
-    # all_scores = gridsearch.cv_results_
-    # all_scores_df = pd.DataFrame([all_scores])
-    # # add the model name as the first column
-    # all_scores_df.insert(0, "model", [feature_selection_method] * len(all_scores_df))
-
-    # # Check if file exists
-    # if os.path.exists(output_path_scores):
-    #     # Load existing file
-    #     existing_df = pd.read_csv(output_path_scores)
-
-    #     # Ensure consistent columns
-    #     if set(existing_df.columns) == set(all_scores_df.columns):
-    #         # Append and save
-    #         updated_df = pd.concat([existing_df, all_scores_df], ignore_index=True)
-    #         updated_df.to_csv(output_path_scores, index=False)
-    #     else:
-    #         raise ValueError("Column mismatch between new data and existing file.")
-    # else:
-    #     # Save new DataFrame as a new file with headers
-    #     all_scores_df.to_csv(output_path_scores, index=False)
 
 if __name__ == "__main__":
     import argparse

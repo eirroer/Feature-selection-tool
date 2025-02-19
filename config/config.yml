@@ -56,6 +56,7 @@ preprocessing:
 feature_selection:
   hyperparameter_optimization_method: "gridsearch" # or "randomsearch"
   cv: 2
+  verbose: 2
   refit: "roc_auc" # or "accuracy", "precision", "recall", "f1"
   
   random_forest:
