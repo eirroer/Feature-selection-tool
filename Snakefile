@@ -13,4 +13,5 @@ rule all:
         expand("results/{model}/{model}_feature_importance.png", model=["random_forest", "xgboost"]),
         expand("results/{model}/{model}_hyperparameters.csv", model=["random_forest", "xgboost"]),
         expand("results/{model}/{model}_model.pkl", model=["random_forest", "xgboost"]),
+        "results/all_model_scores.csv",
         "results/pca_plot.png",
