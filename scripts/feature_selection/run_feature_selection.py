@@ -60,7 +60,6 @@ def plot_feature_importance(X, feature_importances, output_path_plot):
     os.makedirs(os.path.dirname(output_path_plot), exist_ok=True)
     plt.savefig(output_path_plot, dpi=300, format="png")
 
-
 def hyperopt(X, y, model, space, max_evals):
     """Perform hyperopt search cross validation."""
     def objective(params):
@@ -150,7 +149,7 @@ def run_feature_selection(
     if hyperparameter_optimization_method == "gridsearch":
         gridsearch = GridSearchCV(pipeline, param_grid=param_grid, cv=cv, n_jobs=-1, verbose=verbose, scoring=scoring, refit=refit)
     elif hyperparameter_optimization_method == "randomsearch":
-        gridsearch = RandomizedSearchCV(pipeline, param_distributions=param_grid, cv=cv, n_jobs=-1, verbose=10, scoring=scoring, refit=refit)
+        gridsearch = RandomizedSearchCV(pipeline, param_distributions=param_grid, cv=cv, n_jobs=-1, verbose=verbose, scoring=scoring, refit=refit)
     else:
         raise ValueError(f"Hyperparameter optimization method {hyperparameter_optimization_method} not supported.")
 
@@ -165,7 +164,7 @@ def run_feature_selection(
 
     # print(f"Best hyperparameters: {gridsearch.best_params_}")
     # print(f"Best AUC score: {gridsearch.best_score_:.4f}")
-    
+
     write_hyperparameters_to_file(gridsearch.best_params_, output_path_hyperparams)
     save_model(gridsearch.best_estimator_.named_steps["classifier"], output_path_model)
     write_feature_importance_to_file(
@@ -181,7 +180,18 @@ def run_feature_selection(
 
     all_scores = pd.DataFrame(
         gridsearch.cv_results_,
-        columns=["mean_test_accuracy", "std_test_accuracy", "mean_test_precision", "std_test_precision", "mean_test_recall", "std_test_recall", "mean_test_f1", "std_test_f1"],
+        columns=[
+            "mean_test_roc_auc",
+            "std_test_roc_auc",
+            "mean_test_accuracy",
+            "std_test_accuracy",
+            "mean_test_precision",
+            "std_test_precision",
+            "mean_test_recall",
+            "std_test_recall",
+            "mean_test_f1",
+            "std_test_f1",
+        ],
         index=[feature_selection_method],
     ).round(4)
     os.makedirs(os.path.dirname(output_path_scores), exist_ok=True)

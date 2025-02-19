@@ -1,2 +1,2 @@
-,mean_test_accuracy,std_test_accuracy,mean_test_precision,std_test_precision,mean_test_recall,std_test_recall,mean_test_f1,std_test_f1
-random_forest,0.4965,0.0177,0.4953,0.0174,0.495,0.017,0.4919,0.0142
+,mean_test_roc_auc,std_test_roc_auc,mean_test_accuracy,std_test_accuracy,mean_test_precision,std_test_precision,mean_test_recall,std_test_recall,mean_test_f1,std_test_f1
+random_forest,0.4948,0.0204,0.4965,0.0177,0.4953,0.0174,0.495,0.017,0.4919,0.0142
