@@ -17,6 +17,10 @@ from NormalizerVST import NormalizerVST
 from NormalizerTMM import NormalizerTMM
 from NormalizerDESEQ2 import NormalizerDESEQ2
 from sklearn.metrics import make_scorer, precision_score, recall_score, f1_score
+from sklearn.metrics import roc_curve, auc
+from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import RocCurveDisplay
+
 
 def write_hyperparameters_to_file(best_params: dict, output_path_hyperparams):
     """Write the best hyperparameters to a file."""
@@ -85,6 +89,7 @@ def run_feature_selection(
     output_path_hyperparams: str,
     output_path_model: str,
     output_path_scores: str,
+    output_path_roc_curve: str,
 ):
     # read the configuration file
     with open(config_file, "r") as file:
@@ -167,24 +172,17 @@ def run_feature_selection(
     if verbose not in range(0, 11):
         raise ValueError(f"Verbose must be between 0 and 10.")
 
+    n_splits = cv
+    cv_strategy = StratifiedKFold(n_splits=n_splits)  # Can be any cross-validation strategy
+
     if hyperparameter_optimization_method == "gridsearch":
-        gridsearch = GridSearchCV(pipeline, param_grid=param_grid, cv=cv, n_jobs=-1, verbose=verbose, scoring=scoring, refit=refit)
+        gridsearch = GridSearchCV(pipeline, param_grid=param_grid, cv=cv_strategy, n_jobs=-1, verbose=verbose, scoring=scoring, refit=refit)
     elif hyperparameter_optimization_method == "randomsearch":
-        gridsearch = RandomizedSearchCV(pipeline, param_distributions=param_grid, cv=cv, n_jobs=-1, verbose=verbose, scoring=scoring, refit=refit)
+        gridsearch = RandomizedSearchCV(pipeline, param_distributions=param_grid, cv=cv_strategy, n_jobs=-1, verbose=verbose, scoring=scoring, refit=refit)
     else:
         raise ValueError(f"Hyperparameter optimization method {hyperparameter_optimization_method} not supported.")
 
-    gridsearch.fit(X, y)
-
-    # for metric in scoring.keys():
-    #     mean_scores = gridsearch.cv_results_[f"mean_test_{metric}"]
-    #     std_scores = gridsearch.cv_results_[f"std_test_{metric}"]
-    #     print(f"\nResults for {metric}:")
-    #     for params, mean, std in zip(gridsearch.cv_results_["params"], mean_scores, std_scores):
-    #         print(f"params: {params} \n{metric.upper()}: {mean:.4f} ± {std:.4f}\n")
-
-    # print(f"Best hyperparameters: {gridsearch.best_params_}")
-    # print(f"Best AUC score: {gridsearch.best_score_:.4f}")
+    gridsearch.fit(X, y) # Fit the model
 
     write_hyperparameters_to_file(gridsearch.best_params_, output_path_hyperparams)
     save_model(gridsearch.best_estimator_.named_steps["classifier"], output_path_model)
@@ -199,23 +197,8 @@ def run_feature_selection(
         output_path_plot,
     )
 
-    print("cv_results_ columns:")
-    print(pd.DataFrame(gridsearch.cv_results_).columns)
-
-    # print("best_score := gridsearch.best_score_")
-    # print(gridsearch.best_score_)
-
-    # print all scores of the 
-    print("gridsearch.cv_results_['mean_test_roc_auc']")
-    print(gridsearch.cv_results_["mean_test_roc_auc"][gridsearch.best_index_])
-
-    # best_mean_scores = {
-    #     metric: gridsearch.cv_results_[f"mean_test_{metric}"][gridsearch.best_index_]
-    #     for metric in scoring
-    # }
-    # print("best_mean_scores")
-    # print(best_mean_scores)
-    best_index = gridsearch.best_index_  # Get the best index (integer)
+    # Save the scores
+    best_index = gridsearch.best_index_
     best_results = {key: values[best_index] for key, values in gridsearch.cv_results_.items()}
 
     all_scores = pd.DataFrame(
@@ -241,6 +224,75 @@ def run_feature_selection(
 
     os.makedirs(os.path.dirname(output_path_scores), exist_ok=True)
     all_scores.to_csv(output_path_scores, index=True, header=True)
+
+    # Plot the ROC curve
+    best_model = gridsearch.best_estimator_.named_steps["classifier"]
+
+    # Cross-validation setup
+    cv = gridsearch.cv
+
+    tprs = []
+    aucs = []
+    mean_fpr = np.linspace(0, 1, 100)
+
+    X = X.to_numpy()
+
+    fig, ax = plt.subplots(figsize=(6, 6))
+    for fold, (train, test) in enumerate(cv.split(X, y)):
+        best_model.fit(X[train], y[train])
+        viz = RocCurveDisplay.from_estimator(
+            best_model,
+            X[test],
+            y[test],
+            name=f"ROC fold {fold}",
+            alpha=0.3,
+            lw=1,
+            ax=ax,
+            plot_chance_level=(fold == n_splits - 1),
+        )
+        interp_tpr = np.interp(mean_fpr, viz.fpr, viz.tpr)
+        interp_tpr[0] = 0.0
+        tprs.append(interp_tpr)
+        aucs.append(viz.roc_auc)
+
+    # Compute mean and std deviation for the ROC curve
+    mean_tpr = np.mean(tprs, axis=0)
+    mean_tpr[-1] = 1.0
+    mean_auc = auc(mean_fpr, mean_tpr)
+    std_auc = np.std(aucs)
+
+    ax.plot(
+        mean_fpr,
+        mean_tpr,
+        color="b",
+        label=r"Mean ROC (AUC = %0.2f ± %0.2f)" % (mean_auc, std_auc),
+        lw=2,
+        alpha=0.8,
+    )
+
+    # Confidence band (±1 std dev)
+    std_tpr = np.std(tprs, axis=0)
+    tprs_upper = np.minimum(mean_tpr + std_tpr, 1)
+    tprs_lower = np.maximum(mean_tpr - std_tpr, 0)
+    ax.fill_between(
+        mean_fpr,
+        tprs_lower,
+        tprs_upper,
+        color="grey",
+        alpha=0.2,
+        label=r"$\pm$ 1 std. dev.",
+    )
+
+    ax.set(
+        xlabel="False Positive Rate",
+        ylabel="True Positive Rate",
+        title="Mean ROC Curve with Variability",
+    )
+    ax.legend(loc="lower right")
+    fig.suptitle(f"{feature_selection_method}: training", fontsize=16)
+
+    os.makedirs(os.path.dirname(output_path_roc_curve), exist_ok=True)
+    plt.savefig(output_path_roc_curve, dpi=300, format="png")
 
 
 if __name__ == "__main__":
@@ -301,6 +353,12 @@ if __name__ == "__main__":
         help="The output path to save the scores.",
         required=False,
     )
+    parser.add_argument(
+        "--output_path_roc_curve",
+        type=str,
+        help="The output path to save the ROC curve plot.",
+        required=False,
+    )
 
     args = parser.parse_args()
 
@@ -314,4 +372,5 @@ if __name__ == "__main__":
         args.output_path_hyperparams,
         args.output_path_model,
         args.output_path_scores,
+        args.output_path_roc_curve,
     )
