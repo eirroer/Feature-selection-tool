@@ -7,10 +7,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.feature_selection import RFE
 from hyperopt import fmin, tpe, hp, Trials, STATUS_OK, space_eval
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.model_selection import cross_val_score
-from sklearn.feature_selection import SelectFromModel
 from sklearn.pipeline import Pipeline
 from NormalizerVST import NormalizerVST
 from NormalizerTMM import NormalizerTMM
@@ -137,14 +138,17 @@ def run_feature_selection(
         model = RandomForestClassifier(random_state=42)
     elif feature_selection_method == "xgboost":
         model = XGBClassifier(random_state=42)
+    # elif feature_selection_method == "rfe_lr":
+    #     model = RFE(LogisticRegression('elasticnet'), n_features_to_select=1)
     else:
         raise ValueError(f"Feature selection method {feature_selection_method} not supported.")
     pipeline_steps.append(("classifier", model))
-    
+
     pipeline = Pipeline(pipeline_steps)
 
     scoring = {
         "roc_auc": "roc_auc",
+        "balanced_accuracy": "balanced_accuracy",
         "accuracy": "accuracy",
         "precision": make_scorer(precision_score, average="macro"),
         "recall": make_scorer(recall_score, average="macro"),
@@ -195,11 +199,32 @@ def run_feature_selection(
         output_path_plot,
     )
 
+    print("cv_results_ columns:")
+    print(pd.DataFrame(gridsearch.cv_results_).columns)
+
+    # print("best_score := gridsearch.best_score_")
+    # print(gridsearch.best_score_)
+
+    # print all scores of the 
+    print("gridsearch.cv_results_['mean_test_roc_auc']")
+    print(gridsearch.cv_results_["mean_test_roc_auc"][gridsearch.best_index_])
+
+    # best_mean_scores = {
+    #     metric: gridsearch.cv_results_[f"mean_test_{metric}"][gridsearch.best_index_]
+    #     for metric in scoring
+    # }
+    # print("best_mean_scores")
+    # print(best_mean_scores)
+    best_index = gridsearch.best_index_  # Get the best index (integer)
+    best_results = {key: values[best_index] for key, values in gridsearch.cv_results_.items()}
+
     all_scores = pd.DataFrame(
-        gridsearch.cv_results_,
+        best_results,
         columns=[
             "mean_test_roc_auc",
             "std_test_roc_auc",
+            "mean_test_balanced_accuracy",
+            "std_test_balanced_accuracy",
             "mean_test_accuracy",
             "std_test_accuracy",
             "mean_test_precision",
@@ -211,6 +236,9 @@ def run_feature_selection(
         ],
         index=[feature_selection_method],
     ).round(4)
+    # change the '_test_' to '_CV_' in the column names
+    all_scores.columns = [col.replace("_test_", "_CV_") for col in all_scores.columns]
+
     os.makedirs(os.path.dirname(output_path_scores), exist_ok=True)
     all_scores.to_csv(output_path_scores, index=True, header=True)
 

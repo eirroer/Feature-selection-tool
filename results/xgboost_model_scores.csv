@@ -1,2 +1,2 @@
-,mean_test_roc_auc,std_test_roc_auc,mean_test_accuracy,std_test_accuracy,mean_test_precision,std_test_precision,mean_test_recall,std_test_recall,mean_test_f1,std_test_f1
-xgboost,0.5243,0.0221,0.533,0.0165,0.5327,0.0163,0.5325,0.0161,0.532,0.0157
+,mean_CV_roc_auc,std_CV_roc_auc,mean_CV_balanced_accuracy,std_CV_balanced_accuracy,mean_CV_accuracy,std_CV_accuracy,mean_CV_precision,std_CV_precision,mean_CV_recall,std_CV_recall,mean_CV_f1,std_CV_f1
+xgboost,0.5243,0.0221,0.5325,0.0161,0.533,0.0165,0.5327,0.0163,0.5325,0.0161,0.532,0.0157
