@@ -9,14 +9,16 @@ from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_selection import RFE
-from hyperopt import fmin, tpe, hp, Trials, STATUS_OK, space_eval
+# from hyperopt import fmin, tpe, hp, Trials, STATUS_OK, space_eval
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.model_selection import cross_val_score
 from sklearn.pipeline import Pipeline
 from NormalizerVST import NormalizerVST
 from NormalizerTMM import NormalizerTMM
 from NormalizerDESEQ2 import NormalizerDESEQ2
-from sklearn.metrics import make_scorer, precision_score, recall_score, f1_score
+from sklearn.metrics import classification_report, roc_curve, confusion_matrix, roc_auc_score
+from sklearn.metrics import accuracy_score, balanced_accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import make_scorer
 from sklearn.metrics import roc_curve, auc
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import RocCurveDisplay
@@ -140,8 +142,10 @@ def run_feature_selection(
 
     model = None
     if feature_selection_method == "random_forest":
+        model_name = "Random Forest"
         model = RandomForestClassifier(random_state=42)
     elif feature_selection_method == "xgboost":
+        model_name = "XGBoost"
         model = XGBClassifier(random_state=42)
     # elif feature_selection_method == "rfe_lr":
     #     model = RFE(LogisticRegression('elasticnet'), n_features_to_select=1)
@@ -176,7 +180,7 @@ def run_feature_selection(
     cv_strategy = StratifiedKFold(n_splits=n_splits)  # Can be any cross-validation strategy
 
     if hyperparameter_optimization_method == "gridsearch":
-        gridsearch = GridSearchCV(pipeline, param_grid=param_grid, cv=cv_strategy, n_jobs=-1, verbose=verbose, scoring=scoring, refit=refit)
+        gridsearch = GridSearchCV(pipeline, param_grid=param_grid, cv=cv_strategy, n_jobs=-1, verbose=verbose, scoring=scoring, refit=refit, return_train_score=True)
     elif hyperparameter_optimization_method == "randomsearch":
         gridsearch = RandomizedSearchCV(pipeline, param_distributions=param_grid, cv=cv_strategy, n_jobs=-1, verbose=verbose, scoring=scoring, refit=refit)
     else:
@@ -200,8 +204,36 @@ def run_feature_selection(
     # Save the scores
     best_index = gridsearch.best_index_
     best_results = {key: values[best_index] for key, values in gridsearch.cv_results_.items()}
+    best_model = gridsearch.best_estimator_.named_steps["classifier"]
 
-    all_scores = pd.DataFrame(
+    y_true = y
+    y_pred = best_model.predict(X)
+    y_proba = best_model.predict_proba(X)[:, 1]
+
+    # Additional metrics
+    accuracy = accuracy_score(y_true, y_pred)
+    balanced_accuracy = balanced_accuracy_score(y_true, y_pred)
+    roc_auc = roc_auc_score(y_true, y_proba)
+    precision = precision_score(y_true, y_pred)
+    recall = recall_score(y_true, y_pred)
+    f1 = f1_score(y_true, y_pred)
+    
+
+    train_scores = pd.DataFrame(
+        [[roc_auc, balanced_accuracy, accuracy, precision, recall, f1]],
+        columns=[
+            "mean_train_roc_auc",
+            "mean_train_balanced_accuracy",
+            "mean_train_accuracy",
+            "mean_train_precision",
+            "mean_train_recall",
+            "mean_train_f1",
+        ],
+        index=[f"{model_name} (train)"],
+    ).round(4)
+
+
+    cv_scores = pd.DataFrame(
         best_results,
         columns=[
             "mean_test_roc_auc",
@@ -217,8 +249,12 @@ def run_feature_selection(
             "mean_test_f1",
             "std_test_f1",
         ],
-        index=[feature_selection_method],
+        # + [f"split{i}_test_{refit}" for i in range(n_splits)],
+        index=[f"{model_name} (CV)"],
     ).round(4)
+
+    all_scores = pd.concat([train_scores, cv_scores], axis=1)
+
     # change the '_test_' to '_CV_' in the column names
     all_scores.columns = [col.replace("_test_", "_CV_") for col in all_scores.columns]
 
@@ -289,7 +325,7 @@ def run_feature_selection(
         title="Mean ROC Curve with Variability",
     )
     ax.legend(loc="lower right")
-    fig.suptitle(f"{feature_selection_method}: training", fontsize=16)
+    fig.suptitle(f"{model_name}: cross-validation", fontsize=16)
 
     os.makedirs(os.path.dirname(output_path_roc_curve), exist_ok=True)
     plt.savefig(output_path_roc_curve, dpi=300, format="png")

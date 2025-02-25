@@ -85,8 +85,8 @@ rule merge_model_scores:
         random_forest_roc_curve="results/roc_curve_random_forest.png",
         xgboost_roc_curve="results/roc_curve_xgboost.png",
     output:
-        all_model_scores="results/all_best_model_scores_training.csv",
-        all_roc_curves="results/all_roc_curves_training.png",
+        all_model_scores="results/all_best_model_scores_CV.csv",
+        all_roc_curves="results/all_roc_curves_CV.png",
     run:
         # Prepare the command to run the external Python script
         cmd = [
