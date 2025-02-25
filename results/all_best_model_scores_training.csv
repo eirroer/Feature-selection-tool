@@ -1,3 +1,0 @@
-,mean_CV_roc_auc,std_CV_roc_auc,mean_CV_balanced_accuracy,std_CV_balanced_accuracy,mean_CV_accuracy,std_CV_accuracy,mean_CV_precision,std_CV_precision,mean_CV_recall,std_CV_recall,mean_CV_f1,std_CV_f1
-random_forest,0.5263,0.0193,0.5176,0.015,0.5189,0.0145,0.5177,0.015,0.5176,0.015,0.5153,0.0168
-xgboost,0.4892,0.0275,0.4852,0.0325,0.4858,0.0328,0.4852,0.0325,0.4852,0.0325,0.4848,0.0323
