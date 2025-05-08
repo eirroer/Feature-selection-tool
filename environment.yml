@@ -8,7 +8,6 @@ channels:
 dependencies:
   - python>=3.8
   - pandas
-  - typer[all]
   - numpy
   - scikit-learn
   - pyyaml
@@ -18,8 +17,8 @@ dependencies:
   - tqdm
   - pip
   - rnanorm
-  - rpy2
   - xgboost
+  - pickle
   - pip:
       - typing-extensions
       - pydeseq2

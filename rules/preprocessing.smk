@@ -41,9 +41,10 @@ rule read_and_split_train_test_data:
 
 rule threshold_filter_data:
     input:
-        count_train_data="data/count_train_data.csv"
+        count_train_data="data/count_train_data.csv",
+        metadata_train_data="data/metadata_train_data.csv",
     output:
-        threshold_filtered_data=temp("data/threshold_filtered_count_train_data.csv")
+        threshold_filtered_data="data/threshold_filtered_count_train_data.csv",
     log:
         "logs/threshold_filter_data.log"
     params:
@@ -55,9 +56,10 @@ rule threshold_filter_data:
         cmd = [
             "python", "{params.script}",
             "--count_file", input.count_train_data,
+            "--metadata_file", input.metadata_train_data,
             "--min_count", str(params.min_count),
             "--min_samples", str(params.min_samples),
-            "--output_path", output.threshold_filtered_data
+            "--output_path_count", output.threshold_filtered_data,
         ]
         # Log the command
         shell_cmd = " ".join(cmd)
@@ -100,7 +102,7 @@ rule plot_pca:
         normalized_count_train_data="data/normalized_count_train_data.csv",
         metadata_train_data="data/metadata_train_data.csv",
     output:
-        pca_plot="plots/pca_plot.png"
+        pca_plot="results/pca_plot.png"
     log:
         "logs/plot_pca.log"
     params:
