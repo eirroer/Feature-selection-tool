@@ -3,6 +3,21 @@ import pandas as pd
 import numpy as np
 from sklearn.feature_selection import VarianceThreshold
 
+def threshold_filter(count_data: pd.DataFrame, min_count, min_samples) -> pd.DataFrame:
+    """Filter out genes that have a count less than the min_count in min_samples samples."""
+
+    threshold_filtered_count_data = count_data.loc[:, (count_data > min_count).sum(axis=0) >= min_samples]
+
+    # print a lot of information
+    print(f"Original count data shape: {count_data.shape}")
+    print(f"Threshold filtered count data shape: {threshold_filtered_count_data.shape}")
+
+    # show removed genes
+    removed_genes = count_data.columns.difference(threshold_filtered_count_data.columns)
+    print(f"Removed genes: {removed_genes}")
+
+    return threshold_filtered_count_data
+
 
 def variance_filter(count_data: pd.DataFrame, threshold) -> pd.DataFrame:
     """Filter out genes that have a variance less than the threshold."""
@@ -69,6 +84,11 @@ def run_pre_filtering(count_data_file, config_file, output_path):
     count_data = pd.read_csv(count_data_file, delimiter=";", index_col=0, header=0)
 
     # Filter out genes based on the pre-filtering methods
+    if "threshold_filter" in pre_filter_methods:
+        min_count = pre_filter_params["threshold_filter"]["min_count"]
+        min_samples = pre_filter_params["threshold_filter"]["min_samples"]
+        count_data = threshold_filter(count_data, min_count, min_samples)
+
     if "variance_filter" in pre_filter_methods:
         threshold = pre_filter_params["variance_filter"]["threshold"]
         count_data = variance_filter(count_data, threshold)

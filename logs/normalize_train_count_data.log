@@ -1,6 +1,6 @@
 Running normalization...
-Count data file: data/threshold_filtered_count_train_data.csv
+Count data file: data/pre_filtered_count_data.csv
 Metadata file: data/metadata_train_data.csv
-Normalization methods: ['vst']
+Normalization methods: ['deseq2']
 Output path: data/normalized_count_train_data.csv
-Running VST normalization...
+Running DESeq2 normalization...

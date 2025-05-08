@@ -1,0 +1,14 @@
+Number of samples: 2606
+Number of features: 848
+Number of metadata columns: 5
+Metadata columns: ['sex', 'condition', 'histology', 'cancertype', 'stage']
+  Metadata_col_name Value  Count  Percentage
+0               sex     M    578       68.16
+1               sex     F    270       31.84
+2         condition    LC    433       51.06
+3         condition     C    415       48.94
+  Sex Condition  Count  Percentage
+0   F         C    135       50.00
+1   F        LC    135       50.00
+2   M        LC    298       51.56
+3   M         C    280       48.44

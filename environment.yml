@@ -11,14 +11,13 @@ dependencies:
   - numpy
   - scikit-learn
   - pyyaml
-  - rich
+  # - rich
   - matplotlib
   - seaborn
   - tqdm
   - pip
   - rnanorm
   - xgboost
-  - pickle
   - pip:
       - typing-extensions
       - pydeseq2

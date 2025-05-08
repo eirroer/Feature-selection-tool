@@ -9,3 +9,19 @@ counts_holdout_test_set: None
 metadata_holdout_test_set: None
 test_size: 0.2
 random_state: 42
+ID          hsa-let-7a-2-3p  hsa-let-7a-3p  ...  hsa-miR-99b-3p  hsa-miR-99b-5p
+SampleID                                    ...                                
+sample1                   0              0  ...              26            2950
+sample10                  0              6  ...              48             286
+sample100                 0             13  ...              10             323
+sample1000                0              7  ...              26            2457
+sample1001                0             22  ...              52             363
+
+[5 rows x 2606 columns]
+           sex condition        histology cancertype    stage
+SampleID                                                     
+sample1      F         C          control    control  Control
+sample10     M         C          control    control  Control
+sample100    M         C          control    control  Control
+sample1000   M        LC  Adenocarcinomas      NSCLC  Unknown
+sample1001   M         C          control    control  Control

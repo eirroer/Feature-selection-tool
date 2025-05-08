@@ -1,0 +1,17 @@
+digraph snakemake_dag {
+    graph[rankdir=LR, bgcolor=white, margin=0, labelloc="t", fontname="sans", fontsize=12];
+    node[shape=box, style=rounded, fontname=sans, fontsize=11, penwidth=2];
+    edge[penwidth=1, color=grey, fontname="sans", fontsize=10];
+
+	0[label = "plot_pca", color = "0.50 0.6 0.85"];
+	1[label = "normalize_train_count_data", color = "0.17 0.6 0.85"];
+	2[label = "pre_filter_data", color = "0.39 0.6 0.85"];
+	3[label = "read_and_split_train_test_data", color = "0.28 0.6 0.85"];
+
+	# Edge labels
+    1 -> 0 [label="Normalized counts"];
+    3 -> 0 [label="Metadata"];
+    2 -> 1 [label="Filtered counts"];
+    3 -> 1 [label="Metadata"];
+    3 -> 2 [label="Raw data"];
+}            

@@ -11,8 +11,24 @@ preprocessing:
     random_state: 42
 
   threshold_filter_params:
+    min_count: 10
+    min_samples: 3
+
+  pre_filter_methods:
+    threshold_filter:
+      use_method: True
       min_count: 10
       min_samples: 3
+    variance_filter:
+      use_method: False
+      threshold: 0.5
+    expr_percentile_filter:
+      use_method: False
+      threshold_percentile: 0.8
+    correlation_filter:
+      use_method: False
+      correlation_method: "spearman" # or "pearson", "kendall"
+      threshold: 0.9
 
   normalization_methods:
     tmm:
@@ -20,9 +36,9 @@ preprocessing:
     cpm:
       use_method: False
     vst:
-      use_method: True
-    deseq2:
       use_method: False
+    deseq2:
+      use_method: True
 
   scaling_methods_metadata: # Use only on metadata
     standard_scale:
@@ -41,21 +57,14 @@ preprocessing:
       n_components: 2
       color_by: "condition"
 
-  pre_filter_methods:
-    variance_filter:
-      use_method: False
-      threshold: 0.5
-    expr_percentile_filter:
-      use_method: False
-      threshold_percentile: 0.8
-    correlation_filter:
-      use_method: True
-      correlation_method: "spearman" # or "pearson", "kendall"
-      threshold: 0.9
 
 feature_selection:
-  hyperparameter_optimization_method: "gridsearch" # or "randomsearch"
-  cv: 2
+  hyperparameter_optimization_method: "randomsearch" # or "randomsearch"
+  use_models:
+    - random_forest
+    - xgboost
+  cv: 5
+  cv_strategy: "stratifiedkfold" # or "kfold"
   verbose: 2
   refit: "roc_auc" # or "accuracy", "precision", "recall", "f1"
   
@@ -73,6 +82,14 @@ feature_selection:
         # min_samples_split: [2, 5, 10]
 
     randomsearch:
+      param_dist:
+        # n_estimators:
+        #   type: "np.arange"
+        #   start: 100
+        #   stop: 1000
+        #   step: 100
+
+
       param_grid:
         n_estimators: [50]
         max_depth: [None]
@@ -83,27 +100,7 @@ feature_selection:
         # max_depth: [None, 10, 20, 30]
         # max_features: [0.1, 1.0]
         # min_samples_split: [2, 5, 10]
-      
-    hyperopt:
-      param_grid:
-        criterion:
-          parameter_type: choice
-          values: ["entropy", "gini"]
-        max_depth:
-          parameter_type: quniform
-          values: [10, 1200, 10]
-        max_features:
-          parameter_type: choice
-          values: ["sqrt", "log2", None]
-        min_samples_leaf: 
-          parameter_type: uniform
-          values: [0, 0.5]
-        min_samples_split: 
-          parameter_type: uniform
-          values: [0, 1]
-        n_estimators:
-          parameter_type: choice
-          values: [10, 50, 300, 750, 1200, 1300, 1500]
+
 
   xgboost:
     gridsearch: 
@@ -146,52 +143,3 @@ feature_selection:
       # colsample_bynode: [0.5, 0.7, 0.9, 1.0]
       # reg_lambda: [0, 1, 10, 100]
       # reg_alpha: [0, 0.1, 1, 10]
-
-    hyperopt:
-      param_grid:
-        max_depth:
-          parameter_type: choice
-          values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-        eta:
-          parameter_type: uniform
-          values: [0, 1]
-        gamma:
-          parameter_type: uniform
-          values: [0, 100]
-        reg_alpha:
-          parameter_type: uniform
-          values: [0.0000001, 10]
-        reg_lambda:
-          parameter_type: uniform
-          values: [0, 1]
-        colsample_bytree:
-          parameter_type: uniform
-          values: [0.5, 1]
-        colsample_bynode:
-          parameter_type: uniform
-          values: [0.5, 1]
-        colsample_bylevel:
-          parameter_type: uniform
-          values: [0.5, 1]
-        n_estimators:
-          parameter_type: choice
-          values: [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 310, 320, 330, 340, 350, 360, 370, 380, 390, 400, 410, 420, 430, 440, 450, 460, 470, 480, 490, 500, 510, 520, 530, 540, 550, 560, 570, 580, 590, 600, 610, 620, 630, 640, 650, 660, 670, 680, 690, 700, 710, 720, 730, 740, 750, 760, 770, 780, 790, 800, 810, 820, 830, 840, 850, 860, 870, 880, 890, 900, 910, 920, 930, 940, 950, 960, 970, 980, 990]
-        min_child_weight:
-          parameter_type: choice
-          values: [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        max_delta_step:
-          parameter_type: choice
-          values: [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        subsample:
-          parameter_type: uniform
-          values: [0.5, 1]
-        # objective:
-        #   parameter_type: fixed
-        #   values: "binary:logistic"
-        # eval_metric:
-        #   parameter_type: fixed
-        #   values: "aucpr"
-        # seed:
-        #   parameter_type: fixed
-        #   values: 44
-    

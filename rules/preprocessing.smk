@@ -39,27 +39,51 @@ rule read_and_split_train_test_data:
         # Run the command and redirect stdout and stderr to the log file
         shell(" ".join(cmd) + " > {log} 2>&1")
 
-rule threshold_filter_data:
+# rule filter_counts_by_metadata:
+#     input:
+#         count_train_data="data/count_train_data.csv",
+#         metadata_train_data="data/metadata_train_data.csv"
+#     output:
+#         filtered_count_train_data="data/filtered_count_train_data.csv"
+#     log:
+#         "logs/filter_on_metadata.log"
+#     params:
+#         script="scripts/filter_on_metadata.py",
+#         filter_column=config["preprocessing"]["filter_on_metadata"]["filter_column"],
+#         filter_value=config["preprocessing"]["filter_on_metadata"]["filter_value"]
+#     run:
+#         # Prepare the command to run the external Python script
+#         cmd = [
+#             "python", "{params.script}",
+#             "--count_file", input.count_train_data,
+#             "--metadata_file", input.metadata_train_data,
+#             "--filter_column", params.filter_column,
+#             "--filter_value", params.filter_value,
+#             "--output_path", output.filtered_count_train_data
+#         ]
+#         # Log the command
+#         shell_cmd = " ".join(cmd)
+#         print(f"Running command: {shell_cmd}")
+#         # Run the command and redirect stdout and stderr to the log file
+#         shell(shell_cmd + " > {log} 2>&1")
+
+rule pre_filter_data:
     input:
         count_train_data="data/count_train_data.csv",
-        metadata_train_data="data/metadata_train_data.csv",
+        config_file="config/config.yml"
     output:
-        threshold_filtered_data="data/threshold_filtered_count_train_data.csv",
+        pre_filtered_data="data/pre_filtered_count_data.csv"
     log:
-        "logs/threshold_filter_data.log"
+        "logs/pre_filter_data.log"
     params:
-        script="scripts/threshold_filter.py",
-        min_count=config["preprocessing"]["threshold_filter_params"]["min_count"],
-        min_samples=config["preprocessing"]["threshold_filter_params"]["min_samples"],
+        script="scripts/pre_filter.py",
     run:
         # Prepare the command to run the external Python script
         cmd = [
             "python", "{params.script}",
             "--count_file", input.count_train_data,
-            "--metadata_file", input.metadata_train_data,
-            "--min_count", str(params.min_count),
-            "--min_samples", str(params.min_samples),
-            "--output_path_count", output.threshold_filtered_data,
+            "--config_file", input.config_file,
+            "--output_path", output.pre_filtered_data
         ]
         # Log the command
         shell_cmd = " ".join(cmd)
@@ -67,9 +91,10 @@ rule threshold_filter_data:
         # Run the command and redirect stdout and stderr to the log file
         shell(shell_cmd + " > {log} 2>&1")
 
+
 rule normalize_train_count_data:
     input:
-        threshold_filter_data="data/threshold_filtered_count_train_data.csv",
+        pre_filtered_data="data/pre_filtered_count_data.csv",
         metadata_train_data="data/metadata_train_data.csv"
     output:
         normalized_count_train_data="data/normalized_count_train_data.csv"
@@ -85,7 +110,7 @@ rule normalize_train_count_data:
         # Prepare the command to run the external Python script
         cmd = [
             "python", "{params.script}",
-            "--count_file", input.threshold_filter_data,
+            "--count_file", input.pre_filtered_data,
             "--metadata_file", input.metadata_train_data,
             "--normalization_methods", " ".join(params.normalization_methods),
             "--output_path", output.normalized_count_train_data
@@ -125,27 +150,3 @@ rule plot_pca:
         # Run the command and redirect stdout and stderr to the log file
         shell(shell_cmd + " > {log} 2>&1")
 
-
-rule pre_filter_data:
-    input:
-        normalized_count_train_data="data/normalized_count_train_data.csv",
-        config_file="config/config.yml"
-    output:
-        pre_filtered_data="data/pre_filtered_normalized_count_train_data.csv"
-    log:
-        "logs/pre_filter_data.log"
-    params:
-        script="scripts/pre_filter.py",
-    run:
-        # Prepare the command to run the external Python script
-        cmd = [
-            "python", "{params.script}",
-            "--count_file", input.normalized_count_train_data,
-            "--config_file", input.config_file,
-            "--output_path", output.pre_filtered_data
-        ]
-        # Log the command
-        shell_cmd = " ".join(cmd)
-        print(f"Running command: {shell_cmd}")
-        # Run the command and redirect stdout and stderr to the log file
-        shell(shell_cmd + " > {log} 2>&1")

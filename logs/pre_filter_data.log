@@ -1,4 +1,13 @@
 Running pre-filtering...
-Count data file: data/normalized_count_train_data.csv
-Output path: data/pre_filtered_normalized_count_train_data.csv
-Correlation filtering all genes with a correlation greater than 0.9, using the spearman method
+Count data file: data/count_train_data.csv
+Output path: data/pre_filtered_count_data.csv
+Original count data shape: (848, 2606)
+Threshold filtered count data shape: (848, 1088)
+Removed genes: Index(['hsa-let-7a-2-3p', 'hsa-let-7c-3p', 'hsa-let-7e-3p', 'hsa-let-7g-3p',
+       'hsa-miR-1-5p', 'hsa-miR-100-3p', 'hsa-miR-101-2-5p', 'hsa-miR-101-5p',
+       'hsa-miR-10226', 'hsa-miR-10392-3p',
+       ...
+       'hsa-miR-9851-3p', 'hsa-miR-9851-5p', 'hsa-miR-9898', 'hsa-miR-9899',
+       'hsa-miR-9900', 'hsa-miR-9901', 'hsa-miR-9902', 'hsa-miR-9983-3p',
+       'hsa-miR-9986', 'hsa-miR-99a-3p'],
+      dtype='object', length=1518)

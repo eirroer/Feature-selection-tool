@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from InputFormatChecker import InputFormatChecker
 
+
 def preprocess(
             count_file, 
             metadata_file, 
@@ -26,6 +27,9 @@ def preprocess(
     count_data.index.name = "SampleID"
     metadata = pd.read_csv(metadata_file, delimiter=";", index_col=0, header=0)
     metadata.index.name = "SampleID"
+
+    print(count_data.head())
+    print(metadata.head())
 
     if counts_holdout_test_set and metadata_holdout_test_set:
         count_train_data = count_data
