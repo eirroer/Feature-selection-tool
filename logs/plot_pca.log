@@ -1,12 +1,11 @@
-qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in ""
 Performing PCA with 2 components
             hsa-let-7a-3p  hsa-let-7a-5p  ...  hsa-miR-99b-3p  hsa-miR-99b-5p
 SampleID                                  ...                                
-sample108       18.450749    6236.353306  ...       13.838062     4335.926115
-sample852      110.129036    8080.896787  ...       21.453708     1793.530013
-sample1038       0.000000    2159.225083  ...        5.354083      391.612909
-sample321       10.573854     680.251274  ...        2.349745      115.137521
-sample75         0.000000    2892.746293  ...       11.393941      781.361406
+sample108       25.239884    8531.080814  ...       18.929913     5931.372755
+sample852      224.066487   16441.242201  ...       43.649316     3649.082782
+sample1038       0.000000    3503.663767  ...        8.687795      635.450177
+sample321       15.286832     983.452854  ...        3.397074      166.456614
+sample75         0.000000    7609.976320  ...       29.974153     2055.535189
 
 [5 rows x 1088 columns]
            sex condition histology cancertype      stage
@@ -16,17 +15,17 @@ sample852    F         C   control    control    Control
 sample1038   M         C   control    control    Control
 sample321    M        LC    Others     Others  Localized
 sample75     F         C   control    control    Control
-                      PC1           PC2
-SampleID                               
-sample108  -132414.054045 -68405.833851
-sample852  -122692.346454 -88700.939587
-sample1038  126885.295305  10788.743831
-sample321      250.287382  -9932.457191
-sample75   -128248.576234  -2266.792968
-                      PC1           PC2 condition
-SampleID                                         
-sample108  -132414.054045 -68405.833851         C
-sample852  -122692.346454 -88700.939587         C
-sample1038  126885.295305  10788.743831         C
-sample321      250.287382  -9932.457191        LC
-sample75   -128248.576234  -2266.792968         C
+                      PC1            PC2
+SampleID                                
+sample108  -115442.404209 -176858.880662
+sample852   -72657.832691 -167720.549109
+sample1038  262249.820648  159176.252245
+sample321    59707.842010   22046.611588
+sample75   -153335.053213   56637.381256
+                      PC1            PC2 condition
+SampleID                                          
+sample108  -115442.404209 -176858.880662         C
+sample852   -72657.832691 -167720.549109         C
+sample1038  262249.820648  159176.252245         C
+sample321    59707.842010   22046.611588        LC
+sample75   -153335.053213   56637.381256         C

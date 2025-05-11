@@ -1,6 +1,6 @@
 --Arguments received--
-count_file: mock_data_lc/lc_mirna_counts.csv
-metadata_file: mock_data_lc/lc_dataset.csv
+count_file: ../mock_data_lc/lc_mirna_counts.csv
+metadata_file: ../mock_data_lc/lc_dataset.csv
 count_train_output_path: data/count_train_data.csv
 metadata_train_output_path: data/metadata_train_data.csv
 count_test_output_path: data/count_test_data.csv
@@ -9,19 +9,10 @@ counts_holdout_test_set: None
 metadata_holdout_test_set: None
 test_size: 0.2
 random_state: 42
-ID          hsa-let-7a-2-3p  hsa-let-7a-3p  ...  hsa-miR-99b-3p  hsa-miR-99b-5p
-SampleID                                    ...                                
-sample1                   0              0  ...              26            2950
-sample10                  0              6  ...              48             286
-sample100                 0             13  ...              10             323
-sample1000                0              7  ...              26            2457
-sample1001                0             22  ...              52             363
-
-[5 rows x 2606 columns]
-           sex condition        histology cancertype    stage
-SampleID                                                     
-sample1      F         C          control    control  Control
-sample10     M         C          control    control  Control
-sample100    M         C          control    control  Control
-sample1000   M        LC  Adenocarcinomas      NSCLC  Unknown
-sample1001   M         C          control    control  Control
+Reading count data from ../mock_data_lc/lc_mirna_counts.csv
+Reading metadata from ../mock_data_lc/lc_dataset.csv
+Splitting data into train and test sets with test size 0.2 and random state 42
+Count train data shape: (848, 2606)
+Metadata train data shape: (848, 5)
+Count test data shape: (213, 2606)
+Metadata test data shape: (213, 5)

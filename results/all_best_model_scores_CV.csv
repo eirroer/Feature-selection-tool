@@ -1,5 +1,5 @@
 ,mean_train_roc_auc,mean_train_balanced_accuracy,mean_train_accuracy,mean_train_precision,mean_train_recall,mean_train_f1,mean_CV_roc_auc,std_CV_roc_auc,mean_CV_balanced_accuracy,std_CV_balanced_accuracy,mean_CV_accuracy,std_CV_accuracy,mean_CV_precision,std_CV_precision,mean_CV_recall,std_CV_recall,mean_CV_f1,std_CV_f1
-Random Forest (train),0.9972,0.966,0.9658,0.9764,0.9561,0.9662,,,,,,,,,,,,
-Random Forest (CV),,,,,,,0.5065,0.0161,0.5043,0.0208,0.5047,0.0212,0.5045,0.0209,0.5043,0.0208,0.504,0.0205
-XGBoost (train),0.9975,0.9742,0.9741,0.9813,0.9677,0.9744,,,,,,,,,,,,
-XGBoost (CV),,,,,,,0.5151,0.0055,0.5027,0.0035,0.5035,0.0035,0.5027,0.0035,0.5027,0.0035,0.5023,0.0036
+Random Forest (train),0.9898,0.9516,0.9517,0.9516,0.9538,0.9527,,,,,,,,,,,,
+Random Forest (CV),,,,,,,0.4973,0.0374,0.4891,0.0325,0.4906,0.0322,0.4884,0.0341,0.4891,0.0325,0.4864,0.0343
+XGBoost (train),0.9923,0.9554,0.9552,0.9647,0.9469,0.9557,,,,,,,,,,,,
+XGBoost (CV),,,,,,,0.5003,0.0373,0.5057,0.0169,0.5059,0.017,0.5057,0.0169,0.5057,0.0169,0.5053,0.017

@@ -1,6 +1,5 @@
 Running normalization...
 Count data file: data/pre_filtered_count_data.csv
 Metadata file: data/metadata_train_data.csv
-Normalization methods: ['deseq2']
+Normalization methods: ['cpm']
 Output path: data/normalized_count_train_data.csv
-Running DESeq2 normalization...

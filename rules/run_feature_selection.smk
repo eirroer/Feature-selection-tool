@@ -15,7 +15,7 @@ rule random_forest:
     log:
         "logs/random_forest_gridsearch.log"
     params:
-        script="scripts/feature_selection/run_feature_selection.py",
+        script="scripts/search/run_search.py",
         config_file="config/config.yml",
         feature_selection_method="random_forest",
     run:
@@ -57,7 +57,7 @@ rule xgboost:
     log:
         "logs/xgboost_gridsearch.log"
     params:
-        script="scripts/feature_selection/run_feature_selection.py",
+        script="scripts/search/run_search.py",
         config_file="config/config.yml",
         feature_selection_method="xgboost"
     run:
@@ -80,35 +80,7 @@ rule xgboost:
         shell_cmd = " ".join(cmd)
         print(f"Running command: {shell_cmd}")
         # Run the command and redirect stdout and stderr to the log file
-        # shell(shell_cmd + " > {log} 2>&1")
-        shell(shell_cmd)
-
-# rule plot_roc_curves:
-#     input:
-#         config_file="config/config.yml",
-#         best_models=expand("results/{model}/{model}_model.pkl", model=["random_forest", "xgboost"]),
-#     output:
-#         all_roc_curves="results/all_roc_curves_CV.png",
-
-#     params:
-#         script="scripts/plot_roc_curves.py",
-#         model_names = ["random_forest", "xgboost"]
-#     run:
-#         best_models = [str(item) for item in input.best_models]
-#         # Prepare the command to run the external Python script
-#         cmd = [
-#             "python", "{params.script}",
-#             "--config_file", input.config_file,
-#             "--best_models", *best_models,
-#             "--model_names", *params.model_names,
-#             "--output_path_roc_curve", output.all_roc_curves,
-#         ]
-#         # Log the command
-#         shell_cmd = " ".join(cmd)
-#         print(f"Running command: {shell_cmd}")
-#         # Run the command and redirect stdout and stderr to the log file
-#         # shell(shell_cmd + " > logs/plot_roc_curves.log 2>&1")
-#         shell(shell_cmd)
+        shell(shell_cmd + " > {log} 2>&1")
 
 
 rule get_CV_scores:

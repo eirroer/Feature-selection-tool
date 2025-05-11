@@ -39,33 +39,6 @@ rule read_and_split_train_test_data:
         # Run the command and redirect stdout and stderr to the log file
         shell(" ".join(cmd) + " > {log} 2>&1")
 
-# rule filter_counts_by_metadata:
-#     input:
-#         count_train_data="data/count_train_data.csv",
-#         metadata_train_data="data/metadata_train_data.csv"
-#     output:
-#         filtered_count_train_data="data/filtered_count_train_data.csv"
-#     log:
-#         "logs/filter_on_metadata.log"
-#     params:
-#         script="scripts/filter_on_metadata.py",
-#         filter_column=config["preprocessing"]["filter_on_metadata"]["filter_column"],
-#         filter_value=config["preprocessing"]["filter_on_metadata"]["filter_value"]
-#     run:
-#         # Prepare the command to run the external Python script
-#         cmd = [
-#             "python", "{params.script}",
-#             "--count_file", input.count_train_data,
-#             "--metadata_file", input.metadata_train_data,
-#             "--filter_column", params.filter_column,
-#             "--filter_value", params.filter_value,
-#             "--output_path", output.filtered_count_train_data
-#         ]
-#         # Log the command
-#         shell_cmd = " ".join(cmd)
-#         print(f"Running command: {shell_cmd}")
-#         # Run the command and redirect stdout and stderr to the log file
-#         shell(shell_cmd + " > {log} 2>&1")
 
 rule pre_filter_data:
     input:
@@ -76,7 +49,7 @@ rule pre_filter_data:
     log:
         "logs/pre_filter_data.log"
     params:
-        script="scripts/pre_filter.py",
+        script="scripts/preprocessing/pre_filter.py",
     run:
         # Prepare the command to run the external Python script
         cmd = [
@@ -101,7 +74,7 @@ rule normalize_train_count_data:
     log:
         "logs/normalize_train_count_data.log"
     params:
-        script="scripts/normalize.py",
+        script="scripts/preprocessing/normalize.py",
         # Get the normalization methods from the config file and filter out the methods that are not used
         normalization_methods=[method for method, is_use in config["preprocessing"]["normalization_methods"].items() if is_use["use_method"]]
     run:

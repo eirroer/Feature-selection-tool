@@ -6,7 +6,6 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report, roc_curve, confusion_matrix, roc_auc_score
-from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, precision_score, recall_score, f1_score
 
 
@@ -21,7 +20,6 @@ def run_prediciton(
     output_clasification_report: str,
     output_confusion_matrix: str,
     output_roc_curve: str,
-    # output_pr_curve: str,
 ):
     """Run the prediction.
 
@@ -33,9 +31,8 @@ def run_prediciton(
         output_clasiification_report (str): The output path to save the classification report.
         output_confusion_matrix (str): The output path to save the confusion matrix.
         output_roc_curve (str): The output path to save the ROC curve.
-        output_pr_curve (str): The output path to save the PR curve.
     """
-    # Load the test data
+
     count_train_data = pd.read_csv(count_train_file, delimiter=";", index_col=0, header=0)
     count_data_test = pd.read_csv(count_test_file, delimiter=";", index_col=0, header=0)
     metadata_test = pd.read_csv(metadata_test_file, delimiter=";", index_col=0, header=0)
@@ -45,7 +42,7 @@ def run_prediciton(
     with open(config_file, "r") as file:
         config = yaml.safe_load(file)
 
-    # Define model file paths
+    # Define model file paths 
     model_files = {
         "Random Forest": model_file_random_forest,
         "XGBoost": model_file_xgboost,
@@ -57,28 +54,29 @@ def run_prediciton(
         with open(model_file, "rb") as file:
             models[name] = pickle.load(file)
 
+    # Make sure the same features as training data
     X_test = count_data_test[count_train_data.columns]
-    y_true = metadata_test["condition"].map({"C": 0, "LC": 1})
+
+    # Read the condition labels from the config file
+    condition_labels = {
+    "case": config["condition_labels"]["case"],
+    "control": config["condition_labels"]["control"]
+    }
+
+    # Validate that each condition label is present in the metadata
+    missing = {k: v for k, v in condition_labels.items() if v not in metadata_test["condition"].unique()}
+    if missing:
+        raise ValueError(f"The following condition labels are missing from metadata_test['condition']: {missing}")
+
+    # Get the true labels
+    y_true = metadata_test["condition"].map({condition_labels["case"]: 1, condition_labels["control"]: 0})
     y_true = y_true.values.ravel()
 
-    # Save the classification report
+    # Create the classification report
     os.makedirs(os.path.dirname(output_clasification_report), exist_ok=True)
     with open(output_clasification_report, "w") as f:
-        # rename the coloumns in the training scores to match the prediction scores, and also std_CV_ Std. Dev .
-        refit = config["feature_selection"]["refit"]
+        
         training_scores_rn = training_scores.copy()
-        # training_scores_rn.rename(
-        #     columns={
-        #         # "mean_train_balances_accuracy": "Balanced Accuracy",
-        #         # "mean_CV_balanced_accuracy": "Balanced Accuracy",
-        #         "mean_CV_accuracy": "Accuracy",
-        #         "mean_CV_roc_auc": "AUC",
-        #         "mean_CV_precision": "Precision",
-        #         "mean_CV_recall": "Recall",
-        #         "mean_CV_f1": "F1-Score",
-        #     },
-        #     inplace=True,
-        # )
 
         columns_to_merge = [
             "Balanced Accuracy",
@@ -90,19 +88,20 @@ def run_prediciton(
         ]
 
         for col in columns_to_merge:
+            # Construct the column names for mean train and CV scores
             train_col = f"mean_train_{col.lower().replace('-', '_').replace(' ', '_')}"
             cv_col = f"mean_CV_{col.lower().replace('-', '_').replace(' ', '_')}"
+
+            # Handle special case for AUC
             if col == "AUC" and "mean_train_roc_auc" in training_scores_rn.columns:
                 train_col = "mean_train_roc_auc"
                 cv_col = "mean_CV_roc_auc"
 
-            # print(train_col, cv_col)
-
+            # Check if the columns exist in the DataFrame and merge them
             if train_col in training_scores_rn.columns and cv_col in training_scores_rn.columns:
                 training_scores_rn[col] = training_scores_rn[[train_col, cv_col]].mean(axis=1)
                 training_scores_rn.drop(columns=[train_col, cv_col], inplace=True)
 
-        # print(training_scores_rn.columns.tolist())
 
         # Merge mean and std. dev. values into a single column
         for metric in ['Balanced Accuracy', 'Accuracy', 'AUC', 'Precision', 'Recall', 'F1-Score']:
@@ -110,17 +109,16 @@ def run_prediciton(
             if std_col in training_scores_rn.columns:
                 training_scores_rn[metric] = training_scores_rn[metric].map("{:.4f}".format) + " +/- " + training_scores_rn[std_col].map("{:.4f}".format)
 
-        # merge the mean and std. dev. values into a single column for the refit metric
-        # training_scores_rn[refit] = training_scores_rn[refit].map("{:.4f}".format) + " +/- " + training_scores_rn[f"std_train_{refit}"].map("{:.4f}".format)
-        # Drop the original std. dev. columns
+        # Drop the std. dev. columns
         training_scores_rn.drop(columns=[col for col in training_scores.columns if col.startswith(("std_CV_", "std_train_"))], inplace=True)
 
+        # run the predicitons
         all_scores = training_scores_rn.copy()
         for name, model in models.items():
             y_pred = model.predict(X_test)
             y_pred_proba = model.predict_proba(X_test)[:, 1]  # Get predicted probabilities for ROC AUC
 
-            # Additional metrics
+            # Calculate metrics
             accuracy = accuracy_score(y_true, y_pred)
             balanced_accuracy = balanced_accuracy_score(y_true, y_pred)
             roc_auc = roc_auc_score(y_true, y_pred_proba)
@@ -144,18 +142,18 @@ def run_prediciton(
 
             # merge the prediction scores with the training scores
             all_scores = pd.concat([all_scores, predition_scores])
-            # print(all_scores.index)
             model_scores = all_scores.copy()
             model_scores = model_scores.loc[[f"{name} (train)", f"{name} (CV)", f"{name} (test)"]]
 
             # remove nan for pretty printing
-            model_scores = model_scores.astype(str).replace("nan", "")
-            model_scores = model_scores.astype(str).replace("nan +/- nan", "")
+            model_scores = model_scores.replace(r'\s*\+/-\s*nan', '', regex=True)
+            model_scores = model_scores.applymap(lambda x: x.strip() if isinstance(x, str) else x)
 
+            # Print the scores
             f.write(model_scores.to_string(col_space=25))
             f.write("\n\n")
 
-            # Standard classification report
+            # Add Standard classification report
             report = classification_report(
                 y_true, y_pred, target_names=["Control", "Case"]
             )
@@ -163,13 +161,12 @@ def run_prediciton(
             # Print results
             f.write(f"Classification Report for {name}:\n")
             f.write(report)
-            # f.write("=" * 60 + "\n")
             f.write("\n")
 
-    # Create subplots
+    # Create the confusion matrix plot
     fig, axes = plt.subplots(1, len(models), figsize=(15, 5))
-
     fig.suptitle("Confusion Matrix")
+
     # Iterate over models and plot confusion matrices
     for ax, (name, model) in zip(axes, models.items()):
         y_pred = model.predict(X_test)
@@ -188,12 +185,12 @@ def run_prediciton(
         ax.set_xlabel("Predicted Label")
         ax.set_ylabel("True Label")
 
-    # plt.tight_layout()
+    # Save the confusion matrix plot
     os.makedirs(os.path.dirname(output_confusion_matrix), exist_ok=True)
     plt.savefig(output_confusion_matrix, bbox_inches='tight', dpi=300)
-    plt.close()  # Close the figure
+    plt.close()
 
-    # Create the plot
+    # Create the ROC curve plot
     plt.figure(figsize=(8, 6))
 
     for name, model in models.items():
@@ -205,20 +202,17 @@ def run_prediciton(
             label=f"{name} (AUC = {auc_score:.2f})",
             linewidth=2,
         )
-    plt.plot([0, 1], [0, 1], 'k--', label='Random Classifier')  # Diagonal line
+    plt.plot([0, 1], [0, 1], 'k--', label='Random Classifier')
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
     plt.suptitle('ROC Curve', fontsize=16)
     plt.title('Final prediction results')
     plt.legend(loc='lower right')
-    # plt.grid()
 
-    # Ensure the output directory exists
-    os.makedirs(os.path.dirname(output_roc_curve), exist_ok=True)
     # Save the ROC curve plot
-    # plt.show()
+    os.makedirs(os.path.dirname(output_roc_curve), exist_ok=True)
     plt.savefig(output_roc_curve, bbox_inches='tight', dpi=300)
-    plt.close()  # Close the figure to free memory
+    plt.close()
 
 
 if __name__ == "__main__":

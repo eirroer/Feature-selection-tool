@@ -1,9 +1,12 @@
 
-count_file: "mock_data_lc/lc_mirna_counts.csv"
-metadata_file: "mock_data_lc/lc_dataset.csv"
+count_file: "../mock_data_lc/lc_mirna_counts.csv"
+metadata_file: "../mock_data_lc/lc_dataset.csv"
 # count_holdout_test_set: None
 # metadata_holdout_test_set: None
 
+condition_labels:
+  case: "LC"
+  control: "C"
 
 preprocessing:
   train_test_split_params:
@@ -34,23 +37,12 @@ preprocessing:
     tmm:
       use_method: False
     cpm:
-      use_method: False
+      use_method: True
     vst:
       use_method: False
     deseq2:
-      use_method: True
-
-  scaling_methods_metadata: # Use only on metadata
-    standard_scale:
-      use_method: False
-    min_max_scale:
-      use_method: False
-    max_abs_scale:
       use_method: False
 
-  scaling_methods_count: # Optional scaling on count data
-    shrinkage_scaling: # Not implemented
-      use_method: False 
 
   pca:
       use_method: True
@@ -58,8 +50,8 @@ preprocessing:
       color_by: "condition"
 
 
-feature_selection:
-  hyperparameter_optimization_method: "randomsearch" # or "randomsearch"
+search_setup:
+  hyperparameter_optimization_method: "gridsearch" # or "randomsearch"
   use_models:
     - random_forest
     - xgboost
@@ -71,10 +63,18 @@ feature_selection:
   random_forest:
     gridsearch:
       param_grid:
-        n_estimators: [50]
-        max_depth: [10]
-        max_features: [0.1]
-        min_samples_split: [2]
+        n_estimators: 
+          type: "list"
+          values: [50]
+        max_depth: 
+          type: "list"
+          values: [10]
+        max_features:  
+          type: "list"
+          values: [0.1]
+        min_samples_split: 
+          type: "list"
+          values: [2]
 
         # n_estimators: [50, 100, 200, 300]
         # max_depth: [None, 10, 20, 30]
@@ -105,17 +105,39 @@ feature_selection:
   xgboost:
     gridsearch: 
       param_grid:
-        n_estimators: [100]
-        max_depth: [6]
-        learning_rate: [0.3]
-        min_child_weight: [1]
-        gamma: [0]
-        subsample: [1.0]
-        colsample_bytree: [1.0]
-        colsample_bylevel: [1.0]
-        colsample_bynode: [1.0]
-        reg_lambda: [1]
-        reg_alpha: [0]
+        n_estimators:  
+          type: "list"
+          values: [100]
+        max_depth: 
+          type: "list"
+          values: [6]
+        learning_rate: 
+          type: "list"
+          values: [0.3]
+        min_child_weight: 
+          type: "list"
+          values: [1]
+        gamma: 
+          type: "list"
+          values: [0]
+        subsample: 
+          type: "list"
+          values: [1.0]
+        colsample_bytree: 
+          type: "list"
+          values: [1.0]
+        colsample_bylevel: 
+          type: "list"
+          values: [1.0]
+        colsample_bynode: 
+          type: "list"
+          values: [1.0]
+        reg_lambda: 
+          type: "list"
+          values: [1]
+        reg_alpha: 
+          type: "list"
+          values: [0]
 
 
     randomsearch:

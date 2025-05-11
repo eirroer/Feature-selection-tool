@@ -1,7 +1,11 @@
-/home/eirroer/miniconda3/envs/fs-tool/lib/python3.12/site-packages/sklearn/model_selection/_search.py:317: UserWarning: The total space of parameters 1 is smaller than n_iter=10. Running 1 iterations. For exhaustive searches, use GridSearchCV.
+/home/eirroer/miniconda3/envs/fs-tool/lib/python3.12/site-packages/sklearn/utils/validation.py:2732: UserWarning: X has feature names, but RandomForestClassifier was fitted without feature names
   warnings.warn(
-Parameters: {'classifier__n_estimators': [50], 'classifier__max_depth': ['None'], 'classifier__max_features': [0.1], 'classifier__min_samples_split': [2]}
-Fitting 2 folds for each of 1 candidates, totalling 2 fits
-qt.qpa.plugin: Could not find the Qt platform plugin "wayland" in ""
-[CV] END classifier__max_depth=None, classifier__max_features=0.1, classifier__min_samples_split=2, classifier__n_estimators=50; total time=   0.6s
-[CV] END classifier__max_depth=None, classifier__max_features=0.1, classifier__min_samples_split=2, classifier__n_estimators=50; total time=   0.5s
+/home/eirroer/miniconda3/envs/fs-tool/lib/python3.12/site-packages/sklearn/utils/validation.py:2732: UserWarning: X has feature names, but RandomForestClassifier was fitted without feature names
+  warnings.warn(
+Parameters: {'classifier__n_estimators': [50], 'classifier__max_depth': [10], 'classifier__max_features': [0.1], 'classifier__min_samples_split': [2]}
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+[CV] END classifier__max_depth=10, classifier__max_features=0.1, classifier__min_samples_split=2, classifier__n_estimators=50; total time=   0.4s
+[CV] END classifier__max_depth=10, classifier__max_features=0.1, classifier__min_samples_split=2, classifier__n_estimators=50; total time=   0.5s
+[CV] END classifier__max_depth=10, classifier__max_features=0.1, classifier__min_samples_split=2, classifier__n_estimators=50; total time=   0.4s
+[CV] END classifier__max_depth=10, classifier__max_features=0.1, classifier__min_samples_split=2, classifier__n_estimators=50; total time=   0.4s
+[CV] END classifier__max_depth=10, classifier__max_features=0.1, classifier__min_samples_split=2, classifier__n_estimators=50; total time=   0.4s
