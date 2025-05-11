@@ -21,7 +21,7 @@ This tool takes raw RNA‑seq count tables plus sample metadata, applies configu
 ---
 
 
-## 🔧 Install Conda Environment (`fs-tool.tar.gz`) - Linux only
+## Install Conda Environment (`fs-tool.tar.gz`) - Linux only
 
 This pipeline is designed to run in a secure or offline environment, such as the Tjeneste for Sensitive Data (TSD) or a high-performance computing (HPC) cluster without internet access. To ensure reproducibility and compatibility without requiring online package installation, the environment is distributed as a pre-packed Conda archive.
 
@@ -59,7 +59,7 @@ the tool can be run by one of the following higher level rules:
 |**all**|Runs everthing all at once.|
 
 
-### 📦 Core Packages
+### Core Packages
 
 The following packages are included in the pre-built environment (`fs-tool.tar.gz`) and are required to run the pipeline:
 
