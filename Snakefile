@@ -2,7 +2,7 @@
 configfile: "config/config.yml"
 
 include: "rules/preprocessing.smk"
-include: "rules/run_feature_selection.smk"
+include: "rules/run_cross_validation_search.smk"
 include: "rules/run_prediction.smk"
 
 rule all:
