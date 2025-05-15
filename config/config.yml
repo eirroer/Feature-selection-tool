@@ -1,167 +1,217 @@
 
+# MOCK DATA
 count_file: "../mock_data_lc/lc_mirna_counts.csv"
 metadata_file: "../mock_data_lc/lc_dataset.csv"
-# count_holdout_test_set: None
-# metadata_holdout_test_set: None
 
-condition_labels:
-  case: "LC"
-  control: "C"
+# FULL DATA FOR PCA
+# count_file: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/full_data_for_pca/janus_crc_reindexed.csv"
+# metadata_file: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/full_data_for_pca/janus_crc_metadata_reindexed.csv"
+
+# CPMPLETE METADATA DATASET
+# count_file: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/new/janus_crc_countdata_no_bdgrp1_no_NA_training.csv"
+# metadata_file: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/new/janus_crc_metadata_no_bdgrp1_no_NA_training.csv"
+# count_holdout_test_set: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/new/janus_crc_countdata_no_bdgrp1_no_NA_test.csv"
+# metadata_holdout_test_set: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/new/janus_crc_metadata_no_bdgrp1_no_NA_test.csv"
+
+# ONLY MALES
+# count_file: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/new/janus_crc_countdata_no_bdgrp1_no_NA_training_male.csv"
+# metadata_file: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/new/janus_crc_metadata_no_bdgrp1_no_NA_training_male.csv"
+# count_holdout_test_set: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/new/janus_crc_countdata_no_bdgrp1_no_NA_test_male.csv"
+# metadata_holdout_test_set: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/new/janus_crc_metadata_no_bdgrp1_no_NA_test_male.csv"
+
+
+# ONLY FEMALES
+# count_file: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/new/janus_crc_countdata_no_bdgrp1_no_NA_training_female.csv"
+# metadata_file: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/new/janus_crc_metadata_no_bdgrp1_no_NA_training_female.csv"
+# count_holdout_test_set: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/new/janus_crc_countdata_no_bdgrp1_no_NA_test_female.csv"
+# metadata_holdout_test_set: "/ess/p1068/data/durable/007-f_smei/001-trro/JanusRNA/CRC/eirik_dev/data/new/janus_crc_metadata_no_bdgrp1_no_NA_test_female.csv"
 
 preprocessing:
   train_test_split_params:
     test_size: 0.2
     random_state: 42
 
-  threshold_filter_params:
-    min_count: 10
-    min_samples: 3
-
   pre_filter_methods:
     threshold_filter:
-      use_method: True
+      use_method: False
       min_count: 10
-      min_samples: 3
+      min_samples: 5
     variance_filter:
       use_method: False
       threshold: 0.5
     expr_percentile_filter:
-      use_method: False
-      threshold_percentile: 0.8
+      use_method: True
+      threshold_percentile: 0.2
     correlation_filter:
       use_method: False
       correlation_method: "spearman" # or "pearson", "kendall"
       threshold: 0.9
 
+
   normalization_methods:
     tmm:
       use_method: False
     cpm:
-      use_method: True
-    vst:
       use_method: False
+    vst:
+      use_method: True
     deseq2:
       use_method: False
-
 
   pca:
       use_method: True
       n_components: 2
-      color_by: "condition"
+      color_by: "bd_grp"
 
 
-search_setup:
-  hyperparameter_optimization_method: "gridsearch" # or "randomsearch"
-  use_models:
-    - random_forest
-    - xgboost
+feature_selection:
+  hyperparameter_optimization_method: "gridsearch" #"randomsearch" # or "gridsearch"
+  n_iter: 5000 # specify if using randomsearch
   cv: 5
   cv_strategy: "stratifiedkfold" # or "kfold"
-  verbose: 2
-  refit: "roc_auc" # or "accuracy", "precision", "recall", "f1"
+  verbose: 10
+  refit: "roc_auc" # or "balanced_accuracy", "accuracy", "precision", "recall", "f1"
   
   random_forest:
     gridsearch:
       param_grid:
         n_estimators: 
           type: "list"
-          values: [50]
+          values: [200, 300, 500, 1000]
+        criterion: 
+          type: "list"
+          values: ["gini", "entropy", "log_loss"]
         max_depth: 
           type: "list"
-          values: [10]
-        max_features:  
+          values: [None, 10, 20, 30]
+        max_features: 
           type: "list"
-          values: [0.1]
+          values: ["sqrt", 0.1, 1.0]
         min_samples_split: 
           type: "list"
-          values: [2]
-
-        # n_estimators: [50, 100, 200, 300]
-        # max_depth: [None, 10, 20, 30]
-        # max_features: [0.1, 1.0]
-        # min_samples_split: [2, 5, 10]
+          values: [2, 5, 10]
+        bootstrap: 
+          type: "list"
+          values: [True, False]
+        class_weight: 
+          type: "list"
+          values: ["balanced", "balanced_subsample"]
+        min_samples_leaf: 
+          type: "list"
+          values: [1, 2, 5, 10]
 
     randomsearch:
-      param_dist:
-        # n_estimators:
-        #   type: "np.arange"
-        #   start: 100
-        #   stop: 1000
-        #   step: 100
-
-
       param_grid:
-        n_estimators: [50]
-        max_depth: [None]
-        max_features: [0.1]
-        min_samples_split: [2]
-
-        # n_estimators: [50, 100, 200, 300]
-        # max_depth: [None, 10, 20, 30]
-        # max_features: [0.1, 1.0]
-        # min_samples_split: [2, 5, 10]
-
+        n_estimators: 
+          type: "np.arange"
+          start: 10
+          stop: 10000
+          step: 10
+        criterion: 
+          type: "list"
+          values: ["gini", "entropy", "log_loss"]
+        max_depth: 
+          type: "list"
+          values: [None, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+        max_features: 
+          type: "list"
+          values: [sqrt, log2, None, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        min_samples_split: 
+          type: "np.arange"
+          start: 0.01
+          stop: 1.0
+          step: 0.01
+        bootstrap: 
+          type: "list"
+          values: [True, False]
+        class_weight: 
+          type: "list"
+          values: ["balanced", "balanced_subsample"]
+        min_samples_leaf: 
+          type: "np.arange"
+          start: 0.01
+          stop: 0.5
+          step: 0.01
+        ccp_alpha :
+          type: "np.logspace"
+          start: -4 
+          stop: 0
+          num: 10 
 
   xgboost:
     gridsearch: 
       param_grid:
-        n_estimators:  
+        n_estimators:
           type: "list"
-          values: [100]
+          values: [300, 500, 1000]
         max_depth: 
           type: "list"
-          values: [6]
+          values: [3, 5, 12]
         learning_rate: 
           type: "list"
-          values: [0.3]
+          values: [0.01, 0.05, 0.1]
         min_child_weight: 
           type: "list"
-          values: [1]
-        gamma: 
-          type: "list"
-          values: [0]
+          values: [1, 5]
         subsample: 
           type: "list"
-          values: [1.0]
+          values: [0.5, 0.7, 1.0]
+        gamma: 
+          type: "list"
+          values: [0, 0.1, 0.3]
         colsample_bytree: 
           type: "list"
-          values: [1.0]
-        colsample_bylevel: 
+          values: [0.6, 0.8, 1.0]
+        scale_pos_weight: 
           type: "list"
-          values: [1.0]
-        colsample_bynode: 
-          type: "list"
-          values: [1.0]
-        reg_lambda: 
-          type: "list"
-          values: [1]
-        reg_alpha: 
-          type: "list"
-          values: [0]
-
-
+          values: ["balanced", 1]
+        
     randomsearch:
       param_grid:
-        n_estimators: [100]
-        max_depth: [6]
-        learning_rate: [0.3]
-        min_child_weight: [1]
-        gamma: [0]
-        subsample: [1.0]
-        colsample_bytree: [1.0]
-        colsample_bylevel: [1.0]
-        colsample_bynode: [1.0]
-        reg_lambda: [1]
-        reg_alpha: [0]
+        n_estimators: 
+          type: "np.arange"
+          start: 10
+          stop: 10000
+          step: 10
+        max_depth: 
+          type: "list"
+          values: [None, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+        learning_rate: 
+          type: "np.logspace"
+          start: -3
+          stop: 0
+          num: 10
+        min_child_weight: 
+          type: "np.arange"
+          start: 0
+          stop: 800
+          step: 5
+        subsample: 
+          type: "np.linspace"
+          start: 0.5
+          stop: 1.0
+          num: 10
+        gamma: 
+          type: "np.arange"
+          start: 0
+          stop: 100
+          step: 0.5
+        colsample_bytree: 
+          type: "np.linspace"
+          start: 0.3
+          stop: 1.0
+          num: 10
+        scale_pos_weight:  
+          type: "list"
+          values: ["balanced", 1]
+        reg_lambda:
+          type: "np.arange"
+          start: 0
+          stop: 50
+          step: 0.1
+        reg_alpha: 
+          type: "np.arange"
+          start: 0
+          stop: 50
+          step: 0.1
 
-      # n_estimators: [100, 300, 500, 1000]
-      # max_depth: [3, 5, 7, 9, 12]
-      # learning_rate: [0.01, 0.05, 0.1, 0.2, 0.3]
-      # min_child_weight: [1, 3, 5, 7]
-      # gamma: [0, 0.1, 0.5, 1, 5]
-      # subsample: [0.5, 0.7, 0.9, 1.0]
-      # colsample_bytree: [0.5, 0.7, 0.9, 1.0]
-      # colsample_bylevel: [0.5, 0.7, 0.9, 1.0]
-      # colsample_bynode: [0.5, 0.7, 0.9, 1.0]
-      # reg_lambda: [0, 1, 10, 100]
-      # reg_alpha: [0, 0.1, 1, 10]
